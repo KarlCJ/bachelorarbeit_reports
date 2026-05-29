@@ -1,5 +1,0 @@
-test,query_variant,query_count,scored_query_count,excluded_query_count,hit_rate_at_5,mrr,ndcg_at_5,report_path,csv_path
-dogs_similarity,regular,17,13,4,1.0000,0.9615,0.9032,results/dogs_similarity/index.html,outputs/scenario3_gemini/collection_pfad_d_gemini_embedding_2_szenario_3_semantic_user_image_scored.csv
-dogs_similarity,grayscale,17,13,4,1.0000,0.9385,0.9157,results/dogs_similarity_grayscale/index.html,outputs/scenario3_gemini/collection_pfad_d_gemini_embedding_2_szenario_3_semantic_grayscale.csv
-dogs_identity,regular,40,40,0,1.0000,1.0000,1.0000,results/dogs_identity/index.html,outputs/scenario3_gemini/collection_pfad_d_gemini_embedding_2_szenario_3_identity_scored.csv
-dogs_identity,grayscale,40,40,0,1.0000,1.0000,1.0000,results/dogs_identity_grayscale/index.html,outputs/scenario3_gemini/collection_pfad_d_gemini_embedding_2_szenario_3_identity_grayscale.csv

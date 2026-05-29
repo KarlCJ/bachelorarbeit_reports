@@ -1,5 +1,0 @@
-backend,scenario_id,source_csv,evaluated_count,average_score,contextual_precision,contextual_recall,contextual_relevancy,elapsed_seconds_average
-Pfad A Docling OCR + Captions,szenario_1,outputs/deepeval_retrieval/deepeval_szenario_1_pfad_a_docling_5x/deepeval_szenario_1_pfad_a_docling_5x_summary.csv,18,0.6236,0.8087,0.7326,0.3295,169.1465
-Pfad A Docling OCR + Captions,szenario_2,outputs/deepeval_retrieval/deepeval_szenario_2_pfad_a_docling_5x/deepeval_szenario_2_pfad_a_docling_5x_summary.csv,18,0.6382,0.7777,0.7774,0.3595,163.5356
-Pfad B Docling Hybrid Gemini,szenario_1,outputs/deepeval_retrieval/deepeval_szenario_1_pfad_b_docling_hybrid_5x/deepeval_szenario_1_pfad_b_docling_hybrid_5x_summary.csv,18,0.6340,0.7851,0.8204,0.2964,99.4946
-Pfad B Docling Hybrid Gemini,szenario_2,outputs/deepeval_retrieval/deepeval_szenario_2_pfad_b_docling_hybrid_5x/deepeval_szenario_2_pfad_b_docling_hybrid_5x_summary.csv,18,0.6225,0.7963,0.8298,0.2415,142.5058
