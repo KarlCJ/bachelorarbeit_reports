@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DeepEval Retrieval Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f6f2;
+      --panel: #ffffff;
+      --ink: #202124;
+      --muted: #62666d;
+      --line: #dad7ce;
+      --accent: #2f6f73;
+      --good: #1f7a4f;
+      --bad: #a33b30;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 14px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+    header {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 20px;
+    }
+    h1 { margin: 0; font-size: clamp(24px, 3vw, 36px); line-height: 1.1; }
+    h2 { margin: 0; font-size: 17px; }
+    h3 { margin: 0 0 8px; font-size: 14px; }
+    .meta, .small { color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 10px;
+    }
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .metric strong { display: block; margin-top: 3px; font-size: 18px; }
+    .query-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin: 18px 0;
+      padding: 16px;
+      break-inside: avoid;
+    }
+    .query-head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+    .chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 3px 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      align-items: start;
+    }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fbfaf7;
+      min-width: 0;
+    }
+    .results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .result {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      min-width: 0;
+    }
+    figure { margin: 0; }
+    img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: contain;
+      background: #edeae2;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    figcaption { margin-top: 7px; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .reason {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .pass { color: var(--good); }
+    .fail { color: var(--bad); }
+    .warning {
+      border: 1px solid #d6a647;
+      background: #fff8df;
+      color: #5f4510;
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    @media (max-width: 760px) {
+      main { width: min(100vw - 18px, 1180px); padding-top: 16px; }
+      .query-card { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <h1>DeepEval Retrieval Report</h1>
+      <div class="meta">Collection: collection_pfad_a_gemini_embedding_2_szenario_1</div>
+      <div class="meta">Dataset: tests/evals/.dataset.json</div>
+      <div class="meta">Query backend: gemini · Judge mode: multimodal</div>
+      <div class="meta">
+        Text-Judge: openai/gpt-5.4-mini ·
+        Multimodal-Judge: openai/gpt-5.4-mini
+      </div>
+      <div class="meta">Dataset-Tags: szenario_1</div>
+    </div>
+    <div class="meta">
+      Die Queries aus dem Dataset wurden tatsächlich gegen Qdrant ausgeführt. Payload-Metadaten
+      werden nur nach dem Retrieval angezeigt und nicht zum Filtern, Reranken oder Boosting benutzt.
+    </div>
+    
+    <div class="summary"><div class="metric">
+  <span>contextual_precision</span><strong>0.5000</strong>
+</div><div class="metric">
+  <span>contextual_recall</span><strong>1.0000</strong>
+</div><div class="metric">
+  <span>contextual_relevancy</span><strong>0.2500</strong>
+</div></div>
+  </header>
+  <section class="query-card" id="query-s1_qws_spezifikation_prc_toleranz">
+  <div class="query-head">
+    <div>
+      <h2>s1_qws_spezifikation_prc_toleranz</h2>
+      <div class="meta">
+        Typ: text ·
+        Retrieval-Latenz: 0.0074s
+      </div>
+    </div>
+    <div class="chips"><span class="chip">szenario_1</span>
+<span class="chip">technical_handbook</span>
+<span class="chip">table</span></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>Query</h3>
+      <p>Welche Synthese-Frequenz muss der QWS-3000 einhalten, welcher Toleranzbereich ist zulässig und an welcher Komponente wird dieser Wert gemessen? Nenne Genaue Werte inklusive Einheiten und Toleranzangaben.</p>
+      
+    </div>
+    <div class="panel">
+      <h3>Ground Truth</h3>
+      <p>15.75 GHz, ± 0.05 GHz, Primär-Resonator (PRC)</p>
+      <div class="grid"></div>
+    </div>
+    <div class="panel">
+      <h3>DeepEval Scores</h3>
+      <div class="reason">
+</div>
+      <div class="metric">
+  <span>contextual_precision</span>
+  <strong class="pass">0.5000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.50 because the only relevant node in the retrieval contexts is the 2nd node, which directly provides the needed values: &quot;15.75&quot; GHz, tolerance &quot;± 0.05&quot;, and measurement at the &quot;Primär-Resonator (PRC)&quot;. However, it is not higher because the 1st, 3rd, 4th, and 5th nodes in the retrieval contexts are irrelevant and appear before or around the useful evidence; they discuss general QWS-3000 descriptions, manual references, section headers, or maintenance plans, but not the exact frequency specification. Since relevant information is not ranked above the irrelevant nodes, the precision is only partial rather than close to perfect.</div>
+</div>
+<div class="metric">
+  <span>contextual_recall</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because sentence 1 is fully supported by node 2 in node(s) in retrieval context, which matches exactly with 15.75 GHz, ± 0.05 GHz, Primär-Resonator (PRC).</div>
+</div>
+<div class="metric">
+  <span>contextual_relevancy</span>
+  <strong class="pass">0.2500</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.25 because most of the retrieved context is unrelated, e.g. it “beschreibt allgemein den QWS-3000 als Produkt” and “behandelt einen Wartungsplan und MTBF”, while the actually relevant line does provide the needed data: “Synthese-Frequenz: 15.75 GHz, Toleranzbereich ± 0.05, gemessen am Primär-Resonator (PRC)”. So only one statement directly answers the question, and the rest does not.</div>
+</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 14px;">Retrieved Top-k</h3>
+  <div class="results"><article class="result">
+  <h3>Rang 1 · Score 0.741374</h3>
+  <div class="small">ID: 31eed9e9-6458-5dc7-a9e7-7627d15058bc</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Der QWS3000 repräsentiert den Gipfel der Nanomaterial-Fasertechnologie. Er ermöglicht die präzise, atomar kontrollierte Synthese von Graphen-Mesh-Strukturen und Kohlenstoff-Nanoröhrchen mit beispielloser Konsistenz. Die Einhaltung der unten aufgeführten Spezifikationen ist essentiell für die Garantieleistung und die Betriebssicherheit.</div>
+</article>
+<article class="result">
+  <h3>Rang 2 · Score 0.720553</h3>
+  <div class="small">ID: 9e12e739-fcd5-5d26-bb3d-20877308ce1e</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason">| Parameter                   | Einheit   | Nennwert   | Toleranzbereich   | Anmerkungen zur Messung                |
+|-----------------------------|-----------|------------|-------------------|----------------------------------------|
+| Synthese-Frequenz           | GHz       | 15.75      | ± 0.05            | Gemessen am Primär-Resonator PRC     |
+| Vakuum-Integrität           | mbar      | 1.0 x 10⁻⁹ | 0.8 - 1.2 x 10⁻⁹  | Nach 48-stündigem Betrieb stabilisiert |
+| Energieaufnahme Maximal)   | kW        | 85.0       | ± 2.5             | Während des &quot;Weave&quot;Zyklus Phase 3   |
+| Substrat-Temperatur         | K         | 298.15     | ± 0.1             | Gemessen durch den Kryo-Sensor T22    |
+| Material-Reinheit Ausgabe) | %         | 99.999     | &gt; 99.995          | Nach spektroskopischer Analyse SA40 |</div>
+</article>
+<article class="result">
+  <h3>Rang 3 · Score 0.719595</h3>
+  <div class="small">ID: b2342fc2-04b8-5490-a627-4b6450eaa165</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Die vorliegende Dokumentation dient als verbindliche Referenz für die Inbetriebnahme, Kalibrierung, Wartung und Fehlerbehebung des Quantum Weave Synthesizers QWS3000. Alle Bediener sind verpflichtet, die Sicherheitsbestimmungen und Betriebsanweisungen strikt einzuhalten.</div>
+</article>
+<article class="result">
+  <h3>Rang 4 · Score 0.717414</h3>
+  <div class="small">ID: d02364db-356d-5137-a694-fbd6db7cbc31</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;section_header&quot;
+}</pre>
+  <div class="reason">Quantum Weave Synthesizer QWS3000 Bedienungsanleitung</div>
+</article>
+<article class="result">
+  <h3>Rang 5 · Score 0.711519</h3>
+  <div class="small">ID: 14c54014-f026-54e8-bf63-8588652d8301</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Die Einhaltung des folgenden Wartungsplans ist obligatorisch, um die langfristige Zuverlässigkeit des QWS3000 zu gewährleisten und die MTBF Mean Time Between Failures) zu maximieren.</div>
+</article></div>
+</section>
+</main>
+</body>
+</html>

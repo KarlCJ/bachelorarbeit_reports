@@ -1,0 +1,10 @@
+{
+  "generated_at": "2026-05-11T12:04:22.637513+00:00",
+  "run_id": "collection_pfad_d_gemini_embedding_2_szenario_1_troubleshooting_icons_cutted_image_regular_top5",
+  "collection": "collection_pfad_d_gemini_embedding_2_szenario_1_troubleshooting_icons_cutted",
+  "csv_path": "outputs/troubleshooting_gemini/collection_pfad_d_gemini_embedding_2_szenario_1_troubleshooting_icons_cutted_image_regular_top5.csv",
+  "query_count": 10,
+  "image_count": 23,
+  "report_type": "troubleshooting_retrieval",
+  "fairness_note": "Payload metadata is displayed after retrieval only. It is not used for embedding, filtering, reranking, score boosting, or query construction."
+}

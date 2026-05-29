@@ -1,0 +1,4412 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scenario 3 Retrieval Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f6f2;
+      --panel: #ffffff;
+      --ink: #202124;
+      --muted: #62666d;
+      --line: #dad7ce;
+      --accent: #2f6f73;
+      --good: #1f7a4f;
+      --bad: #a33b30;
+      --neutral: #78621f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 14px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+    header {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 20px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(24px, 3vw, 36px);
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+    h2 {
+      margin: 0;
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+    .meta, .small {
+      color: var(--muted);
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+      gap: 10px;
+    }
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .metric strong {
+      display: block;
+      font-size: 20px;
+      margin-top: 4px;
+    }
+    .query-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin: 18px 0;
+      padding: 16px;
+      break-inside: avoid;
+    }
+    .query-layout {
+      display: grid;
+      grid-template-columns: minmax(170px, 240px) 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    figure {
+      margin: 0;
+    }
+    img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: contain;
+      background: #edeae2;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    figcaption {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+    .query-head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 10px 0;
+    }
+    .chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 3px 8px;
+      color: var(--muted);
+      background: #fbfaf7;
+      font-size: 12px;
+    }
+    .status {
+      border-radius: 999px;
+      color: white;
+      font-weight: 700;
+      padding: 4px 9px;
+      font-size: 12px;
+    }
+    .status.good { background: var(--good); }
+    .status.bad { background: var(--bad); }
+    .status.neutral { background: var(--neutral); }
+    .results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .result {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 9px;
+      background: #fbfaf7;
+    }
+    .result.good { border-color: color-mix(in srgb, var(--good) 55%, var(--line)); }
+    .result.bad { border-color: color-mix(in srgb, var(--bad) 45%, var(--line)); }
+    .rank {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 7px;
+      font-weight: 700;
+    }
+    .score {
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 12px;
+    }
+    .fairness {
+      border-left: 4px solid var(--accent);
+      background: #edf5f4;
+      padding: 10px 12px;
+      border-radius: 6px;
+      color: #214548;
+    }
+    @media (max-width: 760px) {
+      main { width: min(100vw - 20px, 1180px); padding-top: 20px; }
+      .query-layout { grid-template-columns: 1fr; }
+      .results { grid-template-columns: repeat(auto-fit, minmax(132px, 1fr)); }
+    }
+    @media print {
+      body { background: white; }
+      main { width: 100%; padding: 0; }
+      .query-card { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <h1>Scenario 3 Retrieval Report</h1>
+      <div class="meta">Run: collection_pfad_d_gemini_embedding_2_szenario_3_identity · Collection: collection_pfad_d_gemini_embedding_2_szenario_3</div>
+      <div class="meta">CSV: outputs/scenario3_gemini/collection_pfad_d_gemini_embedding_2_szenario_3_identity.csv</div>
+    </div>
+    <div class="fairness">
+      Payload metadata is displayed only after vector retrieval has already produced the ranked
+      IDs. The report does not filter, rerank, boost, embed, or construct queries from metadata.
+    </div>
+    <section class="summary"><div class="metric">
+  <span class="small">Queries</span>
+  <strong>40</strong>
+</div><div class="metric">
+  <span class="small">Queries With Hit</span>
+  <strong>40</strong>
+</div><div class="metric">
+  <span class="small">hit_rate_at_5</span>
+  <strong>1</strong>
+</div><div class="metric">
+  <span class="small">mrr</span>
+  <strong>1</strong>
+</div><div class="metric">
+  <span class="small">ndcg_at_5</span>
+  <strong>1</strong>
+</div></section>
+  </header>
+  <section class="query-card" id="query-f7be6a68-f84d-5135-b03d-458a5fbff1c9">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/query-f7be6a68-f84d-5135-b03d-458a5fbff1c9.jpg" alt="Query image f7be6a68-f84d-5135-b03d-458a5fbff1c9">
+  <figcaption>Query ID: f7be6a68-f84d-5135-b03d-458a5fbff1c9</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>golden retriever</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: golden retriever</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0050s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-f7be6a68-f84d-5135-b03d-458a5fbff1c9.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_01_n02099601_118.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">golden retriever</div>
+  <div class="small">ID: f7be6a68-f84d-5135-b03d-458a5fbff1c9</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-bf8641e0-61f1-5785-9137-6bd51581c629.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_04_n02099601_4651.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">golden retriever</div>
+  <div class="small">ID: bf8641e0-61f1-5785-9137-6bd51581c629</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-9fa9bf5b-af43-5c3d-b801-d8ab84888470.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_03_n02099601_3738.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">golden retriever</div>
+  <div class="small">ID: 9fa9bf5b-af43-5c3d-b801-d8ab84888470</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-9a05a3bb-2d34-5b2a-818a-bdc8112bb402.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_02_n02099601_2408.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">golden retriever</div>
+  <div class="small">ID: 9a05a3bb-2d34-5b2a-818a-bdc8112bb402</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-e4c63eed-94d4-5d71-8470-437e696fb435.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/cats_noise/cat_noise_01_00000075_002.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">cat_noise</span>
+  </div>
+  <div class="small">cat/no breed</div>
+  <div class="small">ID: e4c63eed-94d4-5d71-8470-437e696fb435</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-9a05a3bb-2d34-5b2a-818a-bdc8112bb402">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-9a05a3bb-2d34-5b2a-818a-bdc8112bb402.jpg" alt="Query image 9a05a3bb-2d34-5b2a-818a-bdc8112bb402">
+  <figcaption>Query ID: 9a05a3bb-2d34-5b2a-818a-bdc8112bb402</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>golden retriever</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: golden retriever</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0056s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-9a05a3bb-2d34-5b2a-818a-bdc8112bb402.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_02_n02099601_2408.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">golden retriever</div>
+  <div class="small">ID: 9a05a3bb-2d34-5b2a-818a-bdc8112bb402</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-9fa9bf5b-af43-5c3d-b801-d8ab84888470.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_03_n02099601_3738.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">golden retriever</div>
+  <div class="small">ID: 9fa9bf5b-af43-5c3d-b801-d8ab84888470</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-bf8641e0-61f1-5785-9137-6bd51581c629.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_04_n02099601_4651.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">golden retriever</div>
+  <div class="small">ID: bf8641e0-61f1-5785-9137-6bd51581c629</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-f7be6a68-f84d-5135-b03d-458a5fbff1c9.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_01_n02099601_118.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">golden retriever</div>
+  <div class="small">ID: f7be6a68-f84d-5135-b03d-458a5fbff1c9</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-be46fbf4-9a5a-54ff-859a-8f6b1376c642.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_02_n02088364_6109.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: be46fbf4-9a5a-54ff-859a-8f6b1376c642</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-9fa9bf5b-af43-5c3d-b801-d8ab84888470">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-9fa9bf5b-af43-5c3d-b801-d8ab84888470.jpg" alt="Query image 9fa9bf5b-af43-5c3d-b801-d8ab84888470">
+  <figcaption>Query ID: 9fa9bf5b-af43-5c3d-b801-d8ab84888470</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>golden retriever</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: golden retriever</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0043s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-9fa9bf5b-af43-5c3d-b801-d8ab84888470.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_03_n02099601_3738.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">golden retriever</div>
+  <div class="small">ID: 9fa9bf5b-af43-5c3d-b801-d8ab84888470</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-bf8641e0-61f1-5785-9137-6bd51581c629.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_04_n02099601_4651.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">golden retriever</div>
+  <div class="small">ID: bf8641e0-61f1-5785-9137-6bd51581c629</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-f7be6a68-f84d-5135-b03d-458a5fbff1c9.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_01_n02099601_118.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">golden retriever</div>
+  <div class="small">ID: f7be6a68-f84d-5135-b03d-458a5fbff1c9</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-9a05a3bb-2d34-5b2a-818a-bdc8112bb402.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_02_n02099601_2408.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">golden retriever</div>
+  <div class="small">ID: 9a05a3bb-2d34-5b2a-818a-bdc8112bb402</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-be46fbf4-9a5a-54ff-859a-8f6b1376c642.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_02_n02088364_6109.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: be46fbf4-9a5a-54ff-859a-8f6b1376c642</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-bf8641e0-61f1-5785-9137-6bd51581c629">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-bf8641e0-61f1-5785-9137-6bd51581c629.jpg" alt="Query image bf8641e0-61f1-5785-9137-6bd51581c629">
+  <figcaption>Query ID: bf8641e0-61f1-5785-9137-6bd51581c629</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>golden retriever</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: golden retriever</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0059s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-bf8641e0-61f1-5785-9137-6bd51581c629.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_04_n02099601_4651.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">golden retriever</div>
+  <div class="small">ID: bf8641e0-61f1-5785-9137-6bd51581c629</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-f7be6a68-f84d-5135-b03d-458a5fbff1c9.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_01_n02099601_118.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">golden retriever</div>
+  <div class="small">ID: f7be6a68-f84d-5135-b03d-458a5fbff1c9</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-9fa9bf5b-af43-5c3d-b801-d8ab84888470.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_03_n02099601_3738.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">golden retriever</div>
+  <div class="small">ID: 9fa9bf5b-af43-5c3d-b801-d8ab84888470</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-9a05a3bb-2d34-5b2a-818a-bdc8112bb402.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_02_n02099601_2408.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">golden retriever</div>
+  <div class="small">ID: 9a05a3bb-2d34-5b2a-818a-bdc8112bb402</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-4bf87af2-1b97-5890-9343-66e1fa9ac84f.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_02_n02112018_2614.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: 4bf87af2-1b97-5890-9343-66e1fa9ac84f</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-a23f5cb3-ebd8-5a82-bd6d-75267be0e7d0">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/query-a23f5cb3-ebd8-5a82-bd6d-75267be0e7d0.jpg" alt="Query image a23f5cb3-ebd8-5a82-bd6d-75267be0e7d0">
+  <figcaption>Query ID: a23f5cb3-ebd8-5a82-bd6d-75267be0e7d0</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>German shepherd</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: German shepherd</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0049s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-a23f5cb3-ebd8-5a82-bd6d-75267be0e7d0.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_01_n02106662_14842.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">German shepherd</div>
+  <div class="small">ID: a23f5cb3-ebd8-5a82-bd6d-75267be0e7d0</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-3d837ccc-b51a-56dd-9538-0041ed3c6aee.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_03_n02106662_19801.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">German shepherd</div>
+  <div class="small">ID: 3d837ccc-b51a-56dd-9538-0041ed3c6aee</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-48f10883-5436-58d7-8227-594e37268c85.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_02_n02106662_16014.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">German shepherd</div>
+  <div class="small">ID: 48f10883-5436-58d7-8227-594e37268c85</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-b6924955-3dcb-5ac6-910f-49d328e050c8.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_04_n02106662_8002.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">German shepherd</div>
+  <div class="small">ID: b6924955-3dcb-5ac6-910f-49d328e050c8</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-f864a263-600e-5da8-8ffc-5aef34adc789.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_04_n02110185_725.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: f864a263-600e-5da8-8ffc-5aef34adc789</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-48f10883-5436-58d7-8227-594e37268c85">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-48f10883-5436-58d7-8227-594e37268c85.jpg" alt="Query image 48f10883-5436-58d7-8227-594e37268c85">
+  <figcaption>Query ID: 48f10883-5436-58d7-8227-594e37268c85</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>German shepherd</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: German shepherd</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0053s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-48f10883-5436-58d7-8227-594e37268c85.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_02_n02106662_16014.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">German shepherd</div>
+  <div class="small">ID: 48f10883-5436-58d7-8227-594e37268c85</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-3d837ccc-b51a-56dd-9538-0041ed3c6aee.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_03_n02106662_19801.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">German shepherd</div>
+  <div class="small">ID: 3d837ccc-b51a-56dd-9538-0041ed3c6aee</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-a23f5cb3-ebd8-5a82-bd6d-75267be0e7d0.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_01_n02106662_14842.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">German shepherd</div>
+  <div class="small">ID: a23f5cb3-ebd8-5a82-bd6d-75267be0e7d0</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-9e8dff10-aa05-5b6f-95ee-0e7892e37917.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_03_n02106166_402.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Border collie</div>
+  <div class="small">ID: 9e8dff10-aa05-5b6f-95ee-0e7892e37917</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-f864a263-600e-5da8-8ffc-5aef34adc789.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_04_n02110185_725.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: f864a263-600e-5da8-8ffc-5aef34adc789</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-3d837ccc-b51a-56dd-9538-0041ed3c6aee">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-3d837ccc-b51a-56dd-9538-0041ed3c6aee.jpg" alt="Query image 3d837ccc-b51a-56dd-9538-0041ed3c6aee">
+  <figcaption>Query ID: 3d837ccc-b51a-56dd-9538-0041ed3c6aee</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>German shepherd</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: German shepherd</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0042s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-3d837ccc-b51a-56dd-9538-0041ed3c6aee.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_03_n02106662_19801.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">German shepherd</div>
+  <div class="small">ID: 3d837ccc-b51a-56dd-9538-0041ed3c6aee</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-48f10883-5436-58d7-8227-594e37268c85.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_02_n02106662_16014.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">German shepherd</div>
+  <div class="small">ID: 48f10883-5436-58d7-8227-594e37268c85</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-b6924955-3dcb-5ac6-910f-49d328e050c8.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_04_n02106662_8002.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">German shepherd</div>
+  <div class="small">ID: b6924955-3dcb-5ac6-910f-49d328e050c8</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-a23f5cb3-ebd8-5a82-bd6d-75267be0e7d0.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_01_n02106662_14842.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">German shepherd</div>
+  <div class="small">ID: a23f5cb3-ebd8-5a82-bd6d-75267be0e7d0</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-f864a263-600e-5da8-8ffc-5aef34adc789.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_04_n02110185_725.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: f864a263-600e-5da8-8ffc-5aef34adc789</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-b6924955-3dcb-5ac6-910f-49d328e050c8">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-b6924955-3dcb-5ac6-910f-49d328e050c8.jpg" alt="Query image b6924955-3dcb-5ac6-910f-49d328e050c8">
+  <figcaption>Query ID: b6924955-3dcb-5ac6-910f-49d328e050c8</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>German shepherd</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: German shepherd</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0044s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-b6924955-3dcb-5ac6-910f-49d328e050c8.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_04_n02106662_8002.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">German shepherd</div>
+  <div class="small">ID: b6924955-3dcb-5ac6-910f-49d328e050c8</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-3d837ccc-b51a-56dd-9538-0041ed3c6aee.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_03_n02106662_19801.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">German shepherd</div>
+  <div class="small">ID: 3d837ccc-b51a-56dd-9538-0041ed3c6aee</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-58cdd5cd-b854-5236-92a8-4c4405fdd5b2.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_01_n02110185_10844.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: 58cdd5cd-b854-5236-92a8-4c4405fdd5b2</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-1a72b5cd-9bc4-5c3a-9f9b-949222564989.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_02_n02110185_11445.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: 1a72b5cd-9bc4-5c3a-9f9b-949222564989</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-0e455184-cb0e-5ea9-97cb-b2f4c5ff54f9.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_02_n02110958_11977.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: 0e455184-cb0e-5ea9-97cb-b2f4c5ff54f9</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-58cdd5cd-b854-5236-92a8-4c4405fdd5b2">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-58cdd5cd-b854-5236-92a8-4c4405fdd5b2.jpg" alt="Query image 58cdd5cd-b854-5236-92a8-4c4405fdd5b2">
+  <figcaption>Query ID: 58cdd5cd-b854-5236-92a8-4c4405fdd5b2</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>Siberian husky</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: Siberian husky</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0053s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-58cdd5cd-b854-5236-92a8-4c4405fdd5b2.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_01_n02110185_10844.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: 58cdd5cd-b854-5236-92a8-4c4405fdd5b2</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-1a72b5cd-9bc4-5c3a-9f9b-949222564989.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_02_n02110185_11445.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: 1a72b5cd-9bc4-5c3a-9f9b-949222564989</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-d632b8ba-6706-55fa-93b1-034a36482466.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_03_n02110185_4133.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: d632b8ba-6706-55fa-93b1-034a36482466</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-f864a263-600e-5da8-8ffc-5aef34adc789.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_04_n02110185_725.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: f864a263-600e-5da8-8ffc-5aef34adc789</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-b6924955-3dcb-5ac6-910f-49d328e050c8.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_04_n02106662_8002.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">German shepherd</div>
+  <div class="small">ID: b6924955-3dcb-5ac6-910f-49d328e050c8</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-1a72b5cd-9bc4-5c3a-9f9b-949222564989">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-1a72b5cd-9bc4-5c3a-9f9b-949222564989.jpg" alt="Query image 1a72b5cd-9bc4-5c3a-9f9b-949222564989">
+  <figcaption>Query ID: 1a72b5cd-9bc4-5c3a-9f9b-949222564989</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>Siberian husky</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: Siberian husky</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0045s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-1a72b5cd-9bc4-5c3a-9f9b-949222564989.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_02_n02110185_11445.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: 1a72b5cd-9bc4-5c3a-9f9b-949222564989</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-58cdd5cd-b854-5236-92a8-4c4405fdd5b2.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_01_n02110185_10844.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: 58cdd5cd-b854-5236-92a8-4c4405fdd5b2</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-d632b8ba-6706-55fa-93b1-034a36482466.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_03_n02110185_4133.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: d632b8ba-6706-55fa-93b1-034a36482466</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-f864a263-600e-5da8-8ffc-5aef34adc789.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_04_n02110185_725.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: f864a263-600e-5da8-8ffc-5aef34adc789</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-b6924955-3dcb-5ac6-910f-49d328e050c8.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_04_n02106662_8002.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">German shepherd</div>
+  <div class="small">ID: b6924955-3dcb-5ac6-910f-49d328e050c8</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-d632b8ba-6706-55fa-93b1-034a36482466">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-d632b8ba-6706-55fa-93b1-034a36482466.jpg" alt="Query image d632b8ba-6706-55fa-93b1-034a36482466">
+  <figcaption>Query ID: d632b8ba-6706-55fa-93b1-034a36482466</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>Siberian husky</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: Siberian husky</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0047s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-d632b8ba-6706-55fa-93b1-034a36482466.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_03_n02110185_4133.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: d632b8ba-6706-55fa-93b1-034a36482466</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-1a72b5cd-9bc4-5c3a-9f9b-949222564989.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_02_n02110185_11445.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: 1a72b5cd-9bc4-5c3a-9f9b-949222564989</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-58cdd5cd-b854-5236-92a8-4c4405fdd5b2.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_01_n02110185_10844.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: 58cdd5cd-b854-5236-92a8-4c4405fdd5b2</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-f864a263-600e-5da8-8ffc-5aef34adc789.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_04_n02110185_725.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: f864a263-600e-5da8-8ffc-5aef34adc789</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-e917c9a5-ebce-5e77-b014-a4ffc24c6d3c.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_04_n02108089_849.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: e917c9a5-ebce-5e77-b014-a4ffc24c6d3c</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-f864a263-600e-5da8-8ffc-5aef34adc789">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-f864a263-600e-5da8-8ffc-5aef34adc789.jpg" alt="Query image f864a263-600e-5da8-8ffc-5aef34adc789">
+  <figcaption>Query ID: f864a263-600e-5da8-8ffc-5aef34adc789</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>Siberian husky</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: Siberian husky</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0043s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-f864a263-600e-5da8-8ffc-5aef34adc789.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_04_n02110185_725.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: f864a263-600e-5da8-8ffc-5aef34adc789</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-1a72b5cd-9bc4-5c3a-9f9b-949222564989.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_02_n02110185_11445.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: 1a72b5cd-9bc4-5c3a-9f9b-949222564989</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-58cdd5cd-b854-5236-92a8-4c4405fdd5b2.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_01_n02110185_10844.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: 58cdd5cd-b854-5236-92a8-4c4405fdd5b2</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-d632b8ba-6706-55fa-93b1-034a36482466.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_03_n02110185_4133.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: d632b8ba-6706-55fa-93b1-034a36482466</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-3d837ccc-b51a-56dd-9538-0041ed3c6aee.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_03_n02106662_19801.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">German shepherd</div>
+  <div class="small">ID: 3d837ccc-b51a-56dd-9538-0041ed3c6aee</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-101fd26e-51d9-54fb-81c7-f5c031071b3f">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/query-101fd26e-51d9-54fb-81c7-f5c031071b3f.jpg" alt="Query image 101fd26e-51d9-54fb-81c7-f5c031071b3f">
+  <figcaption>Query ID: 101fd26e-51d9-54fb-81c7-f5c031071b3f</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>pug</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: pug</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0047s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-101fd26e-51d9-54fb-81c7-f5c031071b3f.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_01_n02110958_11194.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: 101fd26e-51d9-54fb-81c7-f5c031071b3f</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-0e455184-cb0e-5ea9-97cb-b2f4c5ff54f9.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_02_n02110958_11977.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: 0e455184-cb0e-5ea9-97cb-b2f4c5ff54f9</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-f85f4cc5-1684-5f3c-ae3c-b8cf039d1edb.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_04_n02110958_13439.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: f85f4cc5-1684-5f3c-ae3c-b8cf039d1edb</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-e2421b62-0a8e-5b94-b345-9f0978a9ff78.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_03_n02110958_13340.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: e2421b62-0a8e-5b94-b345-9f0978a9ff78</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-a66315f5-af8b-5ee0-8c19-2a12013dabf9.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_01_n02108089_1775.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: a66315f5-af8b-5ee0-8c19-2a12013dabf9</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-0e455184-cb0e-5ea9-97cb-b2f4c5ff54f9">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-0e455184-cb0e-5ea9-97cb-b2f4c5ff54f9.jpg" alt="Query image 0e455184-cb0e-5ea9-97cb-b2f4c5ff54f9">
+  <figcaption>Query ID: 0e455184-cb0e-5ea9-97cb-b2f4c5ff54f9</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>pug</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: pug</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0046s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-0e455184-cb0e-5ea9-97cb-b2f4c5ff54f9.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_02_n02110958_11977.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: 0e455184-cb0e-5ea9-97cb-b2f4c5ff54f9</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-101fd26e-51d9-54fb-81c7-f5c031071b3f.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_01_n02110958_11194.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: 101fd26e-51d9-54fb-81c7-f5c031071b3f</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-e2421b62-0a8e-5b94-b345-9f0978a9ff78.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_03_n02110958_13340.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: e2421b62-0a8e-5b94-b345-9f0978a9ff78</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-f85f4cc5-1684-5f3c-ae3c-b8cf039d1edb.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_04_n02110958_13439.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: f85f4cc5-1684-5f3c-ae3c-b8cf039d1edb</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-a66315f5-af8b-5ee0-8c19-2a12013dabf9.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_01_n02108089_1775.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: a66315f5-af8b-5ee0-8c19-2a12013dabf9</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-e2421b62-0a8e-5b94-b345-9f0978a9ff78">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-e2421b62-0a8e-5b94-b345-9f0978a9ff78.jpg" alt="Query image e2421b62-0a8e-5b94-b345-9f0978a9ff78">
+  <figcaption>Query ID: e2421b62-0a8e-5b94-b345-9f0978a9ff78</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>pug</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: pug</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0044s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-e2421b62-0a8e-5b94-b345-9f0978a9ff78.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_03_n02110958_13340.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: e2421b62-0a8e-5b94-b345-9f0978a9ff78</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-101fd26e-51d9-54fb-81c7-f5c031071b3f.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_01_n02110958_11194.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: 101fd26e-51d9-54fb-81c7-f5c031071b3f</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-0e455184-cb0e-5ea9-97cb-b2f4c5ff54f9.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_02_n02110958_11977.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: 0e455184-cb0e-5ea9-97cb-b2f4c5ff54f9</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-f85f4cc5-1684-5f3c-ae3c-b8cf039d1edb.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_04_n02110958_13439.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: f85f4cc5-1684-5f3c-ae3c-b8cf039d1edb</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-4ae1cea4-8236-5531-b9eb-6661d870ecdc.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_03_n02108915_8258.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: 4ae1cea4-8236-5531-b9eb-6661d870ecdc</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-f85f4cc5-1684-5f3c-ae3c-b8cf039d1edb">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-f85f4cc5-1684-5f3c-ae3c-b8cf039d1edb.jpg" alt="Query image f85f4cc5-1684-5f3c-ae3c-b8cf039d1edb">
+  <figcaption>Query ID: f85f4cc5-1684-5f3c-ae3c-b8cf039d1edb</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>pug</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: pug</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0047s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-f85f4cc5-1684-5f3c-ae3c-b8cf039d1edb.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_04_n02110958_13439.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: f85f4cc5-1684-5f3c-ae3c-b8cf039d1edb</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-101fd26e-51d9-54fb-81c7-f5c031071b3f.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_01_n02110958_11194.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: 101fd26e-51d9-54fb-81c7-f5c031071b3f</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-0e455184-cb0e-5ea9-97cb-b2f4c5ff54f9.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_02_n02110958_11977.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: 0e455184-cb0e-5ea9-97cb-b2f4c5ff54f9</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-e2421b62-0a8e-5b94-b345-9f0978a9ff78.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_03_n02110958_13340.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: e2421b62-0a8e-5b94-b345-9f0978a9ff78</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-e4edb628-3f98-5093-bd12-a9871868289f.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_04_n02108915_9666.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: e4edb628-3f98-5093-bd12-a9871868289f</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-94b6fb17-c8f3-57dc-a428-c75ccf78da52">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/query-94b6fb17-c8f3-57dc-a428-c75ccf78da52.jpg" alt="Query image 94b6fb17-c8f3-57dc-a428-c75ccf78da52">
+  <figcaption>Query ID: 94b6fb17-c8f3-57dc-a428-c75ccf78da52</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>French bulldog</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: French bulldog</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0047s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-94b6fb17-c8f3-57dc-a428-c75ccf78da52.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_01_n02108915_11220.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: 94b6fb17-c8f3-57dc-a428-c75ccf78da52</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-e4edb628-3f98-5093-bd12-a9871868289f.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_04_n02108915_9666.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: e4edb628-3f98-5093-bd12-a9871868289f</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-d79f1364-fb86-506f-a3c0-ac6c79981bc2.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_02_n02108915_644.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: d79f1364-fb86-506f-a3c0-ac6c79981bc2</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-4ae1cea4-8236-5531-b9eb-6661d870ecdc.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_03_n02108915_8258.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: 4ae1cea4-8236-5531-b9eb-6661d870ecdc</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-e2421b62-0a8e-5b94-b345-9f0978a9ff78.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_03_n02110958_13340.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: e2421b62-0a8e-5b94-b345-9f0978a9ff78</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-d79f1364-fb86-506f-a3c0-ac6c79981bc2">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-d79f1364-fb86-506f-a3c0-ac6c79981bc2.jpg" alt="Query image d79f1364-fb86-506f-a3c0-ac6c79981bc2">
+  <figcaption>Query ID: d79f1364-fb86-506f-a3c0-ac6c79981bc2</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>French bulldog</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: French bulldog</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0051s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-d79f1364-fb86-506f-a3c0-ac6c79981bc2.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_02_n02108915_644.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: d79f1364-fb86-506f-a3c0-ac6c79981bc2</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-e4edb628-3f98-5093-bd12-a9871868289f.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_04_n02108915_9666.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: e4edb628-3f98-5093-bd12-a9871868289f</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-94b6fb17-c8f3-57dc-a428-c75ccf78da52.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_01_n02108915_11220.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: 94b6fb17-c8f3-57dc-a428-c75ccf78da52</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-4ae1cea4-8236-5531-b9eb-6661d870ecdc.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_03_n02108915_8258.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: 4ae1cea4-8236-5531-b9eb-6661d870ecdc</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-9219b6fa-cff8-5c5f-b22e-575738110467.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_03_n02085620_2793.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: 9219b6fa-cff8-5c5f-b22e-575738110467</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-4ae1cea4-8236-5531-b9eb-6661d870ecdc">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-4ae1cea4-8236-5531-b9eb-6661d870ecdc.jpg" alt="Query image 4ae1cea4-8236-5531-b9eb-6661d870ecdc">
+  <figcaption>Query ID: 4ae1cea4-8236-5531-b9eb-6661d870ecdc</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>French bulldog</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: French bulldog</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0044s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-4ae1cea4-8236-5531-b9eb-6661d870ecdc.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_03_n02108915_8258.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: 4ae1cea4-8236-5531-b9eb-6661d870ecdc</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-94b6fb17-c8f3-57dc-a428-c75ccf78da52.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_01_n02108915_11220.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: 94b6fb17-c8f3-57dc-a428-c75ccf78da52</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-e4edb628-3f98-5093-bd12-a9871868289f.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_04_n02108915_9666.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: e4edb628-3f98-5093-bd12-a9871868289f</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-d79f1364-fb86-506f-a3c0-ac6c79981bc2.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_02_n02108915_644.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: d79f1364-fb86-506f-a3c0-ac6c79981bc2</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-a66315f5-af8b-5ee0-8c19-2a12013dabf9.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_01_n02108089_1775.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: a66315f5-af8b-5ee0-8c19-2a12013dabf9</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-e4edb628-3f98-5093-bd12-a9871868289f">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-e4edb628-3f98-5093-bd12-a9871868289f.jpg" alt="Query image e4edb628-3f98-5093-bd12-a9871868289f">
+  <figcaption>Query ID: e4edb628-3f98-5093-bd12-a9871868289f</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>French bulldog</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: French bulldog</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0043s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-e4edb628-3f98-5093-bd12-a9871868289f.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_04_n02108915_9666.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: e4edb628-3f98-5093-bd12-a9871868289f</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-d79f1364-fb86-506f-a3c0-ac6c79981bc2.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_02_n02108915_644.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: d79f1364-fb86-506f-a3c0-ac6c79981bc2</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-94b6fb17-c8f3-57dc-a428-c75ccf78da52.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_01_n02108915_11220.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: 94b6fb17-c8f3-57dc-a428-c75ccf78da52</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-4ae1cea4-8236-5531-b9eb-6661d870ecdc.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_03_n02108915_8258.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: 4ae1cea4-8236-5531-b9eb-6661d870ecdc</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-101fd26e-51d9-54fb-81c7-f5c031071b3f.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_01_n02110958_11194.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: 101fd26e-51d9-54fb-81c7-f5c031071b3f</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-dd2a934f-94a6-5fd1-8342-bb20c61d54a3">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/query-dd2a934f-94a6-5fd1-8342-bb20c61d54a3.jpg" alt="Query image dd2a934f-94a6-5fd1-8342-bb20c61d54a3">
+  <figcaption>Query ID: dd2a934f-94a6-5fd1-8342-bb20c61d54a3</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>beagle</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: beagle</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0049s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-dd2a934f-94a6-5fd1-8342-bb20c61d54a3.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_01_n02088364_13236.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: dd2a934f-94a6-5fd1-8342-bb20c61d54a3</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-6d660002-1afc-5367-9f8a-3fb9aa51cf53.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_04_n02088364_8713.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: 6d660002-1afc-5367-9f8a-3fb9aa51cf53</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-be46fbf4-9a5a-54ff-859a-8f6b1376c642.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_02_n02088364_6109.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: be46fbf4-9a5a-54ff-859a-8f6b1376c642</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-b649c6cc-9479-5485-addd-8dfd3348c4a5.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_03_n02088364_8477.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: b649c6cc-9479-5485-addd-8dfd3348c4a5</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-9219b6fa-cff8-5c5f-b22e-575738110467.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_03_n02085620_2793.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: 9219b6fa-cff8-5c5f-b22e-575738110467</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-be46fbf4-9a5a-54ff-859a-8f6b1376c642">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-be46fbf4-9a5a-54ff-859a-8f6b1376c642.jpg" alt="Query image be46fbf4-9a5a-54ff-859a-8f6b1376c642">
+  <figcaption>Query ID: be46fbf4-9a5a-54ff-859a-8f6b1376c642</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>beagle</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: beagle</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0047s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-be46fbf4-9a5a-54ff-859a-8f6b1376c642.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_02_n02088364_6109.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: be46fbf4-9a5a-54ff-859a-8f6b1376c642</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-b649c6cc-9479-5485-addd-8dfd3348c4a5.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_03_n02088364_8477.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: b649c6cc-9479-5485-addd-8dfd3348c4a5</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-6d660002-1afc-5367-9f8a-3fb9aa51cf53.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_04_n02088364_8713.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: 6d660002-1afc-5367-9f8a-3fb9aa51cf53</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-dd2a934f-94a6-5fd1-8342-bb20c61d54a3.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_01_n02088364_13236.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: dd2a934f-94a6-5fd1-8342-bb20c61d54a3</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-bf3ecb46-10de-5ba1-a68f-2ee85ee6e6f0.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_02_n02108089_4730.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: bf3ecb46-10de-5ba1-a68f-2ee85ee6e6f0</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-b649c6cc-9479-5485-addd-8dfd3348c4a5">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-b649c6cc-9479-5485-addd-8dfd3348c4a5.jpg" alt="Query image b649c6cc-9479-5485-addd-8dfd3348c4a5">
+  <figcaption>Query ID: b649c6cc-9479-5485-addd-8dfd3348c4a5</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>beagle</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: beagle</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0042s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-b649c6cc-9479-5485-addd-8dfd3348c4a5.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_03_n02088364_8477.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: b649c6cc-9479-5485-addd-8dfd3348c4a5</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-be46fbf4-9a5a-54ff-859a-8f6b1376c642.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_02_n02088364_6109.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: be46fbf4-9a5a-54ff-859a-8f6b1376c642</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-6d660002-1afc-5367-9f8a-3fb9aa51cf53.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_04_n02088364_8713.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: 6d660002-1afc-5367-9f8a-3fb9aa51cf53</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-dd2a934f-94a6-5fd1-8342-bb20c61d54a3.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_01_n02088364_13236.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: dd2a934f-94a6-5fd1-8342-bb20c61d54a3</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-bf3ecb46-10de-5ba1-a68f-2ee85ee6e6f0.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_02_n02108089_4730.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: bf3ecb46-10de-5ba1-a68f-2ee85ee6e6f0</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-6d660002-1afc-5367-9f8a-3fb9aa51cf53">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-6d660002-1afc-5367-9f8a-3fb9aa51cf53.jpg" alt="Query image 6d660002-1afc-5367-9f8a-3fb9aa51cf53">
+  <figcaption>Query ID: 6d660002-1afc-5367-9f8a-3fb9aa51cf53</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>beagle</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: beagle</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0045s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-6d660002-1afc-5367-9f8a-3fb9aa51cf53.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_04_n02088364_8713.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: 6d660002-1afc-5367-9f8a-3fb9aa51cf53</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-be46fbf4-9a5a-54ff-859a-8f6b1376c642.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_02_n02088364_6109.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: be46fbf4-9a5a-54ff-859a-8f6b1376c642</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-dd2a934f-94a6-5fd1-8342-bb20c61d54a3.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_01_n02088364_13236.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: dd2a934f-94a6-5fd1-8342-bb20c61d54a3</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-b649c6cc-9479-5485-addd-8dfd3348c4a5.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_03_n02088364_8477.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: b649c6cc-9479-5485-addd-8dfd3348c4a5</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-e917c9a5-ebce-5e77-b014-a4ffc24c6d3c.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_04_n02108089_849.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: e917c9a5-ebce-5e77-b014-a4ffc24c6d3c</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-a66315f5-af8b-5ee0-8c19-2a12013dabf9">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-a66315f5-af8b-5ee0-8c19-2a12013dabf9.jpg" alt="Query image a66315f5-af8b-5ee0-8c19-2a12013dabf9">
+  <figcaption>Query ID: a66315f5-af8b-5ee0-8c19-2a12013dabf9</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>boxer</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: boxer</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0046s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-a66315f5-af8b-5ee0-8c19-2a12013dabf9.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_01_n02108089_1775.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: a66315f5-af8b-5ee0-8c19-2a12013dabf9</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-bf3ecb46-10de-5ba1-a68f-2ee85ee6e6f0.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_02_n02108089_4730.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: bf3ecb46-10de-5ba1-a68f-2ee85ee6e6f0</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-540ba252-72ab-53be-86ed-684410b69bdc.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_03_n02108089_530.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: 540ba252-72ab-53be-86ed-684410b69bdc</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-e917c9a5-ebce-5e77-b014-a4ffc24c6d3c.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_04_n02108089_849.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: e917c9a5-ebce-5e77-b014-a4ffc24c6d3c</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-101fd26e-51d9-54fb-81c7-f5c031071b3f.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110958-pug/index_01_n02110958_11194.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">pug</div>
+  <div class="small">ID: 101fd26e-51d9-54fb-81c7-f5c031071b3f</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-bf3ecb46-10de-5ba1-a68f-2ee85ee6e6f0">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-bf3ecb46-10de-5ba1-a68f-2ee85ee6e6f0.jpg" alt="Query image bf3ecb46-10de-5ba1-a68f-2ee85ee6e6f0">
+  <figcaption>Query ID: bf3ecb46-10de-5ba1-a68f-2ee85ee6e6f0</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>boxer</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: boxer</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0044s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-bf3ecb46-10de-5ba1-a68f-2ee85ee6e6f0.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_02_n02108089_4730.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: bf3ecb46-10de-5ba1-a68f-2ee85ee6e6f0</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-e917c9a5-ebce-5e77-b014-a4ffc24c6d3c.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_04_n02108089_849.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: e917c9a5-ebce-5e77-b014-a4ffc24c6d3c</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-a66315f5-af8b-5ee0-8c19-2a12013dabf9.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_01_n02108089_1775.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: a66315f5-af8b-5ee0-8c19-2a12013dabf9</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-540ba252-72ab-53be-86ed-684410b69bdc.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_03_n02108089_530.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: 540ba252-72ab-53be-86ed-684410b69bdc</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-be46fbf4-9a5a-54ff-859a-8f6b1376c642.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_02_n02088364_6109.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: be46fbf4-9a5a-54ff-859a-8f6b1376c642</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-540ba252-72ab-53be-86ed-684410b69bdc">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-540ba252-72ab-53be-86ed-684410b69bdc.jpg" alt="Query image 540ba252-72ab-53be-86ed-684410b69bdc">
+  <figcaption>Query ID: 540ba252-72ab-53be-86ed-684410b69bdc</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>boxer</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: boxer</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0045s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-540ba252-72ab-53be-86ed-684410b69bdc.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_03_n02108089_530.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: 540ba252-72ab-53be-86ed-684410b69bdc</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-a66315f5-af8b-5ee0-8c19-2a12013dabf9.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_01_n02108089_1775.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: a66315f5-af8b-5ee0-8c19-2a12013dabf9</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-bf3ecb46-10de-5ba1-a68f-2ee85ee6e6f0.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_02_n02108089_4730.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: bf3ecb46-10de-5ba1-a68f-2ee85ee6e6f0</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-e917c9a5-ebce-5e77-b014-a4ffc24c6d3c.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_04_n02108089_849.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: e917c9a5-ebce-5e77-b014-a4ffc24c6d3c</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-e4edb628-3f98-5093-bd12-a9871868289f.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_04_n02108915_9666.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: e4edb628-3f98-5093-bd12-a9871868289f</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-e917c9a5-ebce-5e77-b014-a4ffc24c6d3c">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-e917c9a5-ebce-5e77-b014-a4ffc24c6d3c.jpg" alt="Query image e917c9a5-ebce-5e77-b014-a4ffc24c6d3c">
+  <figcaption>Query ID: e917c9a5-ebce-5e77-b014-a4ffc24c6d3c</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>boxer</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: boxer</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0037s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-e917c9a5-ebce-5e77-b014-a4ffc24c6d3c.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_04_n02108089_849.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: e917c9a5-ebce-5e77-b014-a4ffc24c6d3c</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-bf3ecb46-10de-5ba1-a68f-2ee85ee6e6f0.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_02_n02108089_4730.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: bf3ecb46-10de-5ba1-a68f-2ee85ee6e6f0</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-a66315f5-af8b-5ee0-8c19-2a12013dabf9.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_01_n02108089_1775.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: a66315f5-af8b-5ee0-8c19-2a12013dabf9</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-540ba252-72ab-53be-86ed-684410b69bdc.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108089-boxer/index_03_n02108089_530.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">boxer</div>
+  <div class="small">ID: 540ba252-72ab-53be-86ed-684410b69bdc</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-6d660002-1afc-5367-9f8a-3fb9aa51cf53.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_04_n02088364_8713.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: 6d660002-1afc-5367-9f8a-3fb9aa51cf53</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-c663f98f-5c46-590b-8a23-03a3823fc107">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/query-c663f98f-5c46-590b-8a23-03a3823fc107.jpg" alt="Query image c663f98f-5c46-590b-8a23-03a3823fc107">
+  <figcaption>Query ID: c663f98f-5c46-590b-8a23-03a3823fc107</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>Pomeranian</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: Pomeranian</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0051s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-c663f98f-5c46-590b-8a23-03a3823fc107.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_01_n02112018_10158.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: c663f98f-5c46-590b-8a23-03a3823fc107</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-efe61acc-2894-5c44-a27b-f9fc8b777692.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_04_n02112018_883.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: efe61acc-2894-5c44-a27b-f9fc8b777692</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-4bf87af2-1b97-5890-9343-66e1fa9ac84f.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_02_n02112018_2614.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: 4bf87af2-1b97-5890-9343-66e1fa9ac84f</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-8453fa7b-e059-57b6-b6ac-b137c3e0b877.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_03_n02112018_5560.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: 8453fa7b-e059-57b6-b6ac-b137c3e0b877</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-c9ffe1d4-9e80-55a2-91c6-3a62083d172d.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_04_n02085620_3875.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: c9ffe1d4-9e80-55a2-91c6-3a62083d172d</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-4bf87af2-1b97-5890-9343-66e1fa9ac84f">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-4bf87af2-1b97-5890-9343-66e1fa9ac84f.jpg" alt="Query image 4bf87af2-1b97-5890-9343-66e1fa9ac84f">
+  <figcaption>Query ID: 4bf87af2-1b97-5890-9343-66e1fa9ac84f</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>Pomeranian</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: Pomeranian</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0045s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-4bf87af2-1b97-5890-9343-66e1fa9ac84f.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_02_n02112018_2614.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: 4bf87af2-1b97-5890-9343-66e1fa9ac84f</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-efe61acc-2894-5c44-a27b-f9fc8b777692.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_04_n02112018_883.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: efe61acc-2894-5c44-a27b-f9fc8b777692</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-c663f98f-5c46-590b-8a23-03a3823fc107.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_01_n02112018_10158.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: c663f98f-5c46-590b-8a23-03a3823fc107</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-8453fa7b-e059-57b6-b6ac-b137c3e0b877.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_03_n02112018_5560.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: 8453fa7b-e059-57b6-b6ac-b137c3e0b877</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-bf8641e0-61f1-5785-9137-6bd51581c629.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_04_n02099601_4651.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">golden retriever</div>
+  <div class="small">ID: bf8641e0-61f1-5785-9137-6bd51581c629</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-8453fa7b-e059-57b6-b6ac-b137c3e0b877">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-8453fa7b-e059-57b6-b6ac-b137c3e0b877.jpg" alt="Query image 8453fa7b-e059-57b6-b6ac-b137c3e0b877">
+  <figcaption>Query ID: 8453fa7b-e059-57b6-b6ac-b137c3e0b877</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>Pomeranian</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: Pomeranian</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0039s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-8453fa7b-e059-57b6-b6ac-b137c3e0b877.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_03_n02112018_5560.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: 8453fa7b-e059-57b6-b6ac-b137c3e0b877</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-efe61acc-2894-5c44-a27b-f9fc8b777692.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_04_n02112018_883.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: efe61acc-2894-5c44-a27b-f9fc8b777692</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-4bf87af2-1b97-5890-9343-66e1fa9ac84f.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_02_n02112018_2614.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: 4bf87af2-1b97-5890-9343-66e1fa9ac84f</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-c663f98f-5c46-590b-8a23-03a3823fc107.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_01_n02112018_10158.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: c663f98f-5c46-590b-8a23-03a3823fc107</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-9219b6fa-cff8-5c5f-b22e-575738110467.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_03_n02085620_2793.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: 9219b6fa-cff8-5c5f-b22e-575738110467</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-efe61acc-2894-5c44-a27b-f9fc8b777692">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-efe61acc-2894-5c44-a27b-f9fc8b777692.jpg" alt="Query image efe61acc-2894-5c44-a27b-f9fc8b777692">
+  <figcaption>Query ID: efe61acc-2894-5c44-a27b-f9fc8b777692</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>Pomeranian</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: Pomeranian</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0041s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-efe61acc-2894-5c44-a27b-f9fc8b777692.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_04_n02112018_883.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: efe61acc-2894-5c44-a27b-f9fc8b777692</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-c663f98f-5c46-590b-8a23-03a3823fc107.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_01_n02112018_10158.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: c663f98f-5c46-590b-8a23-03a3823fc107</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-4bf87af2-1b97-5890-9343-66e1fa9ac84f.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_02_n02112018_2614.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: 4bf87af2-1b97-5890-9343-66e1fa9ac84f</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-8453fa7b-e059-57b6-b6ac-b137c3e0b877.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_03_n02112018_5560.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: 8453fa7b-e059-57b6-b6ac-b137c3e0b877</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-c9ffe1d4-9e80-55a2-91c6-3a62083d172d.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_04_n02085620_3875.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: c9ffe1d4-9e80-55a2-91c6-3a62083d172d</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-94fc25b0-d7ac-5752-be44-be6a372d2f22">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/query-94fc25b0-d7ac-5752-be44-be6a372d2f22.jpg" alt="Query image 94fc25b0-d7ac-5752-be44-be6a372d2f22">
+  <figcaption>Query ID: 94fc25b0-d7ac-5752-be44-be6a372d2f22</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>Border collie</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: Border collie</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0046s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-94fc25b0-d7ac-5752-be44-be6a372d2f22.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_01_n02106166_1975.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Border collie</div>
+  <div class="small">ID: 94fc25b0-d7ac-5752-be44-be6a372d2f22</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-88ce4aaa-c85d-5558-9635-0e473db97b27.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_02_n02106166_3395.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Border collie</div>
+  <div class="small">ID: 88ce4aaa-c85d-5558-9635-0e473db97b27</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-6aafaba5-0dd8-5394-9f8c-c7c02f838b0b.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_04_n02106166_5869.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Border collie</div>
+  <div class="small">ID: 6aafaba5-0dd8-5394-9f8c-c7c02f838b0b</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-9e8dff10-aa05-5b6f-95ee-0e7892e37917.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_03_n02106166_402.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Border collie</div>
+  <div class="small">ID: 9e8dff10-aa05-5b6f-95ee-0e7892e37917</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-b649c6cc-9479-5485-addd-8dfd3348c4a5.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_03_n02088364_8477.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: b649c6cc-9479-5485-addd-8dfd3348c4a5</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-88ce4aaa-c85d-5558-9635-0e473db97b27">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-88ce4aaa-c85d-5558-9635-0e473db97b27.jpg" alt="Query image 88ce4aaa-c85d-5558-9635-0e473db97b27">
+  <figcaption>Query ID: 88ce4aaa-c85d-5558-9635-0e473db97b27</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>Border collie</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: Border collie</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0046s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-88ce4aaa-c85d-5558-9635-0e473db97b27.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_02_n02106166_3395.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Border collie</div>
+  <div class="small">ID: 88ce4aaa-c85d-5558-9635-0e473db97b27</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-6aafaba5-0dd8-5394-9f8c-c7c02f838b0b.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_04_n02106166_5869.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Border collie</div>
+  <div class="small">ID: 6aafaba5-0dd8-5394-9f8c-c7c02f838b0b</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-94fc25b0-d7ac-5752-be44-be6a372d2f22.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_01_n02106166_1975.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Border collie</div>
+  <div class="small">ID: 94fc25b0-d7ac-5752-be44-be6a372d2f22</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-9e8dff10-aa05-5b6f-95ee-0e7892e37917.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_03_n02106166_402.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Border collie</div>
+  <div class="small">ID: 9e8dff10-aa05-5b6f-95ee-0e7892e37917</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-1a72b5cd-9bc4-5c3a-9f9b-949222564989.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_02_n02110185_11445.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Siberian husky</div>
+  <div class="small">ID: 1a72b5cd-9bc4-5c3a-9f9b-949222564989</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-9e8dff10-aa05-5b6f-95ee-0e7892e37917">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-9e8dff10-aa05-5b6f-95ee-0e7892e37917.jpg" alt="Query image 9e8dff10-aa05-5b6f-95ee-0e7892e37917">
+  <figcaption>Query ID: 9e8dff10-aa05-5b6f-95ee-0e7892e37917</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>Border collie</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: Border collie</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0042s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-9e8dff10-aa05-5b6f-95ee-0e7892e37917.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_03_n02106166_402.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Border collie</div>
+  <div class="small">ID: 9e8dff10-aa05-5b6f-95ee-0e7892e37917</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-48f10883-5436-58d7-8227-594e37268c85.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_02_n02106662_16014.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">German shepherd</div>
+  <div class="small">ID: 48f10883-5436-58d7-8227-594e37268c85</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-88ce4aaa-c85d-5558-9635-0e473db97b27.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_02_n02106166_3395.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Border collie</div>
+  <div class="small">ID: 88ce4aaa-c85d-5558-9635-0e473db97b27</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-94fc25b0-d7ac-5752-be44-be6a372d2f22.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_01_n02106166_1975.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Border collie</div>
+  <div class="small">ID: 94fc25b0-d7ac-5752-be44-be6a372d2f22</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-aeac3ef5-684f-5876-9f17-258ea9e0f3cd.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/cats_noise/cat_noise_23_00000638_017.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">cat_noise</span>
+  </div>
+  <div class="small">cat/no breed</div>
+  <div class="small">ID: aeac3ef5-684f-5876-9f17-258ea9e0f3cd</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-6aafaba5-0dd8-5394-9f8c-c7c02f838b0b">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-6aafaba5-0dd8-5394-9f8c-c7c02f838b0b.jpg" alt="Query image 6aafaba5-0dd8-5394-9f8c-c7c02f838b0b">
+  <figcaption>Query ID: 6aafaba5-0dd8-5394-9f8c-c7c02f838b0b</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>Border collie</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: Border collie</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0039s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-6aafaba5-0dd8-5394-9f8c-c7c02f838b0b.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_04_n02106166_5869.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Border collie</div>
+  <div class="small">ID: 6aafaba5-0dd8-5394-9f8c-c7c02f838b0b</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-88ce4aaa-c85d-5558-9635-0e473db97b27.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_02_n02106166_3395.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Border collie</div>
+  <div class="small">ID: 88ce4aaa-c85d-5558-9635-0e473db97b27</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-94fc25b0-d7ac-5752-be44-be6a372d2f22.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_01_n02106166_1975.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Border collie</div>
+  <div class="small">ID: 94fc25b0-d7ac-5752-be44-be6a372d2f22</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-aeac3ef5-684f-5876-9f17-258ea9e0f3cd.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/cats_noise/cat_noise_23_00000638_017.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">cat_noise</span>
+  </div>
+  <div class="small">cat/no breed</div>
+  <div class="small">ID: aeac3ef5-684f-5876-9f17-258ea9e0f3cd</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-9e8dff10-aa05-5b6f-95ee-0e7892e37917.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_03_n02106166_402.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Border collie</div>
+  <div class="small">ID: 9e8dff10-aa05-5b6f-95ee-0e7892e37917</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-c7585a68-82e5-58d1-82d5-ddc0cef9524c">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/query-c7585a68-82e5-58d1-82d5-ddc0cef9524c.jpg" alt="Query image c7585a68-82e5-58d1-82d5-ddc0cef9524c">
+  <figcaption>Query ID: c7585a68-82e5-58d1-82d5-ddc0cef9524c</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>Chihuahua</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: Chihuahua</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0051s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-c7585a68-82e5-58d1-82d5-ddc0cef9524c.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_01_n02085620_14252.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: c7585a68-82e5-58d1-82d5-ddc0cef9524c</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-9219b6fa-cff8-5c5f-b22e-575738110467.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_03_n02085620_2793.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: 9219b6fa-cff8-5c5f-b22e-575738110467</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-c9ffe1d4-9e80-55a2-91c6-3a62083d172d.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_04_n02085620_3875.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: c9ffe1d4-9e80-55a2-91c6-3a62083d172d</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-8453fa7b-e059-57b6-b6ac-b137c3e0b877.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_03_n02112018_5560.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: 8453fa7b-e059-57b6-b6ac-b137c3e0b877</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-fdef16fa-6795-57b8-891f-5d06591a8298.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_02_n02085620_1916.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: fdef16fa-6795-57b8-891f-5d06591a8298</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-fdef16fa-6795-57b8-891f-5d06591a8298">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-fdef16fa-6795-57b8-891f-5d06591a8298.jpg" alt="Query image fdef16fa-6795-57b8-891f-5d06591a8298">
+  <figcaption>Query ID: fdef16fa-6795-57b8-891f-5d06591a8298</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>Chihuahua</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: Chihuahua</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0045s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-fdef16fa-6795-57b8-891f-5d06591a8298.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_02_n02085620_1916.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: fdef16fa-6795-57b8-891f-5d06591a8298</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-c9ffe1d4-9e80-55a2-91c6-3a62083d172d.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_04_n02085620_3875.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: c9ffe1d4-9e80-55a2-91c6-3a62083d172d</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-9219b6fa-cff8-5c5f-b22e-575738110467.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_03_n02085620_2793.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: 9219b6fa-cff8-5c5f-b22e-575738110467</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-94b6fb17-c8f3-57dc-a428-c75ccf78da52.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_01_n02108915_11220.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">French bulldog</div>
+  <div class="small">ID: 94b6fb17-c8f3-57dc-a428-c75ccf78da52</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-c7585a68-82e5-58d1-82d5-ddc0cef9524c.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_01_n02085620_14252.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: c7585a68-82e5-58d1-82d5-ddc0cef9524c</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-9219b6fa-cff8-5c5f-b22e-575738110467">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-9219b6fa-cff8-5c5f-b22e-575738110467.jpg" alt="Query image 9219b6fa-cff8-5c5f-b22e-575738110467">
+  <figcaption>Query ID: 9219b6fa-cff8-5c5f-b22e-575738110467</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>Chihuahua</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: Chihuahua</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0045s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-9219b6fa-cff8-5c5f-b22e-575738110467.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_03_n02085620_2793.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: 9219b6fa-cff8-5c5f-b22e-575738110467</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-c7585a68-82e5-58d1-82d5-ddc0cef9524c.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_01_n02085620_14252.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: c7585a68-82e5-58d1-82d5-ddc0cef9524c</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-dd2a934f-94a6-5fd1-8342-bb20c61d54a3.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02088364-beagle/index_01_n02088364_13236.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">beagle</div>
+  <div class="small">ID: dd2a934f-94a6-5fd1-8342-bb20c61d54a3</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-fdef16fa-6795-57b8-891f-5d06591a8298.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_02_n02085620_1916.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: fdef16fa-6795-57b8-891f-5d06591a8298</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-c9ffe1d4-9e80-55a2-91c6-3a62083d172d.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_04_n02085620_3875.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: c9ffe1d4-9e80-55a2-91c6-3a62083d172d</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-c9ffe1d4-9e80-55a2-91c6-3a62083d172d">
+  <div class="query-layout">
+    <figure>
+  <img src="assets/images/result-c9ffe1d4-9e80-55a2-91c6-3a62083d172d.jpg" alt="Query image c9ffe1d4-9e80-55a2-91c6-3a62083d172d">
+  <figcaption>Query ID: c9ffe1d4-9e80-55a2-91c6-3a62083d172d</figcaption>
+</figure>
+    <div>
+      <div class="query-head">
+        <h2>Chihuahua</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">type: identity</span>
+        <span class="chip">expected: Chihuahua</span>
+        <span class="chip">relevant targets: 1</span>
+        <span class="chip">latency: 0.0042s</span>
+      </div>
+      <div class="small">
+        Expected relation: exact_indexed_image
+      </div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-c9ffe1d4-9e80-55a2-91c6-3a62083d172d.jpg" alt="Retrieved result rank 1">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_04_n02085620_3875.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">correct</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: c9ffe1d4-9e80-55a2-91c6-3a62083d172d</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-fdef16fa-6795-57b8-891f-5d06591a8298.jpg" alt="Retrieved result rank 2">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_02_n02085620_1916.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: fdef16fa-6795-57b8-891f-5d06591a8298</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-c663f98f-5c46-590b-8a23-03a3823fc107.jpg" alt="Retrieved result rank 3">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_01_n02112018_10158.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: c663f98f-5c46-590b-8a23-03a3823fc107</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/result-efe61acc-2894-5c44-a27b-f9fc8b777692.jpg" alt="Retrieved result rank 4">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_04_n02112018_883.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Pomeranian</div>
+  <div class="small">ID: efe61acc-2894-5c44-a27b-f9fc8b777692</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score n/a</span>
+  </div>
+  <figure>
+  <img src="assets/images/query-c7585a68-82e5-58d1-82d5-ddc0cef9524c.jpg" alt="Retrieved result rank 5">
+  <figcaption>data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_01_n02085620_14252.jpg</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not relevant</span>
+    <span class="chip">dog</span>
+  </div>
+  <div class="small">Chihuahua</div>
+  <div class="small">ID: c7585a68-82e5-58d1-82d5-ddc0cef9524c</div>
+</article>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-05-26T18:52:57.114817+00:00",
+  "report_type": "deepeval_dataset_retrieval",
+  "collection": "collection_pfad_b_gemini_embedding_2_szenario_1",
+  "dataset_path": "tests/evals/.dataset.json",
+  "query_backend": "gemini",
+  "include_images": true,
+  "include_reasons": true,
+  "include_tags": [
+    "szenario_1"
+  ],
+  "text_judge_model": "google/gemma-4-31b-it",
+  "multimodal_judge_model": "openai/gpt-5.4-mini",
+  "query_count": 18,
+  "image_count": 16
+}

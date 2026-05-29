@@ -1,0 +1,10 @@
+{
+  "generated_at": "2026-04-28T14:25:17.712114+00:00",
+  "run_id": "collection_pfad_d_gemini_embedding_2_szenario_3_semantic_user_image_scored",
+  "collection": "collection_pfad_d_gemini_embedding_2_szenario_3",
+  "csv_path": "outputs/scenario3_gemini/collection_pfad_d_gemini_embedding_2_szenario_3_semantic_user_image_scored.csv",
+  "query_count": 17,
+  "image_count": 46,
+  "report_type": "scenario3_retrieval",
+  "fairness_note": "Payload metadata is displayed after retrieval only. It is not used for embedding, filtering, reranking, score boosting, or query construction."
+}

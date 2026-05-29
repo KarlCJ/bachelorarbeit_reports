@@ -1,0 +1,10 @@
+{
+  "generated_at": "2026-05-11T20:05:14.646894+00:00",
+  "run_id": "collection_pfad_c_colqwen2_v1_0_merged_szenario_1_text_queries",
+  "collection": "collection_pfad_c_colqwen2_v1_0_merged_szenario_1",
+  "csv_path": "outputs/pdf_pages_colqwen2/collection_pfad_c_colqwen2_v1_0_merged_szenario_1_text_queries.csv",
+  "query_count": 12,
+  "image_count": 12,
+  "report_type": "pdf_page_retrieval",
+  "fairness_note": "Payload metadata is displayed after retrieval only. It is not used for embedding, filtering, reranking, score boosting, or query construction."
+}

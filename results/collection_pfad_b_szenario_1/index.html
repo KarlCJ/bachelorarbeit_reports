@@ -1,0 +1,2373 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DeepEval Retrieval Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f6f2;
+      --panel: #ffffff;
+      --ink: #202124;
+      --muted: #62666d;
+      --line: #dad7ce;
+      --accent: #2f6f73;
+      --good: #1f7a4f;
+      --bad: #a33b30;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 14px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+    header {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 20px;
+    }
+    h1 { margin: 0; font-size: clamp(24px, 3vw, 36px); line-height: 1.1; }
+    h2 { margin: 0; font-size: 17px; }
+    h3 { margin: 0 0 8px; font-size: 14px; }
+    .meta, .small { color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 10px;
+    }
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .metric strong { display: block; margin-top: 3px; font-size: 18px; }
+    .query-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin: 18px 0;
+      padding: 16px;
+      break-inside: avoid;
+    }
+    .query-head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+    .chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 3px 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      align-items: start;
+    }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fbfaf7;
+      min-width: 0;
+    }
+    .results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .result {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      min-width: 0;
+    }
+    figure { margin: 0; }
+    img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: contain;
+      background: #edeae2;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    figcaption { margin-top: 7px; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .reason {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .pass { color: var(--good); }
+    .fail { color: var(--bad); }
+    .warning {
+      border: 1px solid #d6a647;
+      background: #fff8df;
+      color: #5f4510;
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    @media (max-width: 760px) {
+      main { width: min(100vw - 18px, 1180px); padding-top: 16px; }
+      .query-card { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <h1>DeepEval Retrieval Report</h1>
+      <div class="meta">Collection: collection_pfad_b_gemini_embedding_2_szenario_1</div>
+      <div class="meta">Dataset: tests/evals/.dataset.json</div>
+      <div class="meta">Query backend: gemini · Judge mode: multimodal</div>
+      <div class="meta">
+        Text-Judge: google/gemma-4-31b-it ·
+        Multimodal-Judge: openai/gpt-5.4-mini
+      </div>
+      <div class="meta">Dataset-Tags: szenario_1</div>
+    </div>
+    <div class="meta">
+      Die Queries aus dem Dataset wurden tatsächlich gegen Qdrant ausgeführt. Payload-Metadaten
+      werden nur nach dem Retrieval angezeigt und nicht zum Filtern, Reranken oder Boosting benutzt.
+    </div>
+    
+    <div class="summary"><div class="metric">
+  <span>contextual_precision</span><strong>0.7713</strong>
+</div><div class="metric">
+  <span>contextual_recall</span><strong>0.8074</strong>
+</div><div class="metric">
+  <span>contextual_relevancy</span><strong>0.2523</strong>
+</div></div>
+  </header>
+  <section class="query-card" id="query-s1_qws_spezifikation_prc_toleranz">
+  <div class="query-head">
+    <div>
+      <h2>s1_qws_spezifikation_prc_toleranz</h2>
+      <div class="meta">
+        Typ: text ·
+        Retrieval-Latenz: 0.0092s
+      </div>
+    </div>
+    <div class="chips"><span class="chip">szenario_1</span>
+<span class="chip">technical_handbook</span>
+<span class="chip">table</span></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>Query</h3>
+      <p>Welche Synthese-Frequenz muss der QWS-3000 einhalten, welcher Toleranzbereich ist zulässig und an welcher Komponente wird dieser Wert gemessen?</p>
+      
+    </div>
+    <div class="panel">
+      <h3>Ground Truth</h3>
+      <p>| Parameter | Einheit | Nennwert | Toleranzbereich | Anmerkungen zur Messung |
+|---|---|---:|---:|---|
+| Synthese-Frequenz | GHz | 15.75 | ± 0.05 | Gemessen am&lt;br&gt;Primär-Resonator (PRC) |</p>
+      <div class="grid"></div>
+    </div>
+    <div class="panel">
+      <h3>DeepEval Scores</h3>
+      <div class="reason">
+</div>
+      <div class="metric">
+  <span>contextual_precision</span>
+  <strong class="pass">0.2000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.20 because the only relevant node in the retrieval contexts is ranked fifth, meaning it follows four irrelevant nodes. Specifically, the first node only provides &#x27;general information&#x27;, the second node is &#x27;merely a section header&#x27;, the third node discusses &#x27;maintenance plan and MTBF&#x27;, and the fourth node describes &#x27;purpose of the documentation&#x27;, all of which should be ranked lower than the fifth node which contains the &#x27;exact table required for the output&#x27;.</div>
+</div>
+<div class="metric">
+  <span>contextual_recall</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because all information in the expected output, including the table headers and the data row, is perfectly captured in node(s) in retrieval context 5. Great job!</div>
+</div>
+<div class="metric">
+  <span>contextual_relevancy</span>
+  <strong class="pass">0.0833</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.08 because the vast majority of the context is irrelevant, containing general descriptions like &#x27;Der QWS-3000 repräsentiert den Gipfel der Nanomaterial-Fasertechnologie&#x27; and operational guidelines, despite one highly relevant statement specifying that &#x27;Die Synthese-Frequenz hat einen Nennwert von 15.75 GHz, einen Toleranzbereich von ± 0.05 GHz und wird am Primär-Resonator (PRC) gemessen&#x27;.</div>
+</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 14px;">Retrieved Top-k</h3>
+  <div class="results"><article class="result">
+  <h3>Rang 1 · Score 0.73679</h3>
+  <div class="small">ID: 31eed9e9-6458-5dc7-a9e7-7627d15058bc</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Der QWS3000 repräsentiert den Gipfel der Nanomaterial-Fasertechnologie. Er ermöglicht die präzise, atomar kontrollierte Synthese von Graphen-Mesh-Strukturen und Kohlenstoff-Nanoröhrchen mit beispielloser Konsistenz. Die Einhaltung der unten aufgeführten Spezifikationen ist essentiell für die Garantieleistung und die Betriebssicherheit.</div>
+</article>
+<article class="result">
+  <h3>Rang 2 · Score 0.725175</h3>
+  <div class="small">ID: d02364db-356d-5137-a694-fbd6db7cbc31</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;section_header&quot;
+}</pre>
+  <div class="reason">Quantum Weave Synthesizer QWS3000 Bedienungsanleitung</div>
+</article>
+<article class="result">
+  <h3>Rang 3 · Score 0.717995</h3>
+  <div class="small">ID: 14c54014-f026-54e8-bf63-8588652d8301</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Die Einhaltung des folgenden Wartungsplans ist obligatorisch, um die langfristige Zuverlässigkeit des QWS3000 zu gewährleisten und die MTBF Mean Time Between Failures) zu maximieren.</div>
+</article>
+<article class="result">
+  <h3>Rang 4 · Score 0.715901</h3>
+  <div class="small">ID: b2342fc2-04b8-5490-a627-4b6450eaa165</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Die vorliegende Dokumentation dient als verbindliche Referenz für die Inbetriebnahme, Kalibrierung, Wartung und Fehlerbehebung des Quantum Weave Synthesizers QWS3000. Alle Bediener sind verpflichtet, die Sicherheitsbestimmungen und Betriebsanweisungen strikt einzuhalten.</div>
+</article>
+<article class="result">
+  <h3>Rang 5 · Score 0.69814</h3>
+  <div class="small">ID: 9e12e739-fcd5-5d26-bb3d-20877308ce1e</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason">| Parameter                   | Einheit   | Nennwert   | Toleranzbereich   | Anmerkungen zur Messung                |
+|-----------------------------|-----------|------------|-------------------|----------------------------------------|
+| Synthese-Frequenz           | GHz       | 15.75      | ± 0.05            | Gemessen am Primär-Resonator PRC     |
+| Vakuum-Integrität           | mbar      | 1.0 x 10⁻⁹ | 0.8 - 1.2 x 10⁻⁹  | Nach 48-stündigem Betrieb stabilisiert |
+| Energieaufnahme Maximal)   | kW        | 85.0       | ± 2.5             | Während des &quot;Weave&quot;Zyklus Phase 3   |
+| Substrat-Temperatur         | K         | 298.15     | ± 0.1             | Gemessen durch den Kryo-Sensor T22    |
+| Material-Reinheit Ausgabe) | %         | 99.999     | &gt; 99.995          | Nach spektroskopischer Analyse SA40 |</div>
+</article></div>
+</section>
+<section class="query-card" id="query-s1_qws_architektur_komponenten_abfolge">
+  <div class="query-head">
+    <div>
+      <h2>s1_qws_architektur_komponenten_abfolge</h2>
+      <div class="meta">
+        Typ: text ·
+        Retrieval-Latenz: 0.0055s
+      </div>
+    </div>
+    <div class="chips"><span class="chip">szenario_1</span>
+<span class="chip">technical_handbook</span>
+<span class="chip">text</span></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>Query</h3>
+      <p>Aus welchen fünf Hauptphasen besteht die modulare Architektur des QWS-3000 und welche Rolle übernehmen PRC, IQM, Kryo-Sensor und NES-VSR im System?</p>
+      
+    </div>
+    <div class="panel">
+      <h3>Ground Truth</h3>
+      <p>Fünf Hauptphasen: Ionen-Injektionseinheit (IIU), Vakuum-Synthese-Reaktor (VSR), Quantum-Resonanzkammer (QRC), Temperaturkontroll-Array (TCA) und Materialextraktionseinheit (MEU). 
+Primär-Resonator-Controller (PRC): Regelt die Synthesefrequenz und überwacht die Energiezufuhr zur QRC.
+Kryo-Sensor T-22: Ein hochpräziser Temperatursensor, kritisch für dieStabilität der Graphen-Synthese.
+Ionen-Quell-Matrix (IQM): Erzeugt und beschleunigt die Vorläufer-Ionen vor deren Eintritt in den VSR.
+Not-Aus-Schleife (NES-VSR): Eine redundante Sicherheitsschleife, die bei Überdruck oder Temperaturspitzen den VSR sofort entleert.</p>
+      <div class="grid"></div>
+    </div>
+    <div class="panel">
+      <h3>DeepEval Scores</h3>
+      <div class="reason">
+</div>
+      <div class="metric">
+  <span>contextual_precision</span>
+  <strong class="pass">0.7000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.70 because while the first node in the retrieval contexts is highly relevant as it &quot;provides the exact list of the five main phases&quot;, the second, third, and fourth nodes in the retrieval contexts are irrelevant since they are merely a &quot;section header&quot;, describe a &quot;general purpose&quot;, and discuss a &quot;calibration process&quot; respectively, and thus should be ranked lower than the fifth node in the retrieval contexts which provides specific information about the &quot;Quantum-Resonanzkammer (QRC)&quot;.</div>
+</div>
+<div class="metric">
+  <span>contextual_recall</span>
+  <strong class="pass">0.2000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.20 because only sentence 1 is supported by node(s) in retrieval context (node 1), while sentences 2, 3, 4, and 5 are not mentioned in any of the provided nodes.</div>
+</div>
+<div class="metric">
+  <span>contextual_relevancy</span>
+  <strong class="pass">0.2222</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.22 because while the context identifies that the QWS-3000 &#x27;basiert auf einer modularen Fünf-Phasen-Architektur&#x27; and lists the phases, it fails to address the second part of the input; specifically, it &#x27;does not mention&#x27; the roles of &#x27;PRC, IQM, Kryo-Sensor und NES-VSR&#x27;.</div>
+</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 14px;">Retrieved Top-k</h3>
+  <div class="results"><article class="result">
+  <h3>Rang 1 · Score 0.798735</h3>
+  <div class="small">ID: 2520c3ea-42c7-53bc-8667-3da3605da7b7</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 2,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Der QWS3000 basiert auf einer modularen Fünf-Phasen-Architektur, die eine sequentielle, hochkontrollierte Materialbearbeitung gewährleistet. Diese Phasen umfassen die Ionen-Injektionseinheit IIU , den Vakuum-Synthese-Reaktor VSR , die Quantum-Resonanzkammer QRC , das Temperaturkontroll-Array TCA und die Materialextraktionseinheit MEU .</div>
+</article>
+<article class="result">
+  <h3>Rang 2 · Score 0.679942</h3>
+  <div class="small">ID: d02364db-356d-5137-a694-fbd6db7cbc31</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;section_header&quot;
+}</pre>
+  <div class="reason">Quantum Weave Synthesizer QWS3000 Bedienungsanleitung</div>
+</article>
+<article class="result">
+  <h3>Rang 3 · Score 0.661666</h3>
+  <div class="small">ID: 31eed9e9-6458-5dc7-a9e7-7627d15058bc</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Der QWS3000 repräsentiert den Gipfel der Nanomaterial-Fasertechnologie. Er ermöglicht die präzise, atomar kontrollierte Synthese von Graphen-Mesh-Strukturen und Kohlenstoff-Nanoröhrchen mit beispielloser Konsistenz. Die Einhaltung der unten aufgeführten Spezifikationen ist essentiell für die Garantieleistung und die Betriebssicherheit.</div>
+</article>
+<article class="result">
+  <h3>Rang 4 · Score 0.654114</h3>
+  <div class="small">ID: 28021e78-10cb-5926-8a56-372c0b318caf</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 3,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Die Kalibrierung des QWS3000 ist ein kritischer, halbautomatischer Prozess, der alle 50 Betriebsstunden oder nach jedem Substratwechsel durchgeführt werden muss. Die korrekte Kalibrierung garantiert die geforderte Nanomaterial-Reinheit und Stabilität.</div>
+</article>
+<article class="result">
+  <h3>Rang 5 · Score 0.652804</h3>
+  <div class="small">ID: 3f013e18-c1f2-5691-b127-e8decc97fd4f</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 3,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Quantum-Resonanzkammer QRC induziert die notwendigen Schwingungen, um die Kohlenstoffatome in die gewünschte Gitterstruktur zu zwingen. Eine detaillierte Übersicht der Verbindungen und Datenpfade ist in der File Architektur-Spezifikation 1.2 dokumentiert.</div>
+</article></div>
+</section>
+<section class="query-card" id="query-s1_qws_flowchart_vakuum_resonanz_entscheidung">
+  <div class="query-head">
+    <div>
+      <h2>s1_qws_flowchart_vakuum_resonanz_entscheidung</h2>
+      <div class="meta">
+        Typ: text ·
+        Retrieval-Latenz: 0.0203s
+      </div>
+    </div>
+    <div class="chips"><span class="chip">szenario_1</span>
+<span class="chip">technical_handbook</span>
+<span class="chip">visual</span></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>Query</h3>
+      <p>Wie kalibriere ich den QWS, wenn der VSR-Druck unter 10⁻⁹ mbar liegt, und welche Schritte folgen bis zur Prüfung der Resonanzspitze?</p>
+      
+    </div>
+    <div class="panel">
+      <h3>Ground Truth</h3>
+      <p>IQM Bias Spannung auf 5.0 kV setzen, Resonanz Frequenz Sweep auf 15.70 bis 15.80 GHz ausführen, Resonanzspitze bei 15.75 GHz ± 0.01 GHz prüfen</p>
+      <div class="grid"><figure>
+  <img src="assets/images/s1-qws-flowchart-vakuum-resonanz-entscheidung-reference-1.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_004_picture_003.png</figcaption>
+</figure></div>
+    </div>
+    <div class="panel">
+      <h3>DeepEval Scores</h3>
+      <div class="reason">
+</div>
+      <div class="metric">
+  <span>contextual_precision</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because all retrieved nodes in the retrieval context are perfectly ranked, with highly relevant information appearing first!</div>
+</div>
+<div class="metric">
+  <span>contextual_recall</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because node 3 in retrieval context matches sentence 1 exactly (&#x27;IQM Bias Spannung auf 5.0 kV setzen&#x27;), and nodes 1 and 4 in retrieval context support image 1 by covering the VSR pressure check and the resonance/PRC calibration flow, with no missing or conflicting content.</div>
+</div>
+<div class="metric">
+  <span>contextual_relevancy</span>
+  <strong class="pass">0.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.00 because the context fails to provide the requested technical instructions, as it &quot;only contains the condition &#x27;VSRDruck&lt;10-9mbar?&#x27; and does not provide instructions on how to calibrate the QWS or the subsequent steps until the resonance peak check.&quot;</div>
+</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 14px;">Retrieved Top-k</h3>
+  <div class="results"><article class="result">
+  <h3>Rang 1 · Score 0.740829</h3>
+  <div class="small">ID: 52a8051c-dd1d-5d97-8e62-85ac67679f88</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">VSRDruck&lt;10-9mbar?</div>
+</article>
+<article class="result">
+  <h3>Rang 2 · Score 0.730587</h3>
+  <div class="small">ID: 28021e78-10cb-5926-8a56-372c0b318caf</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 3,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Die Kalibrierung des QWS3000 ist ein kritischer, halbautomatischer Prozess, der alle 50 Betriebsstunden oder nach jedem Substratwechsel durchgeführt werden muss. Die korrekte Kalibrierung garantiert die geforderte Nanomaterial-Reinheit und Stabilität.</div>
+</article>
+<article class="result">
+  <h3>Rang 3 · Score 0.665054</h3>
+  <div class="small">ID: 0898a167-0a46-5b36-a0e8-c974e7ab7fbc</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">IQM Bias Spannung auf 5.0 kV setzen</div>
+</article>
+<article class="result">
+  <h3>Rang 4 · Score 0.651231</h3>
+  <div class="small">ID: 05918746-9ed1-53c5-9e6e-5123979ea130</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 5,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason">| Warnung   | Fehlercode   | Beschreibung                                                                                 | Lösungsansatz                                                                                                  |
+|-----------|--------------|----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+|           | E101        | Resonanzfrequenz Drift: Die PRCAusgabe liegt außerhalb des Toleranzbereichs von ± 0.05 GHz. | Führen Sie eine vollständige Systemkalibrierung (siehe Seite 3 durch. Prüfen Sie die Erdung des PRCGehäuses. |</div>
+</article>
+<article class="result">
+  <h3>Rang 5 · Score 0.650757</h3>
+  <div class="small">ID: b2342fc2-04b8-5490-a627-4b6450eaa165</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Die vorliegende Dokumentation dient als verbindliche Referenz für die Inbetriebnahme, Kalibrierung, Wartung und Fehlerbehebung des Quantum Weave Synthesizers QWS3000. Alle Bediener sind verpflichtet, die Sicherheitsbestimmungen und Betriebsanweisungen strikt einzuhalten.</div>
+</article></div>
+</section>
+<section class="query-card" id="query-s1_visual_qws_spezifikation_prc_toleranz">
+  <div class="query-head">
+    <div>
+      <h2>s1_visual_qws_spezifikation_prc_toleranz</h2>
+      <div class="meta">
+        Typ: image_text ·
+        Retrieval-Latenz: 0.1062s
+      </div>
+    </div>
+    <div class="chips"><span class="chip">szenario_1</span>
+<span class="chip">technical_handbook</span>
+<span class="chip">table</span></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>Query</h3>
+      <p>Beantworte die Frage auf dem Bild</p>
+      <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-query.jpg" alt="">
+  <figcaption>Query-Bild</figcaption>
+</figure>
+    </div>
+    <div class="panel">
+      <h3>Ground Truth</h3>
+      <p>| Parameter | Einheit | Nennwert | Toleranzbereich | Anmerkungen zur Messung |
+|---|---|---:|---:|---|
+| Synthese-Frequenz | GHz | 15.75 | ± 0.05 | Gemessen am&lt;br&gt;Primär-Resonator (PRC) |</p>
+      <div class="grid"></div>
+    </div>
+    <div class="panel">
+      <h3>DeepEval Scores</h3>
+      <div class="reason">
+</div>
+      <div class="metric">
+  <span>contextual_precision</span>
+  <strong class="pass">0.3667</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.37 because the first two nodes in retrieval context are irrelevant nodes that mention a tolerance warning and unrelated error codes, so they should be ranked lower than the relevant nodes. The relevant information appears later: node 3 directly says &quot;Synthese-Frequenz | GHz | 15.75 | ± 0.05 | Gemessen am Primär-Resonator (PRC)&quot; and node 5 confirms the measurement location with &quot;Primär-Resonator (PRC)&quot;. The score is not higher because relevant nodes are not at the top of the ranking, even though the needed answer is present and supported by the quoted evidence.</div>
+</div>
+<div class="metric">
+  <span>contextual_recall</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because all information in the expected output is perfectly captured in node(s) in retrieval context (Node 3). Great job!</div>
+</div>
+<div class="metric">
+  <span>contextual_relevancy</span>
+  <strong class="pass">0.4667</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.47 because the context is only partially relevant: it does mention the needed parameter, since &quot;Die Tabelle enthält den Parameter \&quot;Synthese-Frequenz\&quot; ... Nennwert 15.75 ... Toleranzbereich ± 0.05; ... \&quot;Gemessen am Primär-Resonator (PRC)\&quot;.&quot; However, much of the retrieval context is off-topic for the question about the QWS-3000, focusing instead on unrelated items like &quot;Fehlercode E-101&quot; and other technical parameters, so it does not fully answer the input.</div>
+</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 14px;">Retrieved Top-k</h3>
+  <div class="results"><article class="result">
+  <h3>Rang 1 · Score 0.678707</h3>
+  <div class="small">ID: debbcf40-5efb-5f76-8a72-90e778c9083d</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-1.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_005_table_018.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 5,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 2 · Score 0.652432</h3>
+  <div class="small">ID: 7c5a9804-b64a-52e0-88c6-17d510987c00</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-2.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_007_table_020.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 7,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 3 · Score 0.650962</h3>
+  <div class="small">ID: e519dcad-09d3-54fe-b673-721b4495b07e</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-3.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_001_table_015.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 4 · Score 0.643795</h3>
+  <div class="small">ID: 7873058e-4fed-5679-98cd-51a75e31c146</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-4.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_002_table_016.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 2,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 5 · Score 0.638484</h3>
+  <div class="small">ID: 46328841-40f3-5afa-b8e6-13c45d4b167f</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-5.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_005_table_017.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 5,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article></div>
+</section>
+<section class="query-card" id="query-s1_visual_qws_architektur_komponenten_abfolge">
+  <div class="query-head">
+    <div>
+      <h2>s1_visual_qws_architektur_komponenten_abfolge</h2>
+      <div class="meta">
+        Typ: image_text ·
+        Retrieval-Latenz: 0.1116s
+      </div>
+    </div>
+    <div class="chips"><span class="chip">szenario_1</span>
+<span class="chip">technical_handbook</span>
+<span class="chip">text</span></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>Query</h3>
+      <p>Beantworte die Frage auf dem Bild</p>
+      <figure>
+  <img src="assets/images/s1-visual-qws-architektur-komponenten-abfolge-query.jpg" alt="">
+  <figcaption>Query-Bild</figcaption>
+</figure>
+    </div>
+    <div class="panel">
+      <h3>Ground Truth</h3>
+      <p>Fünf Hauptphasen: Ionen-Injektionseinheit (IIU), Vakuum-Synthese-Reaktor (VSR), Quantum-Resonanzkammer (QRC), Temperaturkontroll-Array (TCA) und Materialextraktionseinheit (MEU). 
+Primär-Resonator-Controller (PRC): Regelt die Synthesefrequenz und überwacht die Energiezufuhr zur QRC.
+Kryo-Sensor T-22: Ein hochpräziser Temperatursensor, kritisch für dieStabilität der Graphen-Synthese.
+Ionen-Quell-Matrix (IQM): Erzeugt und beschleunigt die Vorläufer-Ionen vor deren Eintritt in den VSR.
+Not-Aus-Schleife (NES-VSR): Eine redundante Sicherheitsschleife, die bei Überdruck oder Temperaturspitzen den VSR sofort entleert.</p>
+      <div class="grid"></div>
+    </div>
+    <div class="panel">
+      <h3>DeepEval Scores</h3>
+      <div class="reason">
+</div>
+      <div class="metric">
+  <span>contextual_precision</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because the retrieval contexts are perfectly ordered: the first node in retrieval context already provides relevant evidence, and every later node in retrieval context also stays relevant to the question. There are no irrelevant nodes pushed above useful ones, so nothing needs to be ranked lower. The quoted details like &quot;Gemessen am Primär-Resonator (PRC)&quot;, &quot;Gemessen durch den Kryo-Sensor T-22&quot;, and &quot;Kryo-Sensor T-22&quot; align well with the asked system roles, which is why the score is at its current maximum.</div>
+</div>
+<div class="metric">
+  <span>contextual_recall</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because all components of the expected output are perfectly supported by the retrieval context: the five phases are confirmed across nodes 1, 4, and 5; the PRC&#x27;s role is detailed in nodes 2 and 3; the Kryo-Sensor T-22 is validated in nodes 2 and 4; the IQM&#x27;s function is found in nodes 4 and 5; and the VSR safety context is supported by nodes 1 and 4. Great job!</div>
+</div>
+<div class="metric">
+  <span>contextual_relevancy</span>
+  <strong class="pass">0.1538</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.15 because the context is mostly about unrelated faults and measurements like &#x27;Fehler-/Warnungstabelle mit &quot;E-803&quot;, &quot;E-921&quot; und &quot;E-999&quot;&#x27; and &#x27;Messparameter wie &quot;Dimensionsstabilität (Z-Achse)&quot;&#x27;, while the only partially relevant pieces merely mention &#x27;Ionenflussdichte (IQM)&#x27; and &#x27;VSR-Magnetfeld-Homogenität&#x27;; these do not explain the &#x27;fünf Hauptphasen&#x27; or the roles of PRC, IQM, Kryo-Sensor und NES-VSR.</div>
+</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 14px;">Retrieved Top-k</h3>
+  <div class="results"><article class="result">
+  <h3>Rang 1 · Score 0.68862</h3>
+  <div class="small">ID: 7c5a9804-b64a-52e0-88c6-17d510987c00</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-2.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_007_table_020.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 7,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 2 · Score 0.680674</h3>
+  <div class="small">ID: e519dcad-09d3-54fe-b673-721b4495b07e</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-3.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_001_table_015.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 3 · Score 0.678076</h3>
+  <div class="small">ID: debbcf40-5efb-5f76-8a72-90e778c9083d</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-1.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_005_table_018.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 5,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 4 · Score 0.67602</h3>
+  <div class="small">ID: f5a57a76-d68f-5b50-b440-555274b5709d</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-architektur-komponenten-abfolge-result-4.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_006_table_019.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 6,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 5 · Score 0.673923</h3>
+  <div class="small">ID: 7873058e-4fed-5679-98cd-51a75e31c146</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-4.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_002_table_016.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 2,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article></div>
+</section>
+<section class="query-card" id="query-s1_visual_qws_flowchart_vakuum_resonanz_entscheidung">
+  <div class="query-head">
+    <div>
+      <h2>s1_visual_qws_flowchart_vakuum_resonanz_entscheidung</h2>
+      <div class="meta">
+        Typ: image_text ·
+        Retrieval-Latenz: 0.1054s
+      </div>
+    </div>
+    <div class="chips"><span class="chip">szenario_1</span>
+<span class="chip">technical_handbook</span>
+<span class="chip">visual</span></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>Query</h3>
+      <p>Beantworte die Frage auf dem Bild</p>
+      <figure>
+  <img src="assets/images/s1-visual-qws-flowchart-vakuum-resonanz-entscheidung-query.jpg" alt="">
+  <figcaption>Query-Bild</figcaption>
+</figure>
+    </div>
+    <div class="panel">
+      <h3>Ground Truth</h3>
+      <p>IQM Bias Spannung auf 5.0 kV setzen, Resonanz Frequenz Sweep auf 15.70 bis 15.80 GHz ausführen, Resonanzspitze bei 15.75 GHz ± 0.01 GHz prüfen</p>
+      <div class="grid"><figure>
+  <img src="assets/images/s1-qws-flowchart-vakuum-resonanz-entscheidung-reference-1.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_004_picture_003.png</figcaption>
+</figure></div>
+    </div>
+    <div class="panel">
+      <h3>DeepEval Scores</h3>
+      <div class="reason">
+</div>
+      <div class="metric">
+  <span>contextual_precision</span>
+  <strong class="pass">0.9167</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.92 because the relevant nodes in retrieval context are ranked mostly ahead of the irrelevant ones: nodes 1, 2, and 4 appear before node 3, and node 1 directly gives the needed steps with &#x27;IQM Bias Spannung auf 5.0 kV setzen&#x27;, &#x27;Resonanz Frequenz Sweep 15.70 bis 15.80 GHz&#x27;, and &#x27;Resonanz Spitze bei 15.75 GHz ± 0.01 GHz&#x27;. Node 2 also supports the calibration logic by noting &#x27;Resonanzfrequenz Drift: Die PRC-Ausgabe liegt außerhalb des Toleranzbereichs von ± 0.05 GHz.&#x27;, and node 4 provides the pressure condition &#x27;E-312 Vakuum-Integrität Alarm: Der VSR-Druck ist &gt; 5.0 × 10^-9 mbar.&#x27; However, it is not higher because an irrelevant node appears at rank 3 before node 4, and node 5 is also irrelevant at the end, so some non-relevant nodes are not placed lower than all relevant nodes.</div>
+</div>
+<div class="metric">
+  <span>contextual_recall</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because node(s) in retrieval context 1 fully support sentence 1 and the referenced image: the exact instructions &quot;IQM Bias Spannung auf 5.0 kV setzen&quot;, &quot;Resonanz Frequenz Sweep auf 15.70 bis 15.80 GHz ausführen&quot;, and &quot;Resonanzspitze bei 15.75 GHz ± 0.01 GHz prüfen&quot; all appear in node 1, and the figure also matches the referenced image.</div>
+</div>
+<div class="metric">
+  <span>contextual_relevancy</span>
+  <strong class="pass">0.4167</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.42 because most retrieved items are off-topic, e.g. they mention &quot;S-Mag Strom-Ripple&quot;, &quot;Übertemperatur TCA&quot;, and &quot;System Initialisierungsfehler&quot;, which do not answer the image question. However, a few statements are directly relevant, such as &quot;The flowchart starts with a calibration request and checks whether the VSR pressure is below 10^-9 mbar&quot; and &quot;The flowchart asks whether the resonance peak is between 15.75 GHz ± 0.01 GHz,&quot; so the context is only partially useful.</div>
+</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 14px;">Retrieved Top-k</h3>
+  <div class="results"><article class="result">
+  <h3>Rang 1 · Score 0.742966</h3>
+  <div class="small">ID: 37bc758b-9cfb-5d9b-bac6-37dcacc2c2c8</div>
+  <figure>
+  <img src="assets/images/s1-qws-flowchart-vakuum-resonanz-entscheidung-reference-1.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_004_picture_003.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;picture&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 2 · Score 0.693363</h3>
+  <div class="small">ID: debbcf40-5efb-5f76-8a72-90e778c9083d</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-1.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_005_table_018.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 5,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 3 · Score 0.677497</h3>
+  <div class="small">ID: 7c5a9804-b64a-52e0-88c6-17d510987c00</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-2.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_007_table_020.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 7,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 4 · Score 0.674981</h3>
+  <div class="small">ID: f5a57a76-d68f-5b50-b440-555274b5709d</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-architektur-komponenten-abfolge-result-4.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_006_table_019.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 6,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 5 · Score 0.66999</h3>
+  <div class="small">ID: 7873058e-4fed-5679-98cd-51a75e31c146</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-4.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_002_table_016.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 2,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article></div>
+</section>
+<section class="query-card" id="query-s1_noised_visual_qws_spezifikation_prc_toleranz">
+  <div class="query-head">
+    <div>
+      <h2>s1_noised_visual_qws_spezifikation_prc_toleranz</h2>
+      <div class="meta">
+        Typ: image_text ·
+        Retrieval-Latenz: 0.0143s
+      </div>
+    </div>
+    <div class="chips"><span class="chip">szenario_1</span>
+<span class="chip">technical_handbook</span>
+<span class="chip">table</span></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>Query</h3>
+      <p>Beantworte die Frage auf dem Bild</p>
+      <figure>
+  <img src="assets/images/s1-noised-visual-qws-spezifikation-prc-toleranz-query.jpg" alt="">
+  <figcaption>Query-Bild</figcaption>
+</figure>
+    </div>
+    <div class="panel">
+      <h3>Ground Truth</h3>
+      <p>| Parameter | Einheit | Nennwert | Toleranzbereich | Anmerkungen zur Messung |
+|---|---|---:|---:|---|
+| Synthese-Frequenz | GHz | 15.75 | ± 0.05 | Gemessen am&lt;br&gt;Primär-Resonator (PRC) |</p>
+      <div class="grid"></div>
+    </div>
+    <div class="panel">
+      <h3>DeepEval Scores</h3>
+      <div class="reason">
+</div>
+      <div class="metric">
+  <span>contextual_precision</span>
+  <strong class="pass">0.3333</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.33 because the relevant information appears only at node 3 in the retrieval context, which says &quot;Synthese-Frequenz | GHz | 15.75 | ± 0.05 | Gemessen am Primär-Resonator (PRC)&quot;. However, nodes 1 and 2 rank above it even though they are irrelevant: node 1 only mentions &quot;Resonanzfrequenz Drift&quot; and a tolerance of &quot;± 0.05 GHz&quot; without the requested synthesis frequency, while node 2 lists unrelated warnings like &quot;S-Mag Strom-Ripple&quot; and &quot;QRC-Kopplung verloren&quot;. Since these irrelevant nodes are ranked before the useful node 3, the precision is not higher; it is only moderate because the correct answer is present, but not near the top.</div>
+</div>
+<div class="metric">
+  <span>contextual_recall</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because all information in the expected output is perfectly captured in node(s) in retrieval context (Node 3), including the synthesis frequency parameters and measurement notes!</div>
+</div>
+<div class="metric">
+  <span>contextual_relevancy</span>
+  <strong class="pass">0.5714</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.57 because the retrieval context is only partially aligned: it directly states that “Die Synthese-Frequenz des QWS-3000 beträgt 15.75 GHz mit einem Toleranzbereich von ± 0.05,” which matches the question, but much of the context is still off-topic, e.g. “Die Aussage &#x27;Die Vakuum-Integrität beträgt 1.0 x 10^-9 mbar&#x27; ist dafür irrelevant” and the table mentions unrelated items like “Data Throughput (MEU)” and “Energieaufnahme (Maximal) beträgt 85.0 kW.”</div>
+</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 14px;">Retrieved Top-k</h3>
+  <div class="results"><article class="result">
+  <h3>Rang 1 · Score 0.691741</h3>
+  <div class="small">ID: debbcf40-5efb-5f76-8a72-90e778c9083d</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-1.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_005_table_018.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 5,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 2 · Score 0.678906</h3>
+  <div class="small">ID: 7c5a9804-b64a-52e0-88c6-17d510987c00</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-2.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_007_table_020.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 7,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 3 · Score 0.673712</h3>
+  <div class="small">ID: e519dcad-09d3-54fe-b673-721b4495b07e</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-3.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_001_table_015.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 4 · Score 0.666836</h3>
+  <div class="small">ID: 7873058e-4fed-5679-98cd-51a75e31c146</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-4.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_002_table_016.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 2,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 5 · Score 0.653591</h3>
+  <div class="small">ID: 46328841-40f3-5afa-b8e6-13c45d4b167f</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-5.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_005_table_017.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 5,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article></div>
+</section>
+<section class="query-card" id="query-s1_noised_visual_qws_architektur_komponenten_abfolge">
+  <div class="query-head">
+    <div>
+      <h2>s1_noised_visual_qws_architektur_komponenten_abfolge</h2>
+      <div class="meta">
+        Typ: image_text ·
+        Retrieval-Latenz: 0.0072s
+      </div>
+    </div>
+    <div class="chips"><span class="chip">szenario_1</span>
+<span class="chip">technical_handbook</span>
+<span class="chip">text</span></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>Query</h3>
+      <p>Beantworte die Frage auf dem Bild</p>
+      <figure>
+  <img src="assets/images/s1-noised-visual-qws-architektur-komponenten-abfolge-query.jpg" alt="">
+  <figcaption>Query-Bild</figcaption>
+</figure>
+    </div>
+    <div class="panel">
+      <h3>Ground Truth</h3>
+      <p>Fünf Hauptphasen: Ionen-Injektionseinheit (IIU), Vakuum-Synthese-Reaktor (VSR), Quantum-Resonanzkammer (QRC), Temperaturkontroll-Array (TCA) und Materialextraktionseinheit (MEU). 
+Primär-Resonator-Controller (PRC): Regelt die Synthesefrequenz und überwacht die Energiezufuhr zur QRC.
+Kryo-Sensor T-22: Ein hochpräziser Temperatursensor, kritisch für dieStabilität der Graphen-Synthese.
+Ionen-Quell-Matrix (IQM): Erzeugt und beschleunigt die Vorläufer-Ionen vor deren Eintritt in den VSR.
+Not-Aus-Schleife (NES-VSR): Eine redundante Sicherheitsschleife, die bei Überdruck oder Temperaturspitzen den VSR sofort entleert.</p>
+      <div class="grid"></div>
+    </div>
+    <div class="panel">
+      <h3>DeepEval Scores</h3>
+      <div class="reason">
+</div>
+      <div class="metric">
+  <span>contextual_precision</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because all nodes in retrieval context are relevant and already ranked well, so there are no irrelevant nodes that should be lower. For example, node 1 mentions &quot;QRC-Kopplung verloren&quot; and &quot;Kritischer Systemfehler&quot;, node 2 lists &quot;Ionenflussdichte (IQM)&quot; and &quot;VSR-Magnetfeld-Homogenität&quot;, and node 3 refers to &quot;PRC&quot; with &quot;Resonanzfrequenz Drift&quot;. Nodes 4 and 5 also directly include key architecture terms like &quot;Primär-Resonator (PRC)&quot;, &quot;Kryo-Sensor T-22&quot;, &quot;Vakuum-Integrität Alarm&quot;, and &quot;IQM-Ionenfluss Inkonstant&quot;, so the top ranking is fully precise.</div>
+</div>
+<div class="metric">
+  <span>contextual_recall</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because all components of the expected output are perfectly supported by the node(s) in retrieval context, specifically nodes 1, 2, 3, 4, and 5, which cover all mentioned units and sensors. Great job!</div>
+</div>
+<div class="metric">
+  <span>contextual_relevancy</span>
+  <strong class="pass">0.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.00 because the retrieval context is entirely unrelated to the query: it discusses things like &quot;Warnung&quot;, &quot;Fehlercode&quot;, &quot;E-803&quot;, and &quot;Resonanzfrequenz Drift&quot; rather than answering &quot;die modulare Architektur des QWS-3000&quot; or the roles of &quot;PRC, IQM, Kryo-Sensor und NES-VSR&quot;. Since there are no relevant statements at all (&quot;[]&quot;), the context provides no support for the asked question.</div>
+</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 14px;">Retrieved Top-k</h3>
+  <div class="results"><article class="result">
+  <h3>Rang 1 · Score 0.697893</h3>
+  <div class="small">ID: 7c5a9804-b64a-52e0-88c6-17d510987c00</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-2.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_007_table_020.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 7,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 2 · Score 0.687528</h3>
+  <div class="small">ID: 7873058e-4fed-5679-98cd-51a75e31c146</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-4.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_002_table_016.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 2,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 3 · Score 0.686392</h3>
+  <div class="small">ID: debbcf40-5efb-5f76-8a72-90e778c9083d</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-1.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_005_table_018.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 5,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 4 · Score 0.686331</h3>
+  <div class="small">ID: e519dcad-09d3-54fe-b673-721b4495b07e</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-3.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_001_table_015.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 5 · Score 0.682733</h3>
+  <div class="small">ID: f5a57a76-d68f-5b50-b440-555274b5709d</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-architektur-komponenten-abfolge-result-4.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_006_table_019.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 6,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article></div>
+</section>
+<section class="query-card" id="query-s1_noised_visual_qws_flowchart_vakuum_resonanz_entscheidung">
+  <div class="query-head">
+    <div>
+      <h2>s1_noised_visual_qws_flowchart_vakuum_resonanz_entscheidung</h2>
+      <div class="meta">
+        Typ: image_text ·
+        Retrieval-Latenz: 0.0088s
+      </div>
+    </div>
+    <div class="chips"><span class="chip">szenario_1</span>
+<span class="chip">technical_handbook</span>
+<span class="chip">visual</span></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>Query</h3>
+      <p>Beantworte die Frage auf dem Bild</p>
+      <figure>
+  <img src="assets/images/s1-noised-visual-qws-flowchart-vakuum-resonanz-entscheidung-query.jpg" alt="">
+  <figcaption>Query-Bild</figcaption>
+</figure>
+    </div>
+    <div class="panel">
+      <h3>Ground Truth</h3>
+      <p>IQM Bias Spannung auf 5.0 kV setzen, Resonanz Frequenz Sweep auf 15.70 bis 15.80 GHz ausführen, Resonanzspitze bei 15.75 GHz ± 0.01 GHz prüfen</p>
+      <div class="grid"><figure>
+  <img src="assets/images/s1-qws-flowchart-vakuum-resonanz-entscheidung-reference-1.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_004_picture_003.png</figcaption>
+</figure></div>
+    </div>
+    <div class="panel">
+      <h3>DeepEval Scores</h3>
+      <div class="reason">
+</div>
+      <div class="metric">
+  <span>contextual_precision</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because the relevant nodes in retrieval context are ranked before the irrelevant one: nodes 1–4 all support the image question with exact steps and conditions like &quot;IQM Bias Spannung auf 5.0 kV setzen&quot;, &quot;Resonanz Frequenz Sweep 15.70 bis 15.80 GHz&quot;, and &quot;Resonanz Spitze bei 15.75 GHz ± 0.01 GHz&quot;, while node 5 is an irrelevant node that only lists parameters such as &quot;Dimensionsstabilität&quot; and does not mention the needed procedure. The irrelevant node is already placed last, so the ranking is perfectly ordered.</div>
+</div>
+<div class="metric">
+  <span>contextual_recall</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because sentence 1 is fully supported by node 1 in retrieval context: it matches the exact text about setting IQM bias to 5.0 kV, running the resonance frequency sweep from 15.70 to 15.80 GHz, and checking the resonance peak at 15.75 GHz ± 0.01 GHz, and the referenced image is also present in node 1 with the same flowchart. Great match!</div>
+</div>
+<div class="metric">
+  <span>contextual_relevancy</span>
+  <strong class="pass">0.9167</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.92 because the retrieval context mostly matches the query about the flowchart and calibration steps, including &#x27;Wie kalibriere ich den QWS laut Flowchart, wenn der VSR-Druck unter 10^-9 mbar liegt&#x27; and &#x27;die Frage auf dem Bild lautet...&#x27;; the only clearly irrelevant part is the &#x27;strawberry-pattern background&#x27;, so the context is highly relevant overall.</div>
+</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 14px;">Retrieved Top-k</h3>
+  <div class="results"><article class="result">
+  <h3>Rang 1 · Score 0.755992</h3>
+  <div class="small">ID: 37bc758b-9cfb-5d9b-bac6-37dcacc2c2c8</div>
+  <figure>
+  <img src="assets/images/s1-qws-flowchart-vakuum-resonanz-entscheidung-reference-1.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_004_picture_003.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;picture&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 2 · Score 0.715014</h3>
+  <div class="small">ID: debbcf40-5efb-5f76-8a72-90e778c9083d</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-1.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_005_table_018.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 5,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 3 · Score 0.701172</h3>
+  <div class="small">ID: f5a57a76-d68f-5b50-b440-555274b5709d</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-architektur-komponenten-abfolge-result-4.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_006_table_019.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 6,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 4 · Score 0.694911</h3>
+  <div class="small">ID: 7c5a9804-b64a-52e0-88c6-17d510987c00</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-2.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_007_table_020.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 7,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article>
+<article class="result">
+  <h3>Rang 5 · Score 0.6935</h3>
+  <div class="small">ID: 7873058e-4fed-5679-98cd-51a75e31c146</div>
+  <figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-4.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_002_table_016.png</figcaption>
+</figure>
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_visual_region&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 2,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason"></div>
+</article></div>
+</section>
+<section class="query-card" id="query-s1_qws_handgeschriebene_wartungstabelle_iqm_vsr">
+  <div class="query-head">
+    <div>
+      <h2>s1_qws_handgeschriebene_wartungstabelle_iqm_vsr</h2>
+      <div class="meta">
+        Typ: text ·
+        Retrieval-Latenz: 0.0627s
+      </div>
+    </div>
+    <div class="chips"><span class="chip">szenario_1</span>
+<span class="chip">technical_handbook</span>
+<span class="chip">handwritten_table</span></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>Query</h3>
+      <p>Was gilt es bei der Wartung des HT-400 zu beachten und wer ist laut Wartungstabelle dafür verantwortlich?</p>
+      
+    </div>
+    <div class="panel">
+      <h3>Ground Truth</h3>
+      <p>|Intervall|Bauteil|Kritische Parameter|Schmiermittel / Ersatzteil|Verantwortlicher|
+|---|---|---|---|---|
+|Jährlich|Haupttransformator (HT-400)|Effizienz, &lt;br&gt; Hitzeentwicklung|Kühlmittel (Destiliertes Glykol)&lt;br&gt;Filter (Austausch)|Elektrotechniker|</p>
+      <div class="grid"><figure>
+  <img src="assets/images/s1-visual-qws-spezifikation-prc-toleranz-result-5.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/technical_handbook/page_005_table_017.png</figcaption>
+</figure></div>
+    </div>
+    <div class="panel">
+      <h3>DeepEval Scores</h3>
+      <div class="reason">
+</div>
+      <div class="metric">
+  <span>contextual_precision</span>
+  <strong class="pass">0.3667</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.37 because the first and second nodes in the retrieval context are irrelevant, as they only provide a &quot;general statement&quot; and an &quot;introduction to the maintenance overview,&quot; respectively. The score is not higher because these irrelevant nodes are ranked above the third node, which contains the actual maintenance table and the specific information regarding the HT-400 and the responsible party.</div>
+</div>
+<div class="metric">
+  <span>contextual_recall</span>
+  <strong class="pass">0.5000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.50 because sentence 1 is partly supported by node 3 in retrieval context, which matches the table layout and the yearly entry for a main transformer with maintenance parameters and responsible technician, and node 5 adds the related maintenance-plan section. However, the referenced image is not directly attributable to any image node in retrieval context, since only text/table nodes 1-5 are present and node 3 is similar but not identical to the expected table.</div>
+</div>
+<div class="metric">
+  <span>contextual_relevancy</span>
+  <strong class="pass">0.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.00 because the context is entirely irrelevant; while the input asks about the &#x27;HT-400&#x27;, the context refers to the &#x27;Quantum Weave Synthesizer (QWS-3000)&#x27; and other unrelated components like &#x27;loaea-Qcell-Ma+cix(1QM)&#x27;, providing no information on the specific maintenance instructions or responsible parties for the HT-400.</div>
+</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 14px;">Retrieved Top-k</h3>
+  <div class="results"><article class="result">
+  <h3>Rang 1 · Score 0.685417</h3>
+  <div class="small">ID: 14c54014-f026-54e8-bf63-8588652d8301</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Die Einhaltung des folgenden Wartungsplans ist obligatorisch, um die langfristige Zuverlässigkeit des QWS3000 zu gewährleisten und die MTBF Mean Time Between Failures) zu maximieren.</div>
+</article>
+<article class="result">
+  <h3>Rang 2 · Score 0.645632</h3>
+  <div class="small">ID: 2821c896-27ac-54b9-9706-c941f2699f66</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Nachfolgend finden Sie eine detaillierte Übersicht der planmäßigen Wartungsaktivitäten.</div>
+</article>
+<article class="result">
+  <h3>Rang 3 · Score 0.645014</h3>
+  <div class="small">ID: 4cc260dd-1cf2-5144-a67e-b0060c66fd90</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 5,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason">| lntecvell               | Bacteil                      | KcibischePorasetee                              | Schmiecmiftel/ Ersatzteil            | Vecaatwoctliclec          |
+|-------------------------|------------------------------|-------------------------------------------------|--------------------------------------|---------------------------|
+| Wocheatlich             | loaea-Qcell-Ma+cix(1QM)      | BiaS-Spannaagi loaln-stcom                      | 1QM-Filkrkasreffe CAastaasch)        | TechnilerLevel2           |
+| Moratlich               | Valcam-Dikhenssatre(CSR)     | Moheicleimadog                                  | PTFE-Dichtuogsfiage, Kcy+oxGPL202    | Techaikee Level 3         |
+| Quartals wense          |                              | Freqcea2stabilitah TemPerafaclost               | thermogaste(T--00) Kalibriccuosstool | ngenieur Level 1          |
+| Halbjahrlich...</div>
+</article>
+<article class="result">
+  <h3>Rang 4 · Score 0.619318</h3>
+  <div class="small">ID: b2342fc2-04b8-5490-a627-4b6450eaa165</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Die vorliegende Dokumentation dient als verbindliche Referenz für die Inbetriebnahme, Kalibrierung, Wartung und Fehlerbehebung des Quantum Weave Synthesizers QWS3000. Alle Bediener sind verpflichtet, die Sicherheitsbestimmungen und Betriebsanweisungen strikt einzuhalten.</div>
+</article>
+<article class="result">
+  <h3>Rang 5 · Score 0.605339</h3>
+  <div class="small">ID: 87befed8-4f36-5af8-be92-c053c4588ada</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;section_header&quot;
+}</pre>
+  <div class="reason">4. Wartungsplan</div>
+</article></div>
+</section>
+<section class="query-card" id="query-s1_qws_fehler_e312_e404_vergleich">
+  <div class="query-head">
+    <div>
+      <h2>s1_qws_fehler_e312_e404_vergleich</h2>
+      <div class="meta">
+        Typ: text ·
+        Retrieval-Latenz: 0.0061s
+      </div>
+    </div>
+    <div class="chips"><span class="chip">szenario_1</span>
+<span class="chip">technical_handbook</span>
+<span class="chip">table</span></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>Query</h3>
+      <p>Welche Maßnahmen sind bei einem E-312 Vakuum-Integrität Alarm nötig und wie unterscheiden sie sich von der Vorgehensweise bei einer E-404 Material-Handling Blockade?</p>
+      
+    </div>
+    <div class="panel">
+      <h3>Ground Truth</h3>
+      <p>E-312 Vakuum-Integrität Alarm: Prüfen Sie alle Dichtungssätze (monatliche Wartung) und führen Sie eine Lecksuche durch. Starten Sie die automatische Vakuumpumpe.
+E-404 Material-Handling Blockade: Deaktivieren Sie das System und führen Sie eine manuelle Inspektion der MEU durch. Entfernen Sie blockiertes Material vorsichtig.</p>
+      <div class="grid"></div>
+    </div>
+    <div class="panel">
+      <h3>DeepEval Scores</h3>
+      <div class="reason">
+</div>
+      <div class="metric">
+  <span>contextual_precision</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because the most relevant node in the retrieval contexts is perfectly ranked at the first node, providing the exact solutions for both error codes: &#x27;Prüfen Sie alle Dichtungssätze (monatliche Wartung) und führen Sie eine Lecksuche durch. Starten Sie die automatische Vakuumpumpe&#x27; and &#x27;Deaktivieren Sie das System und führen Sie eine manuelle Inspektion der MEU durch. Entfernen Sie blockiertes Material vorsichtig.&#x27;!</div>
+</div>
+<div class="metric">
+  <span>contextual_recall</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because all information in the expected output is perfectly captured! Both sentences 1 and 2 are fully supported by node(s) in retrieval context 1.</div>
+</div>
+<div class="metric">
+  <span>contextual_relevancy</span>
+  <strong class="pass">0.2500</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.25 because while the context contains highly relevant instructions for &#x27;E-312 Vakuum-Integrität Alarm&#x27; and &#x27;E-404 Material-Handling Blockade&#x27;, it is heavily diluted by numerous irrelevant statements regarding unrelated errors such as &#x27;E-205 Übertemperatur TCA&#x27;, &#x27;E-500 System Initialisierungsfehler&#x27;, and &#x27;E-999 Kritischer Systemfehler&#x27;.</div>
+</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 14px;">Retrieved Top-k</h3>
+  <div class="results"><article class="result">
+  <h3>Rang 1 · Score 0.752914</h3>
+  <div class="small">ID: 287ed7aa-fcbf-5ddc-a8a8-b2a396d3cb64</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 6,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason">| Warnung Fehlercode   | Beschreibung                                                                                                                | Lösungsansatz                                                                                                                      |
+|----------------------|-----------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| E205                | Übertemperatur TCA Die Substrat-Temperatur übersteigt 300.00 K, was die Nanostruktur gefährdet.                            | Überprüfen Sie die Zufuhr des Kryo-Kühlmittels. Prüfen Sie den Kryo-Sensor T22 auf Fehlfunktion.                                  |
+| E312                | Vakuum-Integrität Al...</div>
+</article>
+<article class="result">
+  <h3>Rang 2 · Score 0.704662</h3>
+  <div class="small">ID: 46fbd75c-51fb-5599-8e9b-1b7d2a61fb68</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 6,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason">|
+| E-710                | TCA-Heizmatrix Defekt: Eine oder mehrere Heizelemente des Temperaturkontroll-Arrays reagieren nicht auf Sollwertänderungen. | Isolieren Sie die defekten Elemente im Diagnosesystem. Bei mehr als drei Ausfällen muss das gesamte TCA-Array ersetzt werden.      |</div>
+</article>
+<article class="result">
+  <h3>Rang 3 · Score 0.695006</h3>
+  <div class="small">ID: 5b706844-34da-58e6-9509-1987492f9db6</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Vakuum Array Notservice Routine starten</div>
+</article>
+<article class="result">
+  <h3>Rang 4 · Score 0.689779</h3>
+  <div class="small">ID: 25ecf807-59e6-5e51-a3d4-00497aaaf238</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 7,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason">| Warnung   | Fehlercode                                                                                                              | Beschreibung Lösungsansatz                                                                                                            |
+|-----------|-------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| E-803     | S-Mag Strom-Ripple: Die Stromversorgung des supraleitenden Magneten (S-Mag) zeigt eine unzulässige Restwelligkeit.      | Überprüfen Sie den Haupttransformator (HT-400) auf Überhitzung. Führen Sie eine Kalibrierung der S-Mag-Drosselspulen durch.           |
+| E-921     | QRC-Kopplung verloren: Das Steuersystem kann keine stabile Resonanz...</div>
+</article>
+<article class="result">
+  <h3>Rang 5 · Score 0.678376</h3>
+  <div class="small">ID: 28021e78-10cb-5926-8a56-372c0b318caf</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 3,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Die Kalibrierung des QWS3000 ist ein kritischer, halbautomatischer Prozess, der alle 50 Betriebsstunden oder nach jedem Substratwechsel durchgeführt werden muss. Die korrekte Kalibrierung garantiert die geforderte Nanomaterial-Reinheit und Stabilität.</div>
+</article></div>
+</section>
+<section class="query-card" id="query-s1_qws_fehler_e803_e921_diagnose">
+  <div class="query-head">
+    <div>
+      <h2>s1_qws_fehler_e803_e921_diagnose</h2>
+      <div class="meta">
+        Typ: text ·
+        Retrieval-Latenz: 0.0109s
+      </div>
+    </div>
+    <div class="chips"><span class="chip">szenario_1</span>
+<span class="chip">technical_handbook</span>
+<span class="chip">table</span></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>Query</h3>
+      <p>Was muss ich prüfen, wenn der supraleitende Magnet Strom-Ripple meldet, und welche manuelle Prozedur ist bei verlorener QRC-Kopplung vorgesehen?</p>
+      
+    </div>
+    <div class="panel">
+      <h3>Ground Truth</h3>
+      <p>S-Mag Strom-Ripple: Überprüfen Sie den Haupttransformator (HT-400) auf Überhitzung. Führen Sie eine Kalibrierung der S-Mag-Drosselspulen durch.
+QRC-Kopplung verloren: Führen Sie einen vollständigen Frequenz-Sweep manuell durch. Überprüfen Sie die Kabelverbindungen zwischen PRC und QRC.</p>
+      <div class="grid"></div>
+    </div>
+    <div class="panel">
+      <h3>DeepEval Scores</h3>
+      <div class="reason">
+</div>
+      <div class="metric">
+  <span>contextual_precision</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because the most relevant node in the retrieval contexts is perfectly ranked at the first node, providing the exact answers for both the S-Mag current ripple and QRC coupling!</div>
+</div>
+<div class="metric">
+  <span>contextual_recall</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because all information in the expected output, including the instructions for S-Mag Strom-Ripple and QRC-Kopplung, is perfectly captured in node(s) in retrieval context 1. Great job!</div>
+</div>
+<div class="metric">
+  <span>contextual_relevancy</span>
+  <strong class="pass">0.2000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.20 because while the context contains highly relevant instructions for &#x27;S-Mag Strom-Ripple&#x27; (checking HT-400 for overheating and calibrating coils) and &#x27;verlorener QRC-Kopplung&#x27; (manual frequency-sweep and checking cable connections), the majority of the retrieved content consists of irrelevant general information, such as &#x27;Sicherheitsbestimmungen&#x27; and descriptions of the &#x27;VSR&#x27; as a &#x27;zentrale Komponente&#x27;.</div>
+</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 14px;">Retrieved Top-k</h3>
+  <div class="results"><article class="result">
+  <h3>Rang 1 · Score 0.701177</h3>
+  <div class="small">ID: 25ecf807-59e6-5e51-a3d4-00497aaaf238</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 7,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason">| Warnung   | Fehlercode                                                                                                              | Beschreibung Lösungsansatz                                                                                                            |
+|-----------|-------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| E-803     | S-Mag Strom-Ripple: Die Stromversorgung des supraleitenden Magneten (S-Mag) zeigt eine unzulässige Restwelligkeit.      | Überprüfen Sie den Haupttransformator (HT-400) auf Überhitzung. Führen Sie eine Kalibrierung der S-Mag-Drosselspulen durch.           |
+| E-921     | QRC-Kopplung verloren: Das Steuersystem kann keine stabile Resonanz...</div>
+</article>
+<article class="result">
+  <h3>Rang 2 · Score 0.675167</h3>
+  <div class="small">ID: 0898a167-0a46-5b36-a0e8-c974e7ab7fbc</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">IQM Bias Spannung auf 5.0 kV setzen</div>
+</article>
+<article class="result">
+  <h3>Rang 3 · Score 0.655588</h3>
+  <div class="small">ID: 06b901d7-c70a-5302-8f97-3375f43d5366</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 5,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Bei einer Betriebsstörung führt der QWS3000 automatisch eine Diagnose durch und gibt einen dreistelligen Fehlercode über das Bedienpanel aus. Bei Auftreten eines Fehlers ist der Betrieb sofort einzustellen und die manuelle Störungsbehebung gemäß dieser Tabelle durchzuführen.</div>
+</article>
+<article class="result">
+  <h3>Rang 4 · Score 0.646262</h3>
+  <div class="small">ID: 3ada4807-dbd7-5ad6-9bf4-02f4dc94442a</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 3,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Der Vakuum-Synthese-Reaktor VSR ist die zentrale Komponente, in der die atomare Anordnung stattfindet. Er wird durch einen supraleitenden Magneten stabilisiert, der ein hochreines, feldfreies Umfeld für die Synthese schafft. Die</div>
+</article>
+<article class="result">
+  <h3>Rang 5 · Score 0.644257</h3>
+  <div class="small">ID: b2342fc2-04b8-5490-a627-4b6450eaa165</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;technical_handbook&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Die vorliegende Dokumentation dient als verbindliche Referenz für die Inbetriebnahme, Kalibrierung, Wartung und Fehlerbehebung des Quantum Weave Synthesizers QWS3000. Alle Bediener sind verpflichtet, die Sicherheitsbestimmungen und Betriebsanweisungen strikt einzuhalten.</div>
+</article></div>
+</section>
+<section class="query-card" id="query-s1_aeronova_strategische_vision_2026">
+  <div class="query-head">
+    <div>
+      <h2>s1_aeronova_strategische_vision_2026</h2>
+      <div class="meta">
+        Typ: text ·
+        Retrieval-Latenz: 0.1010s
+      </div>
+    </div>
+    <div class="chips"><span class="chip">szenario_1</span>
+<span class="chip">annual_report</span>
+<span class="chip">text</span></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>Query</h3>
+      <p>Welche drei strategischen Schwerpunkte verfolgt AeroNova für die Last-Mile-Evolution im Jahr 2026?</p>
+      
+    </div>
+    <div class="panel">
+      <h3>Ground Truth</h3>
+      <p>1. Hyper-Lokalisierung: Ausbau unseres Netzwerks in dicht besiedelten städtischen Gebieten, um Lieferzeiten unter 15 Minuten zu realisieren.
+2. KI-gestützte Prädiktion: Integration von tiefem maschinellem Lernen zur Vorhersage von Lieferengpässen und zur dynamischen Routenoptimierung.
+3. Nachhaltigkeit 360: Umstellung der gesamten Bodeninfrastruktur auf 100% erneuerbare Energien und vollständige Kompensation unserer Restemissionen.</p>
+      <div class="grid"></div>
+    </div>
+    <div class="panel">
+      <h3>DeepEval Scores</h3>
+      <div class="reason">
+</div>
+      <div class="metric">
+  <span>contextual_precision</span>
+  <strong class="pass">0.8333</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.83 because while the first node in the retrieval contexts is highly relevant, the second node is irrelevant as it only provides &#x27;general context about the company and document&#x27;. The score is not higher because this irrelevant node is ranked above the third node in the retrieval contexts, which is relevant for identifying the &#x27;correct strategic framework&#x27;.</div>
+</div>
+<div class="metric">
+  <span>contextual_recall</span>
+  <strong class="pass">0.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.00 because none of the sentences in the expected output are fully supported by the node(s) in retrieval context: sentence 1 is not mentioned at all, sentence 2 is only partially related to node 5 but lacks details on deep machine learning and bottlenecks, and sentence 3 is entirely absent from the context.</div>
+</div>
+<div class="metric">
+  <span>contextual_relevancy</span>
+  <strong class="pass">0.2500</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.25 because while the context mentions that &#x27;Im Jahr 2026 wird sich AeroNova auf drei Schlüsselbereiche konzentrieren&#x27;, it fails to actually list them, as the provided text only contains generalities like &#x27;Innovation ist das Fundament von AeroNova&#x27; or unrelated data such as &#x27;RegionaleUmsatzanteile2025&#x27;.</div>
+</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 14px;">Retrieved Top-k</h3>
+  <div class="results"><article class="result">
+  <h3>Rang 1 · Score 0.804841</h3>
+  <div class="small">ID: 8552ef10-fd83-5eb5-8420-7943134648d7</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Unsere Vision bleibt unverändert: Die letzte Meile der globalen Logistik zu revolutionieren. Im Jahr 2026 werden wir uns auf drei Schlüsselbereiche konzentrieren:</div>
+</article>
+<article class="result">
+  <h3>Rang 2 · Score 0.771208</h3>
+  <div class="small">ID: 7a03625f-31b4-5fd2-ba74-9431ff1c3713</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;section_header&quot;
+}</pre>
+  <div class="reason">AeroNova Logistics: Geschäftsbericht 2025</div>
+</article>
+<article class="result">
+  <h3>Rang 3 · Score 0.750091</h3>
+  <div class="small">ID: d77baa5c-195e-5734-87ea-b84e0e05b214</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;section_header&quot;
+}</pre>
+  <div class="reason">Unsere Strategische Vision: Die &quot;Last-Mile-Evolution&quot;</div>
+</article>
+<article class="result">
+  <h3>Rang 4 · Score 0.74052</h3>
+  <div class="small">ID: 94d26a4a-3641-5ce5-bfb7-fb6a6dd33bb0</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 3,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">AeroNovaLogistics:RegionaleUmsatzanteile2025</div>
+</article>
+<article class="result">
+  <h3>Rang 5 · Score 0.740008</h3>
+  <div class="small">ID: 0aa9bae6-fa87-56ba-a571-cc30fdb245b3</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Innovation ist das Fundament von AeroNova. Im Jahr 2025 belief sich unser F&amp;EBudget auf 15% des Gesamtumsatzes. Diese Investitionen verteilen sich auf vier strategische Säulen, um unseren technologischen Vorsprung zu sichern. Der Fokus lag auf der Verbesserung der Flugsicherheit und der KIOptimierung der Logistikrouten.</div>
+</article></div>
+</section>
+<section class="query-card" id="query-s1_aeronova_finanzkennzahlen_q4_b2b_ebitda">
+  <div class="query-head">
+    <div>
+      <h2>s1_aeronova_finanzkennzahlen_q4_b2b_ebitda</h2>
+      <div class="meta">
+        Typ: text ·
+        Retrieval-Latenz: 0.1029s
+      </div>
+    </div>
+    <div class="chips"><span class="chip">szenario_1</span>
+<span class="chip">annual_report</span>
+<span class="chip">table</span></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>Query</h3>
+      <p>Wie hoch waren der Gesamtumsatz und Aero-Freight-B2B-Umsatz in Q4 2025, und welche EBITDA-Marge wurde in Q3 2025 erreicht?</p>
+      
+    </div>
+    <div class="panel">
+      <h3>Ground Truth</h3>
+      <p>| Kennzahl | Einheit | Q1 2025 | Q2 2025 | Q3 2025 | Q4 2025 |
+|---|---|---:|---:|---:|---:|
+| **Umsatzerlöse** |  |  |  |  |  |
+| Aero-Freight (B2B) | Mio. USD | 10.3 | 25.7 | 88.4 | 145.9 |
+| **Gesamtumsatz** | **Mio. USD** | **460.8** | **520.9** | **599.2** | **731.0** |
+|  |  |  |  |  |  |
+| **Gewinnmargen** |  |  |  |  |  |
+| EBITDA-Marge | % | 27.1 | 27.0 | 29.3 | 28.8 |</p>
+      <div class="grid"></div>
+    </div>
+    <div class="panel">
+      <h3>DeepEval Scores</h3>
+      <div class="reason">
+</div>
+      <div class="metric">
+  <span>contextual_precision</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because the most relevant node in the retrieval contexts is perfectly ranked at the first node, as it &quot;contains the exact table needed to answer all parts of the query&quot;!</div>
+</div>
+<div class="metric">
+  <span>contextual_recall</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because every element of the expected output, including the table headers and all data rows, is perfectly captured in node 1 in retrieval context. Great job!</div>
+</div>
+<div class="metric">
+  <span>contextual_relevancy</span>
+  <strong class="pass">0.1765</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.18 because, likely due to a mismatch in how the data was retrieved, as the context contains the exact answers requested—specifically that &#x27;Der Gesamtumsatz in Q4 2025 betrug 731.0 Mio. USD&#x27;, &#x27;Der Aero-Freight (B2B) Umsatz in Q4 2025 betrug 145.9 Mio. USD&#x27;, and &#x27;Die EBITDA-Marge in Q3 2025 betrug 29.3%&#x27;—despite the irrelevancy reasons claiming the text &#x27;does not provide the specific numerical values&#x27;.</div>
+</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 14px;">Retrieved Top-k</h3>
+  <div class="results"><article class="result">
+  <h3>Rang 1 · Score 0.836734</h3>
+  <div class="small">ID: f60ecc2f-b2e0-54ef-bd92-30f353245e1f</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 2,
+  &quot;source_kind&quot;: &quot;table&quot;
+}</pre>
+  <div class="reason">| Kennzahl                    | Einheit   | Q1 2025   | Q2 2025   | Q3 2025   | Q4 2025   |
+|-----------------------------|-----------|-----------|-----------|-----------|-----------|
+| Umsatzerlöse                |           |           |           |           |           |
+| Drohnenlogistik B2C       | Mio. USD  | 450.5     | 495.2     | 510.8     | 585.1     |
+| Aero-Freight B2B          | Mio. USD  | 10.3      | 25.7      | 88.4      | 145.9     |
+| Gesamtumsatz                | Mio. USD  | 460.8     | 520.9     | 599.2     | 731.0     |
+| Betriebsergebnis            |           |           |           |           |           |
+| EBITDA                      | Mio. USD  | 125.1     | 140.8     | 175.5     | 210.6     |
+| Amortisation/Abschreibungen | Mio. USD  | 15.2      | 16.0      | 17.1      | 18.5      |
+| EBIT                        | Mio. USD  | 109.9     | 124.8     | 1...</div>
+</article>
+<article class="result">
+  <h3>Rang 2 · Score 0.812164</h3>
+  <div class="small">ID: 5ee6d040-7891-5eb9-9dbc-f8e5cb9880f8</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 2,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Das Geschäftsjahr 2025 übertraf alle Erwartungen und Prognosen. Insbesondere die Einführung des Aero-Freight-Segments im dritten Quartal führte zu einem signifikanten Wachstum im B2BBereich. Die folgende Tabelle bietet eine detaillierte Aufschlüsselung der wichtigsten Kennzahlen über die vier Quartale.</div>
+</article>
+<article class="result">
+  <h3>Rang 3 · Score 0.744843</h3>
+  <div class="small">ID: 33b743db-acc3-5439-843f-52e6dca442b3</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">das Jahr 2025 markiert einen Wendepunkt in der Geschichte von AeroNova Logistics. Wir haben unsere Position als unangefochtener Weltmarktführer in der autonomen Drohnenlogistik nicht nur gefestigt, sondern durch die Active-Sky-Plattform 2.0 auch technologisch neu definiert. Die erfolgreiche Skalierung unserer Flotte auf über 25.000 aktive Einheiten und die Expansion in vier neue globale Märkte belegen die Robustheit unseres Geschäftsmodells und die unerschütterliche Nachfrage nach schnellen, emissionsfreien Lieferlösungen.</div>
+</article>
+<article class="result">
+  <h3>Rang 4 · Score 0.720819</h3>
+  <div class="small">ID: 94d26a4a-3641-5ce5-bfb7-fb6a6dd33bb0</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 3,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">AeroNovaLogistics:RegionaleUmsatzanteile2025</div>
+</article>
+<article class="result">
+  <h3>Rang 5 · Score 0.72017</h3>
+  <div class="small">ID: 7a03625f-31b4-5fd2-ba74-9431ff1c3713</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;section_header&quot;
+}</pre>
+  <div class="reason">AeroNova Logistics: Geschäftsbericht 2025</div>
+</article></div>
+</section>
+<section class="query-card" id="query-s1_aeronova_marktanteile_2024_2025_vergleich">
+  <div class="query-head">
+    <div>
+      <h2>s1_aeronova_marktanteile_2024_2025_vergleich</h2>
+      <div class="meta">
+        Typ: text ·
+        Retrieval-Latenz: 0.0067s
+      </div>
+    </div>
+    <div class="chips"><span class="chip">szenario_1</span>
+<span class="chip">annual_report</span>
+<span class="chip">visual</span></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>Query</h3>
+      <p>Welche Marktanteile hatten Nordamerika und Lateinamerika jeweils in 2024 und 2025, und wie haben sich diese beiden Regionen verändert?</p>
+      
+    </div>
+    <div class="panel">
+      <h3>Ground Truth</h3>
+      <p>2024:
+Nordamerika (NA): 59%
+Europa (EU): 18%
+Asien-Pazifik (APAC): 11%
+Lateinamerika (LATAM): 8%
+Übrige Regionen: 4%
+
+2025:
+Nordamerika (NA): 35%
+Europa (EU): 28%
+Asien-Pazifik (APAC): 22%
+Lateinamerika (LATAM): 10%
+Übrige Regionen: 5%</p>
+      <div class="grid"><figure>
+  <img src="assets/images/s1-aeronova-marktanteile-2024-2025-vergleich-reference-1.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/annual_report/full_circular_diagramm.png</figcaption>
+</figure></div>
+    </div>
+    <div class="panel">
+      <h3>DeepEval Scores</h3>
+      <div class="reason">
+</div>
+      <div class="metric">
+  <span>contextual_precision</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because all nodes in the retrieval context are perfectly ranked, with every single node being relevant to the query!</div>
+</div>
+<div class="metric">
+  <span>contextual_recall</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because every part of the expected output is covered: the 2025 regional shares are supported by node(s) in retrieval context 2 and 3, and the 2024 shares and chart reference are supported by node 4 (with node 1 also matching the 2025 chart title); the listed regions and labels, including LATAM, align with the retrieved text and image, so there are no gaps.</div>
+</div>
+<div class="metric">
+  <span>contextual_relevancy</span>
+  <strong class="pass">0.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.00 because the context fails to provide the requested market share percentages for 2024 and 2025, as it &#x27;does not provide specific market share data for North America and Latin America&#x27; and instead focuses on irrelevant regions like &#x27;Asien und Europa&#x27; or the &#x27;APAC-Region&#x27;.</div>
+</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 14px;">Retrieved Top-k</h3>
+  <div class="results"><article class="result">
+  <h3>Rang 1 · Score 0.729856</h3>
+  <div class="small">ID: 94d26a4a-3641-5ce5-bfb7-fb6a6dd33bb0</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 3,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">AeroNovaLogistics:RegionaleUmsatzanteile2025</div>
+</article>
+<article class="result">
+  <h3>Rang 2 · Score 0.725535</h3>
+  <div class="small">ID: 22ec95f4-fac2-5852-b9bb-53dc58a7dbde</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 3,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Die aggressive Marktdurchdringungsstrategie in Asien und Europa hat unsere globale Präsenz gestärkt. Die folgenden Daten zeigen die Verteilung unseres Umsatzes nach Regionen am Ende des Geschäftsjahres 2025. Zur Referenz auch das Diagramm von 2024. Diese Diversifizierung reduziert unser regionales Risiko und maximiert die Nutzung unserer globalen Flottenkapazität.</div>
+</article>
+<article class="result">
+  <h3>Rang 3 · Score 0.715763</h3>
+  <div class="small">ID: 787b87e9-0ada-5cc0-9c2b-c129e4cad18f</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 3,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Der Marktanteil in Nordamerika bleibt der größte Einzelmarkt, getrieben durch die hohe Nachfrage im ECommerce. Europa ist aufgrund starker regulatorischer Partnerschaften gewachsen. Wir sehen jedoch das höchste Wachstumspotenzial in der APACRegion.</div>
+</article>
+<article class="result">
+  <h3>Rang 4 · Score 0.711453</h3>
+  <div class="small">ID: a21f7a68-d75c-5687-9c6a-0a5cf61dc079</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 3,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">AeroNovaLogistics:RegionaleUmsatzanteile2024</div>
+</article>
+<article class="result">
+  <h3>Rang 5 · Score 0.687471</h3>
+  <div class="small">ID: 974a4b7f-70ae-57b9-824e-8cdc3b17a7a3</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 3,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Lateinamerika (LATAM)</div>
+</article></div>
+</section>
+<section class="query-card" id="query-s1_aeronova_forschung_budget_balkendiagramm">
+  <div class="query-head">
+    <div>
+      <h2>s1_aeronova_forschung_budget_balkendiagramm</h2>
+      <div class="meta">
+        Typ: text ·
+        Retrieval-Latenz: 0.0148s
+      </div>
+    </div>
+    <div class="chips"><span class="chip">szenario_1</span>
+<span class="chip">annual_report</span>
+<span class="chip">visual</span></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>Query</h3>
+      <p>In welche Branche beziehungsweise F&amp;E-Säule ging bei AeroNova der größte Anteil des Forschungsbudgets, und wie groß war dieser Anteil?</p>
+      
+    </div>
+    <div class="panel">
+      <h3>Ground Truth</h3>
+      <p>AeroNova: Verteilung des F&amp;E Budgets:
+Autonome Navigationssysteme (KI): 40%
+Batterie- und Antriebseffizienz: 30%
+Materialwissenschaften (Leichtbau): 15%
+Active-Sky-Plattform (Software): 15%</p>
+      <div class="grid"><figure>
+  <img src="assets/images/s1-aeronova-forschung-budget-balkendiagramm-reference-1.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/annual_report/page_004_picture_003.png</figcaption>
+</figure></div>
+    </div>
+    <div class="panel">
+      <h3>DeepEval Scores</h3>
+      <div class="reason">
+</div>
+      <div class="metric">
+  <span>contextual_precision</span>
+  <strong class="pass">0.9167</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.92 because while the first and second nodes in the retrieval context are relevant, the third node is an irrelevant node as it is &#x27;only a section header and does not state which branch had the largest share or the percentage&#x27;, which prevents a perfect score. However, the score remains high because the fourth node provides the critical answer, stating &#x27;Der mit Abstand größte Anteil des Budgets floss in die Entwicklung unserer proprietären KI-Algorithmen für die Autonome Navigation&#x27;.</div>
+</div>
+<div class="metric">
+  <span>contextual_recall</span>
+  <strong class="pass">0.5000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.50 because node 1 in retrieval context matches the title &quot;AeroNova: Verteilung des F&amp;E-Budgets&quot; and node 4 supports the 40% autonomous navigation and 30% battery-efficiency items, but the 15% material sciences and 15% Active-Sky allocations are not mentioned by any node, and the specific chart image is also not present in retrieval context.</div>
+</div>
+<div class="metric">
+  <span>contextual_relevancy</span>
+  <strong class="pass">0.5556</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.56 because while the context identifies that the &quot;größte Anteil des Budgets floss in die Entwicklung unserer proprietären KI-Algorithmen für die Autonome Navigation,&quot; it fails to specify &quot;wie groß dieser Anteil&quot; (the exact size of the share) was, as noted in the reasons for irrelevancy.</div>
+</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 14px;">Retrieved Top-k</h3>
+  <div class="results"><article class="result">
+  <h3>Rang 1 · Score 0.854441</h3>
+  <div class="small">ID: 89ad5c22-9a85-5dd6-a3a9-1fc20a8b3ba6</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;caption&quot;
+}</pre>
+  <div class="reason">AeroNova: Verteilung des F&amp;E-Budgets</div>
+</article>
+<article class="result">
+  <h3>Rang 2 · Score 0.808655</h3>
+  <div class="small">ID: 0aa9bae6-fa87-56ba-a571-cc30fdb245b3</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Innovation ist das Fundament von AeroNova. Im Jahr 2025 belief sich unser F&amp;EBudget auf 15% des Gesamtumsatzes. Diese Investitionen verteilen sich auf vier strategische Säulen, um unseren technologischen Vorsprung zu sichern. Der Fokus lag auf der Verbesserung der Flugsicherheit und der KIOptimierung der Logistikrouten.</div>
+</article>
+<article class="result">
+  <h3>Rang 3 · Score 0.710995</h3>
+  <div class="small">ID: 8cbb14de-e347-5d44-ace2-62447fb220d7</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;section_header&quot;
+}</pre>
+  <div class="reason">4. Forschungsbudget und Entwicklung F&amp;E</div>
+</article>
+<article class="result">
+  <h3>Rang 4 · Score 0.702953</h3>
+  <div class="small">ID: 060099c7-0fa1-5c0a-8f20-142128402e65</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Der mit Abstand größte Anteil des Budgets floss in die Entwicklung unserer proprietären KIAlgorithmen für die Autonome Navigation . Diese ermöglichen es unseren Drohnen, auch unter extremen Wetterbedingungen oder in Umgebungen ohne GPSSignal zuverlässig zu navigieren. Die Investition in Batterie- und Antriebseffizienz führte zur Einführung des neuen &quot;Ion-Drive&quot;Akkus, der die Reichweite der Drohnen um 20% erhöhte.</div>
+</article>
+<article class="result">
+  <h3>Rang 5 · Score 0.701742</h3>
+  <div class="small">ID: 7a03625f-31b4-5fd2-ba74-9431ff1c3713</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;section_header&quot;
+}</pre>
+  <div class="reason">AeroNova Logistics: Geschäftsbericht 2025</div>
+</article></div>
+</section>
+<section class="query-card" id="query-s1_aeronova_ion_drive_forschungskontext">
+  <div class="query-head">
+    <div>
+      <h2>s1_aeronova_ion_drive_forschungskontext</h2>
+      <div class="meta">
+        Typ: text ·
+        Retrieval-Latenz: 0.0079s
+      </div>
+    </div>
+    <div class="chips"><span class="chip">szenario_1</span>
+<span class="chip">annual_report</span>
+<span class="chip">visual_text</span></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>Query</h3>
+      <p>Welche F&amp;E-Säule führte zur Einführung des Ion-Drive-Akkus, welchen Reichweitengewinn brachte er, und wie hoch war der zugehörige Budgetanteil?</p>
+      
+    </div>
+    <div class="panel">
+      <h3>Ground Truth</h3>
+      <p>AeroNova: Verteilung des F&amp;E Budgets:
+Batterie- und Antriebseffizienz: 30%
+Die Investition in Batterie- und Antriebseffizienz führte zur Einführung des neuen &quot;Ion-Drive&quot;-Akkus, der die Reichweite der Drohnen um 20% erhöhte.</p>
+      <div class="grid"><figure>
+  <img src="assets/images/s1-aeronova-forschung-budget-balkendiagramm-reference-1.jpg" alt="">
+  <figcaption>artifacts/extracted_images/docling/szenario_1/annual_report/page_004_picture_003.png</figcaption>
+</figure></div>
+    </div>
+    <div class="panel">
+      <h3>DeepEval Scores</h3>
+      <div class="reason">
+</div>
+      <div class="metric">
+  <span>contextual_precision</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because all retrieved nodes in the retrieval context are perfectly ranked, with the most critical information like the &quot;Ion-Drive&quot; battery and its 20% range increase appearing right at the first node!</div>
+</div>
+<div class="metric">
+  <span>contextual_recall</span>
+  <strong class="pass">1.0000</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 1.00 because all parts of the expected output are covered by node(s) in retrieval context: sentence 1 matches node 5 exactly (&#x27;AeroNova: Verteilung des F&amp;E-Budgets&#x27;), sentence 2 is supported by node 3 and node 1 with the 30% battery-and-drive-efficiency detail, sentence 3 is directly stated in node 1 about the new &quot;Ion-Drive&quot; battery and 20% range increase, and the reference image is also supported by node 5 and node 3 with the matching 40/30/15/15% bars. Great coverage!</div>
+</div>
+<div class="metric">
+  <span>contextual_relevancy</span>
+  <strong class="pass">0.1111</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.11 because while the context identifies that &#x27;Batterie- und Antriebseffizienz führte zur Einführung des neuen &#x27;Ion-Drive&#x27;-Akkus&#x27; and provided a range increase of &#x27;20%&#x27;, it fails to provide the &#x27;specific budget share&#x27; requested in the input, as the text only mentions the &#x27;total R&amp;D budget&#x27; of 15%.</div>
+</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 14px;">Retrieved Top-k</h3>
+  <div class="results"><article class="result">
+  <h3>Rang 1 · Score 0.783258</h3>
+  <div class="small">ID: 060099c7-0fa1-5c0a-8f20-142128402e65</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Der mit Abstand größte Anteil des Budgets floss in die Entwicklung unserer proprietären KIAlgorithmen für die Autonome Navigation . Diese ermöglichen es unseren Drohnen, auch unter extremen Wetterbedingungen oder in Umgebungen ohne GPSSignal zuverlässig zu navigieren. Die Investition in Batterie- und Antriebseffizienz führte zur Einführung des neuen &quot;Ion-Drive&quot;Akkus, der die Reichweite der Drohnen um 20% erhöhte.</div>
+</article>
+<article class="result">
+  <h3>Rang 2 · Score 0.71689</h3>
+  <div class="small">ID: 0aa9bae6-fa87-56ba-a571-cc30fdb245b3</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Innovation ist das Fundament von AeroNova. Im Jahr 2025 belief sich unser F&amp;EBudget auf 15% des Gesamtumsatzes. Diese Investitionen verteilen sich auf vier strategische Säulen, um unseren technologischen Vorsprung zu sichern. Der Fokus lag auf der Verbesserung der Flugsicherheit und der KIOptimierung der Logistikrouten.</div>
+</article>
+<article class="result">
+  <h3>Rang 3 · Score 0.714914</h3>
+  <div class="small">ID: 59240d59-f996-52ec-944d-c2a05c400ae8</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Autonome Navigationssysteme und Batterie-und Antriebseffizienz erhalten die groessten Anteile.</div>
+</article>
+<article class="result">
+  <h3>Rang 4 · Score 0.701946</h3>
+  <div class="small">ID: 8cbb14de-e347-5d44-ace2-62447fb220d7</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;section_header&quot;
+}</pre>
+  <div class="reason">4. Forschungsbudget und Entwicklung F&amp;E</div>
+</article>
+<article class="result">
+  <h3>Rang 5 · Score 0.662455</h3>
+  <div class="small">ID: 89ad5c22-9a85-5dd6-a3a9-1fc20a8b3ba6</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;caption&quot;
+}</pre>
+  <div class="reason">AeroNova: Verteilung des F&amp;E-Budgets</div>
+</article></div>
+</section>
+<section class="query-card" id="query-s1_aeronova_esg_tabelle_webinar">
+  <div class="query-head">
+    <div>
+      <h2>s1_aeronova_esg_tabelle_webinar</h2>
+      <div class="meta">
+        Typ: text ·
+        Retrieval-Latenz: 0.0049s
+      </div>
+    </div>
+    <div class="chips"><span class="chip">szenario_1</span>
+<span class="chip">annual_report</span>
+<span class="chip">table_text</span></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h3>Query</h3>
+      <p>Wie haben sich erneuerbare Energie, Arbeitsunfälle, Diversität und Wasserverbrauch bei AeroNova entwickelt, und wann ist das ESG Strategy Update 2026 angesetzt?</p>
+      
+    </div>
+    <div class="panel">
+      <h3>Ground Truth</h3>
+      <p>| Zielbereich | Kennzahl | 2024 Basiswert | 2025 Ist-Wert | 2025 Ziel-Erreichung |
+|---|---|---:|---:|---|
+| **Umwelt (E)** | Anteil erneuerbarer Energie&lt;br&gt;(Flotte/Basis) | 65% | 80% | Hoch |
+| **Soziales (S)** | Arbeitsunfälle (pro 1000h) | 0.8 | 0.5 | Hoch |
+| **Governance (G)** | Diversität (Führungsebenen) | 28% | 33% | Mittel |
+| **Umwelt (E)** | Wasserverbrauch&lt;br&gt;(Ladezentren) | 100% | 95% | Hoch |
+
+Wir laden alle Stakeholder ein, an unserem nächsten Webinar zum Thema
+ESG-Strategie teilzunehmen. Die Registrierung für die Veranstaltung ESG Strategy
+Update 2026 finden Sie unter https://meet.google.com/gan-esg-2026 am 08.02.2026.</p>
+      <div class="grid"><figure>
+  <img src="assets/images/s1-aeronova-esg-tabelle-webinar-reference-1.jpg" alt="">
+  <figcaption>artifacts/rasterized_pages/szenario_1/annual_report/AeroNova_Logistics_page_0005.png</figcaption>
+</figure></div>
+    </div>
+    <div class="panel">
+      <h3>DeepEval Scores</h3>
+      <div class="reason">
+</div>
+      <div class="metric">
+  <span>contextual_precision</span>
+  <strong class="pass">0.2500</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.25 because the only relevant node in the retrieval context is ranked fourth, meaning it is preceded by three irrelevant nodes. Specifically, the first node only mentions the &#x27;Geschäftsbericht 2025&#x27;, the second node is a &#x27;thank-you style passage&#x27;, and the third node focuses on &#x27;F&amp;E-Budget&#x27; and flight safety, all of which should be ranked lower than the fourth node which contains the relevant information regarding &#x27;Umstellung der gesamten Bodeninfrastruktur auf 100% erneuerbare Energien&#x27;.</div>
+</div>
+<div class="metric">
+  <span>contextual_recall</span>
+  <strong class="pass">0.3333</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.33 because the 1st image node in retrieval context aligns with the ESG table (&#x27;Ziele und Fortschritte 2025&#x27; and the listed 2024/2025 metrics), but the remaining text block about the webinar invitation, ESG Strategy Update 2026, and the meeting link/date is not supported by any retrieval node; nodes 1-5 in retrieval context cover other report content and do not attribute these details.</div>
+</div>
+<div class="metric">
+  <span>contextual_relevancy</span>
+  <strong class="pass">0.1667</strong>
+  <div class="small">passed</div>
+  <div class="reason">The score is 0.17 because while there is one relevant statement regarding the &#x27;Umstellung der gesamten Bodeninfrastruktur auf 100% erneuerbare Energien&#x27;, the rest of the context is irrelevant, focusing on &#x27;general gratitude&#x27;, &#x27;F&amp;E-Budget&#x27;, and &#x27;fleet scaling&#x27; rather than the requested data on workplace accidents, diversity, water consumption, or the ESG Strategy Update 2026.</div>
+</div>
+    </div>
+  </div>
+  <h3 style="margin-top: 14px;">Retrieved Top-k</h3>
+  <div class="results"><article class="result">
+  <h3>Rang 1 · Score 0.719508</h3>
+  <div class="small">ID: 7a03625f-31b4-5fd2-ba74-9431ff1c3713</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;section_header&quot;
+}</pre>
+  <div class="reason">AeroNova Logistics: Geschäftsbericht 2025</div>
+</article>
+<article class="result">
+  <h3>Rang 2 · Score 0.697936</h3>
+  <div class="small">ID: ebfbf4fe-7a59-5079-be0f-ef2bdce509c8</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Ich danke jedem einzelnen Mitarbeiter für seine außergewöhnliche Leistung und Ihnen, unseren Investoren, für Ihr fortwährendes Vertrauen. Die Zukunft wird geflogen, und AeroNova ist der Pilot.</div>
+</article>
+<article class="result">
+  <h3>Rang 3 · Score 0.689535</h3>
+  <div class="small">ID: 0aa9bae6-fa87-56ba-a571-cc30fdb245b3</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 4,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">Innovation ist das Fundament von AeroNova. Im Jahr 2025 belief sich unser F&amp;EBudget auf 15% des Gesamtumsatzes. Diese Investitionen verteilen sich auf vier strategische Säulen, um unseren technologischen Vorsprung zu sichern. Der Fokus lag auf der Verbesserung der Flugsicherheit und der KIOptimierung der Logistikrouten.</div>
+</article>
+<article class="result">
+  <h3>Rang 4 · Score 0.687257</h3>
+  <div class="small">ID: 96746175-3c34-5f08-9fb6-50334606ac40</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;list_item&quot;
+}</pre>
+  <div class="reason">Nachhaltigkeit 360 Umstellung der gesamten Bodeninfrastruktur auf 100% erneuerbare Energien und vollständige Kompensation unserer Restemissionen.</div>
+</article>
+<article class="result">
+  <h3>Rang 5 · Score 0.683965</h3>
+  <div class="small">ID: 33b743db-acc3-5439-843f-52e6dca442b3</div>
+  
+  <pre>{
+  &quot;asset_type&quot;: &quot;docling_text_chunk&quot;,
+  &quot;document_id&quot;: &quot;annual_report&quot;,
+  &quot;page_number&quot;: 1,
+  &quot;source_kind&quot;: &quot;text&quot;
+}</pre>
+  <div class="reason">das Jahr 2025 markiert einen Wendepunkt in der Geschichte von AeroNova Logistics. Wir haben unsere Position als unangefochtener Weltmarktführer in der autonomen Drohnenlogistik nicht nur gefestigt, sondern durch die Active-Sky-Plattform 2.0 auch technologisch neu definiert. Die erfolgreiche Skalierung unserer Flotte auf über 25.000 aktive Einheiten und die Expansion in vier neue globale Märkte belegen die Robustheit unseres Geschäftsmodells und die unerschütterliche Nachfrage nach schnellen, emissionsfreien Lieferlösungen.</div>
+</article></div>
+</section>
+</main>
+</body>
+</html>

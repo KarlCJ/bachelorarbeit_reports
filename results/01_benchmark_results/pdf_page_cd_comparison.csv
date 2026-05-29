@@ -1,0 +1,7 @@
+backend,scenario_id,source_csv,query_count,hit_rate_at_5,mrr,ndcg_at_5,elapsed_seconds
+Pfad C ColQwen2 MaxSim,szenario_1,outputs/pdf_pages_colqwen2/mlflow_iterations/collection_pfad_c_colqwen2_v1_0_merged_szenario_1_text_queries_5x_summary.csv,12,1.0000,0.8958,0.9218,4.9293
+Pfad C ColQwen2 MaxSim,szenario_2,outputs/pdf_pages_colqwen2/mlflow_iterations/collection_pfad_c_colqwen2_v1_0_merged_szenario_2_text_queries_5x_summary.csv,12,0.9167,0.8750,0.8859,4.8792
+Pfad D Gemini Embedding 2,szenario_1,outputs/pdf_pages_gemini/mlflow_iterations/collection_pfad_d_gemini_embedding_2_szenario_1_text_queries_5x_summary.csv,12,1.0000,0.9167,0.9385,0.0932
+Pfad D Gemini Embedding 2,szenario_2,outputs/pdf_pages_gemini/mlflow_iterations/collection_pfad_d_gemini_embedding_2_szenario_2_text_queries_5x_summary.csv,12,1.0000,0.9167,0.9385,0.0972
+Pfad D vdr-2b-multi-v1,szenario_1,outputs/pdf_pages_vdr_2b_multi/mlflow_iterations/collection_pfad_d_vdr_2b_multi_v1_szenario_1_text_queries_5x_summary.csv,12,1.0000,0.8611,0.8968,7.7277
+Pfad D vdr-2b-multi-v1,szenario_2,outputs/pdf_pages_vdr_2b_multi/mlflow_iterations/collection_pfad_d_vdr_2b_multi_v1_szenario_2_text_queries_5x_summary.csv,12,1.0000,0.8611,0.8968,7.6736

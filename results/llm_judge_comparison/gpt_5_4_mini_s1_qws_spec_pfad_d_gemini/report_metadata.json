@@ -1,0 +1,15 @@
+{
+  "generated_at": "2026-05-26T17:37:55.747210+00:00",
+  "report_type": "deepeval_dataset_retrieval",
+  "collection": "collection_pfad_a_gemini_embedding_2_szenario_1",
+  "dataset_path": "tests/evals/.dataset.json",
+  "query_backend": "gemini",
+  "include_images": true,
+  "include_tags": [
+    "szenario_1"
+  ],
+  "text_judge_model": "openai/gpt-5.4-mini",
+  "multimodal_judge_model": "openai/gpt-5.4-mini",
+  "query_count": 1,
+  "image_count": 0
+}

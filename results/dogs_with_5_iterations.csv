@@ -1,0 +1,7 @@
+row_type,iteration,collection,query_type,top_k,embedding_model,query_count,scored_query_count,excluded_query_count,elapsed_seconds,hit_rate_at_5,mrr,ndcg_at_5
+iteration,1,collection_pfad_d_gemini_embedding_2_szenario_3,semantic,5,google/gemini-embedding-2-preview,17,13,4,5.487046690999705,1.0,0.9615384615384616,0.903224598455952
+iteration,2,collection_pfad_d_gemini_embedding_2_szenario_3,semantic,5,google/gemini-embedding-2-preview,17,13,4,6.281363644000521,1.0,0.9615384615384616,0.903224598455952
+iteration,3,collection_pfad_d_gemini_embedding_2_szenario_3,semantic,5,google/gemini-embedding-2-preview,17,13,4,20.44368576400302,1.0,0.9615384615384616,0.903224598455952
+iteration,4,collection_pfad_d_gemini_embedding_2_szenario_3,semantic,5,google/gemini-embedding-2-preview,17,13,4,5.992545171997335,1.0,0.9615384615384616,0.903224598455952
+iteration,5,collection_pfad_d_gemini_embedding_2_szenario_3,semantic,5,google/gemini-embedding-2-preview,17,13,4,6.774470418997225,1.0,0.9615384615384616,0.903224598455952
+average,,collection_pfad_d_gemini_embedding_2_szenario_3,semantic,5,google/gemini-embedding-2-preview,17,13,4,8.995822337999561,1.0,0.9615384615384615,0.9032245984559519

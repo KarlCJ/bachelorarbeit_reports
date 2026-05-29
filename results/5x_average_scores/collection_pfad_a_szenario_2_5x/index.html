@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DeepEval 5x Summary - pdf_szenario_2</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f6f2;
+      --panel: #fff;
+      --ink: #202124;
+      --muted: #62666d;
+      --line: #dad7ce;
+      --accent: #2f6f73;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 14px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main { width: min(1280px, calc(100vw - 32px)); margin: 0 auto; padding: 32px 0 56px; }
+    header { border-bottom: 1px solid var(--line); padding-bottom: 18px; margin-bottom: 22px; }
+    h1 { margin: 0 0 8px; font-size: 30px; }
+    h2 { margin: 26px 0 10px; font-size: 18px; }
+    .meta { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+    }
+    th { background: #ece9df; font-size: 12px; }
+    td.number { font-variant-numeric: tabular-nums; }
+    .query-image-cell { min-width: 220px; max-width: 280px; }
+    .query-image {
+      display: block;
+      width: min(240px, 100%);
+      max-height: 180px;
+      object-fit: contain;
+      border: 1px solid var(--line);
+      background: #fff;
+      margin-bottom: 6px;
+    }
+    .query-image-path {
+      color: var(--muted);
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>DeepEval 5x Summary</h1>
+    <div class="meta">Suite: pdf_szenario_2</div>
+    <div class="meta">Beschreibung: DeepEval semantic retrieval for Szenario 2 over Pfad A/B Docling namespaces.</div>
+    <div class="meta">
+      Iterationen: 5 · Max Cases: alle ·
+      Threshold: 0
+    </div>
+    <div class="meta">Generiert: 2026-05-28T13:45:53.591389+00:00</div>
+  </header>
+  <h2>Durchschnitt pro Namespace</h2>
+  <table><thead><tr><th>run_id</th><th>collection</th><th>query_backend</th><th>iterations</th><th>evaluated_count_per_iteration</th><th>average_score</th><th>contextual_precision</th><th>contextual_recall</th><th>contextual_relevancy</th><th>elapsed_seconds_average</th><th>elapsed_seconds_total</th></tr></thead><tbody><tr><td>deepeval_szenario_2_pfad_a_docling</td><td>collection_pfad_a_gemini_embedding_2_szenario_2</td><td>gemini</td><td class="number">5</td><td class="number">18</td><td class="number">0.6382</td><td class="number">0.7777</td><td class="number">0.7774</td><td class="number">0.3595</td><td class="number">163.5356</td><td class="number">817.6781</td></tr></tbody></table>
+  <h2>Durchschnitt pro Test Case</h2>
+  <table><thead><tr><th>run_id</th><th>query_id</th><th>query_type</th><th>iterations</th><th>average_score</th><th>contextual_precision</th><th>contextual_recall</th><th>contextual_relevancy</th><th>retrieval_latency_seconds_average</th><th>query_text</th><th>query_image</th></tr></thead><tbody><tr><td>deepeval_szenario_2_pfad_a_docling</td><td>s2_aeronova_esg_tabelle_webinar</td><td>text</td><td class="number">5</td><td class="number">0.2089</td><td class="number">0.2500</td><td class="number">0.2100</td><td class="number">0.1667</td><td class="number">0.0304</td><td>Wie haben sich erneuerbare Energie, Arbeitsunfälle, Diversität und Wasserverbrauch bei AeroNova entwickelt, und wann ist das ESG Strategy Update 2026 angesetzt?</td><td class="query-image-cell"></td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td>s2_aeronova_finanzkennzahlen_q4_b2b_ebitda</td><td>text</td><td class="number">5</td><td class="number">0.7828</td><td class="number">1.0000</td><td class="number">1.0000</td><td class="number">0.3483</td><td class="number">0.0371</td><td>Wie hoch waren der Gesamtumsatz und Aero-Freight-B2B-Umsatz in Q4 2025, und welche EBITDA-Marge wurde in Q3 2025 erreicht?</td><td class="query-image-cell"></td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td>s2_aeronova_forschung_budget_balkendiagramm</td><td>text</td><td class="number">5</td><td class="number">0.6863</td><td class="number">0.9833</td><td class="number">0.5867</td><td class="number">0.4889</td><td class="number">0.0389</td><td>In welche Branche beziehungsweise F&amp;E-Säule ging bei AeroNova der größte Anteil des Forschungsbudgets, und wie groß war dieser Anteil?</td><td class="query-image-cell"></td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td>s2_aeronova_ion_drive_forschungskontext</td><td>text</td><td class="number">5</td><td class="number">0.6738</td><td class="number">0.9411</td><td class="number">0.9500</td><td class="number">0.1302</td><td class="number">0.0246</td><td>Welche F&amp;E-Säule führte zur Einführung des Ion-Drive-Akkus, welchen Reichweitengewinn brachte er, und wie hoch war der zugehörige Budgetanteil?</td><td class="query-image-cell"></td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td>s2_aeronova_marktanteile_2024_2025_vergleich</td><td>text</td><td class="number">5</td><td class="number">0.6121</td><td class="number">0.7833</td><td class="number">1.0000</td><td class="number">0.0530</td><td class="number">0.0385</td><td>Welche Marktanteile hatten Nordamerika und Lateinamerika jeweils in 2024 und 2025, und wie haben sich diese beiden Regionen verändert?</td><td class="query-image-cell"></td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td>s2_aeronova_strategische_vision_2026</td><td>text</td><td class="number">5</td><td class="number">0.4130</td><td class="number">0.9333</td><td class="number">0.0667</td><td class="number">0.2389</td><td class="number">0.0277</td><td>Welche drei strategischen Schwerpunkte verfolgt AeroNova für die Last-Mile-Evolution im Jahr 2026?</td><td class="query-image-cell"></td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td>s2_noised_visual_qws_architektur_komponenten_abfolge</td><td>image_text</td><td class="number">5</td><td class="number">0.7139</td><td class="number">0.7867</td><td class="number">0.6800</td><td class="number">0.6750</td><td class="number">0.0220</td><td>Beantworte die Frage auf dem Bild</td><td class="query-image-cell"><a href="assets/images/query-tests-evals-image-queries-noised-qws-architektur-komponenten-abfolge-png.jpg"><img class="query-image" src="assets/images/query-tests-evals-image-queries-noised-qws-architektur-komponenten-abfolge-png.jpg" alt="tests/evals/image_queries/noised_qws_architektur_komponenten_abfolge.png"></a><div class="query-image-path">tests/evals/image_queries/noised_qws_architektur_komponenten_abfolge.png</div></td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td>s2_noised_visual_qws_flowchart_vakuum_resonanz_entscheidung</td><td>image_text</td><td class="number">5</td><td class="number">0.9831</td><td class="number">1.0000</td><td class="number">1.0000</td><td class="number">0.9492</td><td class="number">0.0292</td><td>Beantworte die Frage auf dem Bild</td><td class="query-image-cell"><a href="assets/images/query-tests-evals-image-queries-noised-qws-flowchart-vakuum-resonanz-entscheidung-png.jpg"><img class="query-image" src="assets/images/query-tests-evals-image-queries-noised-qws-flowchart-vakuum-resonanz-entscheidung-png.jpg" alt="tests/evals/image_queries/noised_qws_flowchart_vakuum_resonanz_entscheidung.png"></a><div class="query-image-path">tests/evals/image_queries/noised_qws_flowchart_vakuum_resonanz_entscheidung.png</div></td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td>s2_noised_visual_qws_spezifikation_prc_toleranz</td><td>image_text</td><td class="number">5</td><td class="number">0.6564</td><td class="number">0.5000</td><td class="number">1.0000</td><td class="number">0.4691</td><td class="number">0.0205</td><td>Beantworte die Frage auf dem Bild</td><td class="query-image-cell"><a href="assets/images/query-tests-evals-image-queries-noised-qws-spezifikation-prc-toleranz-png.jpg"><img class="query-image" src="assets/images/query-tests-evals-image-queries-noised-qws-spezifikation-prc-toleranz-png.jpg" alt="tests/evals/image_queries/noised_qws_spezifikation_prc_toleranz.png"></a><div class="query-image-path">tests/evals/image_queries/noised_qws_spezifikation_prc_toleranz.png</div></td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td>s2_qws_architektur_komponenten_abfolge</td><td>text</td><td class="number">5</td><td class="number">0.4089</td><td class="number">0.7600</td><td class="number">0.2000</td><td class="number">0.2667</td><td class="number">0.0324</td><td>Aus welchen fünf Hauptphasen besteht die modulare Architektur des QWS-3000 und welche Rolle übernehmen PRC, IQM, Kryo-Sensor und NES-VSR im System?</td><td class="query-image-cell"></td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td>s2_qws_fehler_e312_e404_vergleich</td><td>text</td><td class="number">5</td><td class="number">0.7515</td><td class="number">1.0000</td><td class="number">1.0000</td><td class="number">0.2545</td><td class="number">0.0436</td><td>Welche Maßnahmen sind bei einem E-312 Vakuum-Integrität Alarm nötig und wie unterscheiden sie sich von der Vorgehensweise bei einer E-404 Material-Handling Blockade?</td><td class="query-image-cell"></td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td>s2_qws_fehler_e803_e921_diagnose</td><td>text</td><td class="number">5</td><td class="number">0.7862</td><td class="number">0.8333</td><td class="number">1.0000</td><td class="number">0.5253</td><td class="number">0.0533</td><td>Was muss ich prüfen, wenn der supraleitende Magnet Strom-Ripple meldet, und welche manuelle Prozedur ist bei verlorener QRC-Kopplung vorgesehen?</td><td class="query-image-cell"></td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td>s2_qws_flowchart_vakuum_resonanz_entscheidung</td><td>text</td><td class="number">5</td><td class="number">0.6632</td><td class="number">0.9611</td><td class="number">1.0000</td><td class="number">0.0286</td><td class="number">0.0245</td><td>Wie kalibriere ich den QWS, wenn der VSR-Druck unter 10⁻⁹ mbar liegt, und welche Schritte folgen bis zur Prüfung der Resonanzspitze?</td><td class="query-image-cell"></td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td>s2_qws_handgeschriebene_wartungstabelle_iqm_vsr</td><td>text</td><td class="number">5</td><td class="number">0.4056</td><td class="number">0.3667</td><td class="number">0.7000</td><td class="number">0.1500</td><td class="number">0.0233</td><td>Was gilt es bei der Wartung des HT-400 zu beachten und wer ist laut Wartungstabelle dafür verantwortlich?</td><td class="query-image-cell"></td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td>s2_qws_spezifikation_prc_toleranz</td><td>text</td><td class="number">5</td><td class="number">0.4278</td><td class="number">0.2000</td><td class="number">1.0000</td><td class="number">0.0833</td><td class="number">0.0375</td><td>Welche Synthese-Frequenz muss der QWS-3000 einhalten, welcher Toleranzbereich ist zulässig und an welcher Komponente wird dieser Wert gemessen?</td><td class="query-image-cell"></td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td>s2_visual_qws_architektur_komponenten_abfolge</td><td>image_text</td><td class="number">5</td><td class="number">0.5730</td><td class="number">0.7000</td><td class="number">0.6000</td><td class="number">0.4189</td><td class="number">0.0303</td><td>Beantworte die Frage auf dem Bild</td><td class="query-image-cell"><a href="assets/images/query-tests-evals-image-queries-qws-architektur-komponenten-abfolge-png.jpg"><img class="query-image" src="assets/images/query-tests-evals-image-queries-qws-architektur-komponenten-abfolge-png.jpg" alt="tests/evals/image_queries/qws_architektur_komponenten_abfolge.png"></a><div class="query-image-path">tests/evals/image_queries/qws_architektur_komponenten_abfolge.png</div></td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td>s2_visual_qws_flowchart_vakuum_resonanz_entscheidung</td><td>image_text</td><td class="number">5</td><td class="number">0.9606</td><td class="number">1.0000</td><td class="number">1.0000</td><td class="number">0.8817</td><td class="number">0.0376</td><td>Beantworte die Frage auf dem Bild</td><td class="query-image-cell"><a href="assets/images/query-tests-evals-image-queries-qws-flowchart-vakuum-resonanz-entscheidung-png.jpg"><img class="query-image" src="assets/images/query-tests-evals-image-queries-qws-flowchart-vakuum-resonanz-entscheidung-png.jpg" alt="tests/evals/image_queries/qws_flowchart_vakuum_resonanz_entscheidung.png"></a><div class="query-image-path">tests/evals/image_queries/qws_flowchart_vakuum_resonanz_entscheidung.png</div></td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td>s2_visual_qws_spezifikation_prc_toleranz</td><td>image_text</td><td class="number">5</td><td class="number">0.7812</td><td class="number">1.0000</td><td class="number">1.0000</td><td class="number">0.3435</td><td class="number">0.0361</td><td>Beantworte die Frage auf dem Bild</td><td class="query-image-cell"><a href="assets/images/query-tests-evals-image-queries-qws-spezifikation-prc-toleranz-png.jpg"><img class="query-image" src="assets/images/query-tests-evals-image-queries-qws-spezifikation-prc-toleranz-png.jpg" alt="tests/evals/image_queries/qws_spezifikation_prc_toleranz.png"></a><div class="query-image-path">tests/evals/image_queries/qws_spezifikation_prc_toleranz.png</div></td></tr></tbody></table>
+  <h2>Einzeldurchläufe</h2>
+  <table><thead><tr><th>run_id</th><th>iteration</th><th>average_score</th><th>contextual_precision</th><th>contextual_recall</th><th>contextual_relevancy</th><th>elapsed_seconds</th></tr></thead><tbody><tr><td>deepeval_szenario_2_pfad_a_docling</td><td class="number">1</td><td class="number">0.6199</td><td class="number">0.7642</td><td class="number">0.7398</td><td class="number">0.3558</td><td class="number">303.7211</td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td class="number">2</td><td class="number">0.6457</td><td class="number">0.7796</td><td class="number">0.8083</td><td class="number">0.3492</td><td class="number">96.1934</td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td class="number">3</td><td class="number">0.6549</td><td class="number">0.7778</td><td class="number">0.8000</td><td class="number">0.3870</td><td class="number">87.3839</td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td class="number">4</td><td class="number">0.6432</td><td class="number">0.7889</td><td class="number">0.7778</td><td class="number">0.3630</td><td class="number">247.6921</td></tr><tr><td>deepeval_szenario_2_pfad_a_docling</td><td class="number">5</td><td class="number">0.6273</td><td class="number">0.7781</td><td class="number">0.7611</td><td class="number">0.3428</td><td class="number">82.6876</td></tr></tbody></table>
+</main>
+</body>
+</html>

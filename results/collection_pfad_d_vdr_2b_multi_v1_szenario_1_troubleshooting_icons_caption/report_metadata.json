@@ -1,0 +1,10 @@
+{
+  "generated_at": "2026-05-11T12:24:58.545061+00:00",
+  "run_id": "collection_pfad_d_vdr_2b_multi_v1_szenario_1_troubleshooting_icons_caption",
+  "collection": "collection_pfad_d_vdr_2b_multi_v1_szenario_1_troubleshooting_icons",
+  "csv_path": "outputs/troubleshooting_vdr_2b_multi/collection_pfad_d_vdr_2b_multi_v1_szenario_1_troubleshooting_icons_caption.csv",
+  "query_count": 10,
+  "image_count": 23,
+  "report_type": "troubleshooting_retrieval",
+  "fairness_note": "Payload metadata is displayed after retrieval only. It is not used for embedding, filtering, reranking, score boosting, or query construction."
+}
