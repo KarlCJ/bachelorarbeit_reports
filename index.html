@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bachelorarbeit Reports</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --text-color: #f8fafc;
+            --card-bg: #1e293b;
+            --card-hover: #334155;
+            --accent: #3b82f6;
+            --accent-hover: #60a5fa;
+            --border: #334155;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        p.subtitle {
+            color: #94a3b8;
+            font-size: 1.1rem;
+        }
+        .category {
+            margin-bottom: 3rem;
+            background: rgba(30, 41, 59, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+        .category-title {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            color: #e2e8f0;
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .card:hover {
+            background: var(--card-hover);
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            box-shadow: 0 8px 12px -3px rgba(0, 0, 0, 0.2);
+        }
+        .card-title {
+            font-weight: 500;
+            word-break: break-all;
+        }
+        .card-icon {
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 600px) {
+            body { padding: 1rem; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Bachelorarbeit Reports</h1>
+            <p class="subtitle">Übersicht aller generierten HTML-Ergebnisse und Metriken</p>
+        </header>
+
+        <div class="category">
+            <h2 class="category-title">collection_pfad_a_szenario_1</h2>
+            <div class="grid">
+                <a href="results/collection_pfad_a_szenario_1/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_a_szenario_1_5x</h2>
+            <div class="grid">
+                <a href="results/5x_average_scores/collection_pfad_a_szenario_1_5x/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_a_szenario_2</h2>
+            <div class="grid">
+                <a href="results/collection_pfad_a_szenario_2/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_a_szenario_2_5x</h2>
+            <div class="grid">
+                <a href="results/5x_average_scores/collection_pfad_a_szenario_2_5x/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_b_szenario_1</h2>
+            <div class="grid">
+                <a href="results/collection_pfad_b_szenario_1/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_b_szenario_1_5x</h2>
+            <div class="grid">
+                <a href="results/5x_average_scores/collection_pfad_b_szenario_1_5x/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_b_szenario_2</h2>
+            <div class="grid">
+                <a href="results/collection_pfad_b_szenario_2/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_b_szenario_2_5x</h2>
+            <div class="grid">
+                <a href="results/5x_average_scores/collection_pfad_b_szenario_2_5x/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_c_colqwen2_szenario_1_troubleshooting_icons_image</h2>
+            <div class="grid">
+                <a href="results/collection_pfad_c_colqwen2_szenario_1_troubleshooting_icons_image/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_c_colqwen2_v1_0_merged_szenario_1_text_queries</h2>
+            <div class="grid">
+                <a href="results/collection_pfad_c_colqwen2_v1_0_merged_szenario_1_text_queries/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_c_colqwen2_v1_0_merged_szenario_1_troubleshooting_icons_image</h2>
+            <div class="grid">
+                <a href="results/collection_pfad_c_colqwen2_v1_0_merged_szenario_1_troubleshooting_icons_image/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_c_colqwen2_v1_0_merged_szenario_2_text_queries</h2>
+            <div class="grid">
+                <a href="results/collection_pfad_c_colqwen2_v1_0_merged_szenario_2_text_queries/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_d_gemini_embedding_2_szenario_1_text_queries</h2>
+            <div class="grid">
+                <a href="results/collection_pfad_d_gemini_embedding_2_szenario_1_text_queries/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_d_gemini_embedding_2_szenario_1_troubleshooting_icons_caption</h2>
+            <div class="grid">
+                <a href="results/collection_pfad_d_gemini_embedding_2_szenario_1_troubleshooting_icons_caption/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_d_gemini_embedding_2_szenario_1_troubleshooting_icons_cutted_image_regular_top5</h2>
+            <div class="grid">
+                <a href="results/collection_pfad_d_gemini_embedding_2_szenario_1_troubleshooting_icons_cutted_image_regular_top5/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_d_gemini_embedding_2_szenario_1_troubleshooting_icons_image</h2>
+            <div class="grid">
+                <a href="results/collection_pfad_d_gemini_embedding_2_szenario_1_troubleshooting_icons_image/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_d_gemini_embedding_2_szenario_1_troubleshooting_icons_multimodal</h2>
+            <div class="grid">
+                <a href="results/collection_pfad_d_gemini_embedding_2_szenario_1_troubleshooting_icons_multimodal/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_d_gemini_embedding_2_szenario_2_text_queries</h2>
+            <div class="grid">
+                <a href="results/collection_pfad_d_gemini_embedding_2_szenario_2_text_queries/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_d_vdr_2b_multi_v1_szenario_1_text_queries</h2>
+            <div class="grid">
+                <a href="results/collection_pfad_d_vdr_2b_multi_v1_szenario_1_text_queries/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_d_vdr_2b_multi_v1_szenario_1_troubleshooting_icons_caption</h2>
+            <div class="grid">
+                <a href="results/collection_pfad_d_vdr_2b_multi_v1_szenario_1_troubleshooting_icons_caption/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_d_vdr_2b_multi_v1_szenario_1_troubleshooting_icons_image</h2>
+            <div class="grid">
+                <a href="results/collection_pfad_d_vdr_2b_multi_v1_szenario_1_troubleshooting_icons_image/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">collection_pfad_d_vdr_2b_multi_v1_szenario_2_text_queries</h2>
+            <div class="grid">
+                <a href="results/collection_pfad_d_vdr_2b_multi_v1_szenario_2_text_queries/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">dogs_identity</h2>
+            <div class="grid">
+                <a href="results/dogs_identity/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">dogs_identity_grayscale</h2>
+            <div class="grid">
+                <a href="results/dogs_identity_grayscale/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">dogs_similarity</h2>
+            <div class="grid">
+                <a href="results/dogs_similarity/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">dogs_similarity_comparison_colqwen2_grayscale_top5</h2>
+            <div class="grid">
+                <a href="results/dogs_similarity_comparison_colqwen2_grayscale_top5/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">dogs_similarity_comparison_gemini_grayscale_top5</h2>
+            <div class="grid">
+                <a href="results/dogs_similarity_comparison_gemini_grayscale_top5/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">dogs_similarity_grayscale</h2>
+            <div class="grid">
+                <a href="results/dogs_similarity_grayscale/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">gemma4_31B_s1_qws_spec_pfad_d_gemini</h2>
+            <div class="grid">
+                <a href="results/llm_judge_comparison/gemma4_31B_s1_qws_spec_pfad_d_gemini/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">gpt54_s1_qws_spec_pfad_d_gemini</h2>
+            <div class="grid">
+                <a href="results/llm_judge_comparison/gpt54_s1_qws_spec_pfad_d_gemini/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">gpt55_s1_qws_spec_pfad_d_gemini</h2>
+            <div class="grid">
+                <a href="results/llm_judge_comparison/gpt55_s1_qws_spec_pfad_d_gemini/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">gpt_5_4_mini_s1_qws_spec_pfad_d_gemini</h2>
+            <div class="grid">
+                <a href="results/llm_judge_comparison/gpt_5_4_mini_s1_qws_spec_pfad_d_gemini/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">grayscale_comparison_colqwen2_grayscale_top5</h2>
+            <div class="grid">
+                <a href="results/grayscale_comparison_colqwen2_grayscale_top5/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2 class="category-title">grayscale_comparison_gemini_grayscale_top5</h2>
+            <div class="grid">
+                <a href="results/grayscale_comparison_gemini_grayscale_top5/index.html" class="card">
+                    <svg class="card-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="card-title">index.html</span>
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            Zuletzt aktualisiert am 29.05.2026 21:23:47
+        </footer>
+    </div>
+</body>
+</html>
