@@ -1,0 +1,10 @@
+{
+  "generated_at": "2026-05-31T16:23:27.690361+00:00",
+  "report_type": "deepeval_repeated_suite_summary",
+  "suite_id": "pdf_szenario_1",
+  "report_id": "deepeval_szenario_1_pfad_ab_docling_caption_image",
+  "iterations": 5,
+  "run_count": 1,
+  "row_count": 5,
+  "case_count": 18
+}
