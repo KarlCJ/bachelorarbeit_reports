@@ -1,0 +1,695 @@
+{
+  "metadata": {
+    "purpose": "DeepEval dataset-driven retrieval tests for Visual Document Retrieval benchmark",
+    "judge_model": "openai/gpt-5.4 via OpenRouter",
+    "query_backend": "gemini by default through google/gemini-embedding-2-preview",
+    "metrics": [
+      "ContextualPrecisionMetric",
+      "ContextualRecallMetric",
+      "ContextualRelevancyMetric"
+    ],
+    "manual_editing": "Edit query.text, query.image, ground_truth.reference_text, and ground_truth.reference_images. These query fields are the actual retrieval inputs used by the DeepEval retrieval suite."
+  },
+  "goldens": [
+    {
+      "query_id": "s1_qws_spezifikation_prc_toleranz",
+      "query": {
+        "type": "text",
+        "text": "Welche Synthese-Frequenz muss der QWS-3000 einhalten, welcher Toleranzbereich ist zulässig und an welcher Komponente wird dieser Wert gemessen?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "| Parameter | Einheit | Nennwert | Toleranzbereich | Anmerkungen zur Messung |\n|---|---|---:|---:|---|\n| Synthese-Frequenz | GHz | 15.75 | ± 0.05 | Gemessen am<br>Primär-Resonator (PRC) |",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_1",
+        "technical_handbook",
+        "table"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s1_qws_architektur_komponenten_abfolge",
+      "query": {
+        "type": "text",
+        "text": "Aus welchen fünf Hauptphasen besteht die modulare Architektur des QWS-3000 und welche Rolle übernehmen PRC, IQM, Kryo-Sensor und NES-VSR im System?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "Fünf Hauptphasen: Ionen-Injektionseinheit (IIU), Vakuum-Synthese-Reaktor (VSR), Quantum-Resonanzkammer (QRC), Temperaturkontroll-Array (TCA) und Materialextraktionseinheit (MEU). \nPrimär-Resonator-Controller (PRC): Regelt die Synthesefrequenz und überwacht die Energiezufuhr zur QRC.\nKryo-Sensor T-22: Ein hochpräziser Temperatursensor, kritisch für dieStabilität der Graphen-Synthese.\nIonen-Quell-Matrix (IQM): Erzeugt und beschleunigt die Vorläufer-Ionen vor deren Eintritt in den VSR.\nNot-Aus-Schleife (NES-VSR): Eine redundante Sicherheitsschleife, die bei Überdruck oder Temperaturspitzen den VSR sofort entleert.\n",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_1",
+        "technical_handbook",
+        "text"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s1_qws_flowchart_vakuum_resonanz_entscheidung",
+      "query": {
+        "type": "text",
+        "text": "Wie kalibriere ich den QWS, wenn der VSR-Druck unter 10⁻⁹ mbar liegt, und welche Schritte folgen bis zur Prüfung der Resonanzspitze?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "IQM Bias Spannung auf 5.0 kV setzen, Resonanz Frequenz Sweep auf 15.70 bis 15.80 GHz ausführen, Resonanzspitze bei 15.75 GHz ± 0.01 GHz prüfen",
+        "reference_images": [
+          "artifacts/extracted_images/docling/szenario_1/technical_handbook/page_004_picture_003.png"
+        ]
+      },
+      "tags": [
+        "szenario_1",
+        "technical_handbook",
+        "visual"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s1_visual_qws_spezifikation_prc_toleranz",
+      "query": {
+        "type": "image_text",
+        "text": "Beantworte die Frage auf dem Bild",
+        "image": "tests/evals/image_queries/qws_spezifikation_prc_toleranz.png"
+      },
+      "ground_truth": {
+        "reference_text": "| Parameter | Einheit | Nennwert | Toleranzbereich | Anmerkungen zur Messung |\n|---|---|---:|---:|---|\n| Synthese-Frequenz | GHz | 15.75 | ± 0.05 | Gemessen am<br>Primär-Resonator (PRC) |",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_1",
+        "technical_handbook",
+        "table"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s1_visual_qws_architektur_komponenten_abfolge",
+      "query": {
+        "type": "image_text",
+        "text": "Beantworte die Frage auf dem Bild",
+        "image": "tests/evals/image_queries/qws_architektur_komponenten_abfolge.png"
+      },
+      "ground_truth": {
+        "reference_text": "Fünf Hauptphasen: Ionen-Injektionseinheit (IIU), Vakuum-Synthese-Reaktor (VSR), Quantum-Resonanzkammer (QRC), Temperaturkontroll-Array (TCA) und Materialextraktionseinheit (MEU). \nPrimär-Resonator-Controller (PRC): Regelt die Synthesefrequenz und überwacht die Energiezufuhr zur QRC.\nKryo-Sensor T-22: Ein hochpräziser Temperatursensor, kritisch für dieStabilität der Graphen-Synthese.\nIonen-Quell-Matrix (IQM): Erzeugt und beschleunigt die Vorläufer-Ionen vor deren Eintritt in den VSR.\nNot-Aus-Schleife (NES-VSR): Eine redundante Sicherheitsschleife, die bei Überdruck oder Temperaturspitzen den VSR sofort entleert.\n",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_1",
+        "technical_handbook",
+        "text"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s1_visual_qws_flowchart_vakuum_resonanz_entscheidung",
+      "query": {
+        "type": "image_text",
+        "text": "Beantworte die Frage auf dem Bild",
+        "image": "tests/evals/image_queries/qws_flowchart_vakuum_resonanz_entscheidung.png"
+      },
+      "ground_truth": {
+        "reference_text": "IQM Bias Spannung auf 5.0 kV setzen, Resonanz Frequenz Sweep auf 15.70 bis 15.80 GHz ausführen, Resonanzspitze bei 15.75 GHz ± 0.01 GHz prüfen",
+        "reference_images": [
+          "artifacts/extracted_images/docling/szenario_1/technical_handbook/page_004_picture_003.png"
+        ]
+      },
+      "tags": [
+        "szenario_1",
+        "technical_handbook",
+        "visual"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s1_noised_visual_qws_spezifikation_prc_toleranz",
+      "query": {
+        "type": "image_text",
+        "text": "Beantworte die Frage auf dem Bild",
+        "image": "tests/evals/image_queries/noised_qws_spezifikation_prc_toleranz.png"
+      },
+      "ground_truth": {
+        "reference_text": "| Parameter | Einheit | Nennwert | Toleranzbereich | Anmerkungen zur Messung |\n|---|---|---:|---:|---|\n| Synthese-Frequenz | GHz | 15.75 | ± 0.05 | Gemessen am<br>Primär-Resonator (PRC) |",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_1",
+        "technical_handbook",
+        "table"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s1_noised_visual_qws_architektur_komponenten_abfolge",
+      "query": {
+        "type": "image_text",
+        "text": "Beantworte die Frage auf dem Bild",
+        "image": "tests/evals/image_queries/noised_qws_architektur_komponenten_abfolge.png"
+      },
+      "ground_truth": {
+        "reference_text": "Fünf Hauptphasen: Ionen-Injektionseinheit (IIU), Vakuum-Synthese-Reaktor (VSR), Quantum-Resonanzkammer (QRC), Temperaturkontroll-Array (TCA) und Materialextraktionseinheit (MEU). \nPrimär-Resonator-Controller (PRC): Regelt die Synthesefrequenz und überwacht die Energiezufuhr zur QRC.\nKryo-Sensor T-22: Ein hochpräziser Temperatursensor, kritisch für dieStabilität der Graphen-Synthese.\nIonen-Quell-Matrix (IQM): Erzeugt und beschleunigt die Vorläufer-Ionen vor deren Eintritt in den VSR.\nNot-Aus-Schleife (NES-VSR): Eine redundante Sicherheitsschleife, die bei Überdruck oder Temperaturspitzen den VSR sofort entleert.\n",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_1",
+        "technical_handbook",
+        "text"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s1_noised_visual_qws_flowchart_vakuum_resonanz_entscheidung",
+      "query": {
+        "type": "image_text",
+        "text": "Beantworte die Frage auf dem Bild",
+        "image": "tests/evals/image_queries/noised_qws_flowchart_vakuum_resonanz_entscheidung.png"
+      },
+      "ground_truth": {
+        "reference_text": "IQM Bias Spannung auf 5.0 kV setzen, Resonanz Frequenz Sweep auf 15.70 bis 15.80 GHz ausführen, Resonanzspitze bei 15.75 GHz ± 0.01 GHz prüfen",
+        "reference_images": [
+          "artifacts/extracted_images/docling/szenario_1/technical_handbook/page_004_picture_003.png"
+        ]
+      },
+      "tags": [
+        "szenario_1",
+        "technical_handbook",
+        "visual"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s1_qws_handgeschriebene_wartungstabelle_iqm_vsr",
+      "query": {
+        "type": "text",
+        "text": "Was gilt es bei der Wartung des HT-400 zu beachten und wer ist laut Wartungstabelle dafür verantwortlich?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "|Intervall|Bauteil|Kritische Parameter|Schmiermittel / Ersatzteil|Verantwortlicher|\n|---|---|---|---|---|\n|Jährlich|Haupttransformator (HT-400)|Effizienz, <br> Hitzeentwicklung|Kühlmittel (Destiliertes Glykol)<br>Filter (Austausch)|Elektrotechniker|",
+        "reference_images": [
+          "artifacts/extracted_images/docling/szenario_1/technical_handbook/page_005_table_017.png"
+        ]
+      },
+      "tags": [
+        "szenario_1",
+        "technical_handbook",
+        "handwritten_table"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s1_qws_fehler_e312_e404_vergleich",
+      "query": {
+        "type": "text",
+        "text": "Welche Maßnahmen sind bei einem E-312 Vakuum-Integrität Alarm nötig und wie unterscheiden sie sich von der Vorgehensweise bei einer E-404 Material-Handling Blockade?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "E-312 Vakuum-Integrität Alarm: Prüfen Sie alle Dichtungssätze (monatliche Wartung) und führen Sie eine Lecksuche durch. Starten Sie die automatische Vakuumpumpe.\nE-404 Material-Handling Blockade: Deaktivieren Sie das System und führen Sie eine manuelle Inspektion der MEU durch. Entfernen Sie blockiertes Material vorsichtig.",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_1",
+        "technical_handbook",
+        "table"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s1_qws_fehler_e803_e921_diagnose",
+      "query": {
+        "type": "text",
+        "text": "Was muss ich prüfen, wenn der supraleitende Magnet Strom-Ripple meldet, und welche manuelle Prozedur ist bei verlorener QRC-Kopplung vorgesehen?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "S-Mag Strom-Ripple: Überprüfen Sie den Haupttransformator (HT-400) auf Überhitzung. Führen Sie eine Kalibrierung der S-Mag-Drosselspulen durch.\nQRC-Kopplung verloren: Führen Sie einen vollständigen Frequenz-Sweep manuell durch. Überprüfen Sie die Kabelverbindungen zwischen PRC und QRC.",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_1",
+        "technical_handbook",
+        "table"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s1_aeronova_strategische_vision_2026",
+      "query": {
+        "type": "text",
+        "text": "Welche drei strategischen Schwerpunkte verfolgt AeroNova für die Last-Mile-Evolution im Jahr 2026?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "1. Hyper-Lokalisierung: Ausbau unseres Netzwerks in dicht besiedelten städtischen Gebieten, um Lieferzeiten unter 15 Minuten zu realisieren.\n2. KI-gestützte Prädiktion: Integration von tiefem maschinellem Lernen zur Vorhersage von Lieferengpässen und zur dynamischen Routenoptimierung.\n3. Nachhaltigkeit 360: Umstellung der gesamten Bodeninfrastruktur auf 100% erneuerbare Energien und vollständige Kompensation unserer Restemissionen.",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_1",
+        "annual_report",
+        "text"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s1_aeronova_finanzkennzahlen_q4_b2b_ebitda",
+      "query": {
+        "type": "text",
+        "text": "Wie hoch waren der Gesamtumsatz und Aero-Freight-B2B-Umsatz in Q4 2025, und welche EBITDA-Marge wurde in Q3 2025 erreicht?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "| Kennzahl | Einheit | Q1 2025 | Q2 2025 | Q3 2025 | Q4 2025 |\n|---|---|---:|---:|---:|---:|\n| **Umsatzerlöse** |  |  |  |  |  |\n| Aero-Freight (B2B) | Mio. USD | 10.3 | 25.7 | 88.4 | 145.9 |\n| **Gesamtumsatz** | **Mio. USD** | **460.8** | **520.9** | **599.2** | **731.0** |\n|  |  |  |  |  |  |\n| **Gewinnmargen** |  |  |  |  |  |\n| EBITDA-Marge | % | 27.1 | 27.0 | 29.3 | 28.8 |",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_1",
+        "annual_report",
+        "table"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s1_aeronova_marktanteile_2024_2025_vergleich",
+      "query": {
+        "type": "text",
+        "text": "Welche Marktanteile hatten Nordamerika und Lateinamerika jeweils in 2024 und 2025, und wie haben sich diese beiden Regionen verändert?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "2024:\nNordamerika (NA): 59%\nEuropa (EU): 18%\nAsien-Pazifik (APAC): 11%\nLateinamerika (LATAM): 8%\nÜbrige Regionen: 4%\n\n2025:\nNordamerika (NA): 35%\nEuropa (EU): 28%\nAsien-Pazifik (APAC): 22%\nLateinamerika (LATAM): 10%\nÜbrige Regionen: 5%",
+        "reference_images": [
+          "artifacts/extracted_images/docling/szenario_1/annual_report/full_circular_diagramm.png"
+        ]
+      },
+      "tags": [
+        "szenario_1",
+        "annual_report",
+        "visual"
+      ],
+      "comments": "Diese Ground Truth bewertet die vollständige Seite mit beiden Kreisdiagrammen und ist bewusst nicht an einzelne Docling-Extraktionsregionen gebunden."
+    },
+    {
+      "query_id": "s1_aeronova_forschung_budget_balkendiagramm",
+      "query": {
+        "type": "text",
+        "text": "In welche Branche beziehungsweise F&E-Säule ging bei AeroNova der größte Anteil des Forschungsbudgets, und wie groß war dieser Anteil?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "AeroNova: Verteilung des F&E Budgets:\nAutonome Navigationssysteme (KI): 40%\nBatterie- und Antriebseffizienz: 30%\nMaterialwissenschaften (Leichtbau): 15%\nActive-Sky-Plattform (Software): 15%",
+        "reference_images": [
+          "artifacts/extracted_images/docling/szenario_1/annual_report/page_004_picture_003.png"
+        ]
+      },
+      "tags": [
+        "szenario_1",
+        "annual_report",
+        "visual"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s1_aeronova_ion_drive_forschungskontext",
+      "query": {
+        "type": "text",
+        "text": "Welche F&E-Säule führte zur Einführung des Ion-Drive-Akkus, welchen Reichweitengewinn brachte er, und wie hoch war der zugehörige Budgetanteil?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "AeroNova: Verteilung des F&E Budgets:\nBatterie- und Antriebseffizienz: 30%\nDie Investition in Batterie- und Antriebseffizienz führte zur Einführung des neuen \"Ion-Drive\"-Akkus, der die Reichweite der Drohnen um 20% erhöhte.",
+        "reference_images": [
+          "artifacts/extracted_images/docling/szenario_1/annual_report/page_004_picture_003.png"
+        ]
+      },
+      "tags": [
+        "szenario_1",
+        "annual_report",
+        "visual_text"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s1_aeronova_esg_tabelle_webinar",
+      "query": {
+        "type": "text",
+        "text": "Wie haben sich erneuerbare Energie, Arbeitsunfälle, Diversität und Wasserverbrauch bei AeroNova entwickelt, und wann ist das ESG Strategy Update 2026 angesetzt?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "| Zielbereich | Kennzahl | 2024 Basiswert | 2025 Ist-Wert | 2025 Ziel-Erreichung |\n|---|---|---:|---:|---|\n| **Umwelt (E)** | Anteil erneuerbarer Energie<br>(Flotte/Basis) | 65% | 80% | Hoch |\n| **Soziales (S)** | Arbeitsunfälle (pro 1000h) | 0.8 | 0.5 | Hoch |\n| **Governance (G)** | Diversität (Führungsebenen) | 28% | 33% | Mittel |\n| **Umwelt (E)** | Wasserverbrauch<br>(Ladezentren) | 100% | 95% | Hoch |\n\nWir laden alle Stakeholder ein, an unserem nächsten Webinar zum Thema\nESG-Strategie teilzunehmen. Die Registrierung für die Veranstaltung ESG Strategy\nUpdate 2026 finden Sie unter https://meet.google.com/gan-esg-2026 am 08.02.2026.",
+        "reference_images": [
+          "artifacts/rasterized_pages/szenario_1/annual_report/AeroNova_Logistics_page_0005.png"
+        ]
+      },
+      "tags": [
+        "szenario_1",
+        "annual_report",
+        "table_text"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s2_qws_spezifikation_prc_toleranz",
+      "query": {
+        "type": "text",
+        "text": "Welche Synthese-Frequenz muss der QWS-3000 einhalten, welcher Toleranzbereich ist zulässig und an welcher Komponente wird dieser Wert gemessen?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "| Parameter | Einheit | Nennwert | Toleranzbereich | Anmerkungen zur Messung |\n|---|---|---:|---:|---|\n| Synthese-Frequenz | GHz | 15.75 | ± 0.05 | Gemessen am<br>Primär-Resonator (PRC) |",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_2",
+        "technical_handbook",
+        "table"
+      ],
+      "comments": "Szenario 2 nutzt dieselbe fachliche Ground Truth wie Szenario 1, aber Referenzbilder aus dem Noise-Szenario."
+    },
+    {
+      "query_id": "s2_qws_architektur_komponenten_abfolge",
+      "query": {
+        "type": "text",
+        "text": "Aus welchen fünf Hauptphasen besteht die modulare Architektur des QWS-3000 und welche Rolle übernehmen PRC, IQM, Kryo-Sensor und NES-VSR im System?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "Fünf Hauptphasen: Ionen-Injektionseinheit (IIU), Vakuum-Synthese-Reaktor (VSR), Quantum-Resonanzkammer (QRC), Temperaturkontroll-Array (TCA) und Materialextraktionseinheit (MEU). \nPrimär-Resonator-Controller (PRC): Regelt die Synthesefrequenz und überwacht die Energiezufuhr zur QRC.\nKryo-Sensor T-22: Ein hochpräziser Temperatursensor, kritisch für dieStabilität der Graphen-Synthese.\nIonen-Quell-Matrix (IQM): Erzeugt und beschleunigt die Vorläufer-Ionen vor deren Eintritt in den VSR.\nNot-Aus-Schleife (NES-VSR): Eine redundante Sicherheitsschleife, die bei Überdruck oder Temperaturspitzen den VSR sofort entleert.\n",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_2",
+        "technical_handbook",
+        "text"
+      ],
+      "comments": "Szenario 2 nutzt dieselbe fachliche Ground Truth wie Szenario 1, aber Referenzbilder aus dem Noise-Szenario."
+    },
+    {
+      "query_id": "s2_qws_flowchart_vakuum_resonanz_entscheidung",
+      "query": {
+        "type": "text",
+        "text": "Wie kalibriere ich den QWS, wenn der VSR-Druck unter 10⁻⁹ mbar liegt, und welche Schritte folgen bis zur Prüfung der Resonanzspitze?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "IQM Bias Spannung auf 5.0 kV setzen, Resonanz Frequenz Sweep auf 15.70 bis 15.80 GHz ausführen, Resonanzspitze bei 15.75 GHz ± 0.01 GHz prüfen",
+        "reference_images": [
+          "artifacts/extracted_images/docling/szenario_1/technical_handbook/page_004_picture_003.png"
+        ]
+      },
+      "tags": [
+        "szenario_2",
+        "technical_handbook",
+        "visual"
+      ],
+      "comments": "Szenario 2 nutzt dieselbe fachliche Ground Truth wie Szenario 1, aber Referenzbilder aus dem Noise-Szenario."
+    },
+    {
+      "query_id": "s2_visual_qws_spezifikation_prc_toleranz",
+      "query": {
+        "type": "image_text",
+        "text": "Beantworte die Frage auf dem Bild",
+        "image": "tests/evals/image_queries/qws_spezifikation_prc_toleranz.png"
+      },
+      "ground_truth": {
+        "reference_text": "| Parameter | Einheit | Nennwert | Toleranzbereich | Anmerkungen zur Messung |\n|---|---|---:|---:|---|\n| Synthese-Frequenz | GHz | 15.75 | ± 0.05 | Gemessen am<br>Primär-Resonator (PRC) |",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_2",
+        "technical_handbook",
+        "table"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s2_visual_qws_architektur_komponenten_abfolge",
+      "query": {
+        "type": "image_text",
+        "text": "Beantworte die Frage auf dem Bild",
+        "image": "tests/evals/image_queries/qws_architektur_komponenten_abfolge.png"
+      },
+      "ground_truth": {
+        "reference_text": "Fünf Hauptphasen: Ionen-Injektionseinheit (IIU), Vakuum-Synthese-Reaktor (VSR), Quantum-Resonanzkammer (QRC), Temperaturkontroll-Array (TCA) und Materialextraktionseinheit (MEU). \nPrimär-Resonator-Controller (PRC): Regelt die Synthesefrequenz und überwacht die Energiezufuhr zur QRC.\nKryo-Sensor T-22: Ein hochpräziser Temperatursensor, kritisch für dieStabilität der Graphen-Synthese.\nIonen-Quell-Matrix (IQM): Erzeugt und beschleunigt die Vorläufer-Ionen vor deren Eintritt in den VSR.\nNot-Aus-Schleife (NES-VSR): Eine redundante Sicherheitsschleife, die bei Überdruck oder Temperaturspitzen den VSR sofort entleert.\n",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_2",
+        "technical_handbook",
+        "text"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s2_visual_qws_flowchart_vakuum_resonanz_entscheidung",
+      "query": {
+        "type": "image_text",
+        "text": "Beantworte die Frage auf dem Bild",
+        "image": "tests/evals/image_queries/qws_flowchart_vakuum_resonanz_entscheidung.png"
+      },
+      "ground_truth": {
+        "reference_text": "IQM Bias Spannung auf 5.0 kV setzen, Resonanz Frequenz Sweep auf 15.70 bis 15.80 GHz ausführen, Resonanzspitze bei 15.75 GHz ± 0.01 GHz prüfen",
+        "reference_images": [
+          "artifacts/extracted_images/docling/szenario_1/technical_handbook/page_004_picture_003.png"
+        ]
+      },
+      "tags": [
+        "szenario_2",
+        "technical_handbook",
+        "visual"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s2_noised_visual_qws_spezifikation_prc_toleranz",
+      "query": {
+        "type": "image_text",
+        "text": "Beantworte die Frage auf dem Bild",
+        "image": "tests/evals/image_queries/noised_qws_spezifikation_prc_toleranz.png"
+      },
+      "ground_truth": {
+        "reference_text": "| Parameter | Einheit | Nennwert | Toleranzbereich | Anmerkungen zur Messung |\n|---|---|---:|---:|---|\n| Synthese-Frequenz | GHz | 15.75 | ± 0.05 | Gemessen am<br>Primär-Resonator (PRC) |",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_2",
+        "technical_handbook",
+        "table"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s2_noised_visual_qws_architektur_komponenten_abfolge",
+      "query": {
+        "type": "image_text",
+        "text": "Beantworte die Frage auf dem Bild",
+        "image": "tests/evals/image_queries/noised_qws_architektur_komponenten_abfolge.png"
+      },
+      "ground_truth": {
+        "reference_text": "Fünf Hauptphasen: Ionen-Injektionseinheit (IIU), Vakuum-Synthese-Reaktor (VSR), Quantum-Resonanzkammer (QRC), Temperaturkontroll-Array (TCA) und Materialextraktionseinheit (MEU). \nPrimär-Resonator-Controller (PRC): Regelt die Synthesefrequenz und überwacht die Energiezufuhr zur QRC.\nKryo-Sensor T-22: Ein hochpräziser Temperatursensor, kritisch für dieStabilität der Graphen-Synthese.\nIonen-Quell-Matrix (IQM): Erzeugt und beschleunigt die Vorläufer-Ionen vor deren Eintritt in den VSR.\nNot-Aus-Schleife (NES-VSR): Eine redundante Sicherheitsschleife, die bei Überdruck oder Temperaturspitzen den VSR sofort entleert.\n",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_2",
+        "technical_handbook",
+        "text"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s2_noised_visual_qws_flowchart_vakuum_resonanz_entscheidung",
+      "query": {
+        "type": "image_text",
+        "text": "Beantworte die Frage auf dem Bild",
+        "image": "tests/evals/image_queries/noised_qws_flowchart_vakuum_resonanz_entscheidung.png"
+      },
+      "ground_truth": {
+        "reference_text": "IQM Bias Spannung auf 5.0 kV setzen, Resonanz Frequenz Sweep auf 15.70 bis 15.80 GHz ausführen, Resonanzspitze bei 15.75 GHz ± 0.01 GHz prüfen",
+        "reference_images": [
+          "artifacts/extracted_images/docling/szenario_1/technical_handbook/page_004_picture_003.png"
+        ]
+      },
+      "tags": [
+        "szenario_2",
+        "technical_handbook",
+        "visual"
+      ],
+      "comments": "Manuell prüfbare Ground Truth. query.text, query.image, ground_truth.reference_text und ground_truth.reference_images dürfen für DeepEval angepasst werden."
+    },
+    {
+      "query_id": "s2_qws_handgeschriebene_wartungstabelle_iqm_vsr",
+      "query": {
+        "type": "text",
+        "text": "Was gilt es bei der Wartung des HT-400 zu beachten und wer ist laut Wartungstabelle dafür verantwortlich?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "|Intervall|Bauteil|Kritische Parameter|Schmiermittel / Ersatzteil|Verantwortlicher|\n|---|---|---|---|---|\n|Jährlich|Haupttransformator (HT-400)|Effizienz, <br> Hitzeentwicklung|Kühlmittel (Destiliertes Glykol)<br>Filter (Austausch)|Elektrotechniker|",
+        "reference_images": [
+          "artifacts/extracted_images/docling/szenario_1/technical_handbook/page_005_table_017.png"
+        ]
+      },
+      "tags": [
+        "szenario_2",
+        "technical_handbook",
+        "handwritten_table"
+      ],
+      "comments": "Szenario 2 nutzt dieselbe fachliche Ground Truth wie Szenario 1, aber Referenzbilder aus dem Noise-Szenario."
+    },
+    {
+      "query_id": "s2_qws_fehler_e312_e404_vergleich",
+      "query": {
+        "type": "text",
+        "text": "Welche Maßnahmen sind bei einem E-312 Vakuum-Integrität Alarm nötig und wie unterscheiden sie sich von der Vorgehensweise bei einer E-404 Material-Handling Blockade?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "E-312 Vakuum-Integrität Alarm: Prüfen Sie alle Dichtungssätze (monatliche Wartung) und führen Sie eine Lecksuche durch. Starten Sie die automatische Vakuumpumpe.\nE-404 Material-Handling Blockade: Deaktivieren Sie das System und führen Sie eine manuelle Inspektion der MEU durch. Entfernen Sie blockiertes Material vorsichtig.",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_2",
+        "technical_handbook",
+        "table"
+      ],
+      "comments": "Szenario 2 nutzt dieselbe fachliche Ground Truth wie Szenario 1, aber Referenzbilder aus dem Noise-Szenario."
+    },
+    {
+      "query_id": "s2_qws_fehler_e803_e921_diagnose",
+      "query": {
+        "type": "text",
+        "text": "Was muss ich prüfen, wenn der supraleitende Magnet Strom-Ripple meldet, und welche manuelle Prozedur ist bei verlorener QRC-Kopplung vorgesehen?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "S-Mag Strom-Ripple: Überprüfen Sie den Haupttransformator (HT-400) auf Überhitzung. Führen Sie eine Kalibrierung der S-Mag-Drosselspulen durch.\nQRC-Kopplung verloren: Führen Sie einen vollständigen Frequenz-Sweep manuell durch. Überprüfen Sie die Kabelverbindungen zwischen PRC und QRC.",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_2",
+        "technical_handbook",
+        "table"
+      ],
+      "comments": "Szenario 2 nutzt dieselbe fachliche Ground Truth wie Szenario 1, aber Referenzbilder aus dem Noise-Szenario."
+    },
+    {
+      "query_id": "s2_aeronova_strategische_vision_2026",
+      "query": {
+        "type": "text",
+        "text": "Welche drei strategischen Schwerpunkte verfolgt AeroNova für die Last-Mile-Evolution im Jahr 2026?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "1. Hyper-Lokalisierung: Ausbau unseres Netzwerks in dicht besiedelten städtischen Gebieten, um Lieferzeiten unter 15 Minuten zu realisieren.\n2. KI-gestützte Prädiktion: Integration von tiefem maschinellem Lernen zur Vorhersage von Lieferengpässen und zur dynamischen Routenoptimierung.\n3. Nachhaltigkeit 360: Umstellung der gesamten Bodeninfrastruktur auf 100% erneuerbare Energien und vollständige Kompensation unserer Restemissionen.",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_2",
+        "annual_report",
+        "text"
+      ],
+      "comments": "Szenario 2 nutzt dieselbe fachliche Ground Truth wie Szenario 1, aber Referenzbilder aus dem Noise-Szenario."
+    },
+    {
+      "query_id": "s2_aeronova_finanzkennzahlen_q4_b2b_ebitda",
+      "query": {
+        "type": "text",
+        "text": "Wie hoch waren der Gesamtumsatz und Aero-Freight-B2B-Umsatz in Q4 2025, und welche EBITDA-Marge wurde in Q3 2025 erreicht?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "| Kennzahl | Einheit | Q1 2025 | Q2 2025 | Q3 2025 | Q4 2025 |\n|---|---|---:|---:|---:|---:|\n| **Umsatzerlöse** |  |  |  |  |  |\n| Aero-Freight (B2B) | Mio. USD | 10.3 | 25.7 | 88.4 | 145.9 |\n| **Gesamtumsatz** | **Mio. USD** | **460.8** | **520.9** | **599.2** | **731.0** |\n|  |  |  |  |  |  |\n| **Gewinnmargen** |  |  |  |  |  |\n| EBITDA-Marge | % | 27.1 | 27.0 | 29.3 | 28.8 |",
+        "reference_images": []
+      },
+      "tags": [
+        "szenario_2",
+        "annual_report",
+        "table"
+      ],
+      "comments": "Szenario 2 nutzt dieselbe fachliche Ground Truth wie Szenario 1, aber Referenzbilder aus dem Noise-Szenario."
+    },
+    {
+      "query_id": "s2_aeronova_marktanteile_2024_2025_vergleich",
+      "query": {
+        "type": "text",
+        "text": "Welche Marktanteile hatten Nordamerika und Lateinamerika jeweils in 2024 und 2025, und wie haben sich diese beiden Regionen verändert?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "2024:\nNordamerika (NA): 59%\nEuropa (EU): 18%\nAsien-Pazifik (APAC): 11%\nLateinamerika (LATAM): 8%\nÜbrige Regionen: 4%\n\n2025:\nNordamerika (NA): 35%\nEuropa (EU): 28%\nAsien-Pazifik (APAC): 22%\nLateinamerika (LATAM): 10%\nÜbrige Regionen: 5%",
+        "reference_images": [
+          "artifacts/extracted_images/docling/szenario_1/annual_report/full_circular_diagramm.png"
+        ]
+      },
+      "tags": [
+        "szenario_2",
+        "annual_report",
+        "visual"
+      ],
+      "comments": "Diese Ground Truth bewertet die vollständige Seite mit beiden Kreisdiagrammen und ist bewusst nicht an einzelne Docling-Extraktionsregionen gebunden."
+    },
+    {
+      "query_id": "s2_aeronova_forschung_budget_balkendiagramm",
+      "query": {
+        "type": "text",
+        "text": "In welche Branche beziehungsweise F&E-Säule ging bei AeroNova der größte Anteil des Forschungsbudgets, und wie groß war dieser Anteil?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "AeroNova: Verteilung des F&E Budgets:\nAutonome Navigationssysteme (KI): 40%\nBatterie- und Antriebseffizienz: 30%\nMaterialwissenschaften (Leichtbau): 15%\nActive-Sky-Plattform (Software): 15%",
+        "reference_images": [
+          "artifacts/extracted_images/docling/szenario_1/annual_report/page_004_picture_003.png"
+        ]
+      },
+      "tags": [
+        "szenario_2",
+        "annual_report",
+        "visual"
+      ],
+      "comments": "Szenario 2 nutzt dieselbe fachliche Ground Truth wie Szenario 1, aber Referenzbilder aus dem Noise-Szenario."
+    },
+    {
+      "query_id": "s2_aeronova_ion_drive_forschungskontext",
+      "query": {
+        "type": "text",
+        "text": "Welche F&E-Säule führte zur Einführung des Ion-Drive-Akkus, welchen Reichweitengewinn brachte er, und wie hoch war der zugehörige Budgetanteil?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "AeroNova: Verteilung des F&E Budgets:\nBatterie- und Antriebseffizienz: 30%\nDie Investition in Batterie- und Antriebseffizienz führte zur Einführung des neuen \"Ion-Drive\"-Akkus, der die Reichweite der Drohnen um 20% erhöhte.",
+        "reference_images": [
+          "artifacts/extracted_images/docling/szenario_1/annual_report/page_004_picture_003.png"
+        ]
+      },
+      "tags": [
+        "szenario_2",
+        "annual_report",
+        "visual_text"
+      ],
+      "comments": "Szenario 2 nutzt dieselbe fachliche Ground Truth wie Szenario 1, aber Referenzbilder aus dem Noise-Szenario."
+    },
+    {
+      "query_id": "s2_aeronova_esg_tabelle_webinar",
+      "query": {
+        "type": "text",
+        "text": "Wie haben sich erneuerbare Energie, Arbeitsunfälle, Diversität und Wasserverbrauch bei AeroNova entwickelt, und wann ist das ESG Strategy Update 2026 angesetzt?",
+        "image": null
+      },
+      "ground_truth": {
+        "reference_text": "| Zielbereich | Kennzahl | 2024 Basiswert | 2025 Ist-Wert | 2025 Ziel-Erreichung |\n|---|---|---:|---:|---|\n| **Umwelt (E)** | Anteil erneuerbarer Energie<br>(Flotte/Basis) | 65% | 80% | Hoch |\n| **Soziales (S)** | Arbeitsunfälle (pro 1000h) | 0.8 | 0.5 | Hoch |\n| **Governance (G)** | Diversität (Führungsebenen) | 28% | 33% | Mittel |\n| **Umwelt (E)** | Wasserverbrauch<br>(Ladezentren) | 100% | 95% | Hoch |\n\nWir laden alle Stakeholder ein, an unserem nächsten Webinar zum Thema\nESG-Strategie teilzunehmen. Die Registrierung für die Veranstaltung ESG Strategy\nUpdate 2026 finden Sie unter https://meet.google.com/gan-esg-2026 am 08.02.2026.",
+        "reference_images": [
+          "artifacts/rasterized_pages/szenario_1/annual_report/AeroNova_Logistics_page_0005.png"
+        ]
+      },
+      "tags": [
+        "szenario_2",
+        "annual_report",
+        "table_text"
+      ],
+      "comments": "Szenario 2 nutzt dieselbe fachliche Ground Truth wie Szenario 1, aber Referenzbilder aus dem Noise-Szenario."
+    }
+  ]
+}

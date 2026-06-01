@@ -1,0 +1,2764 @@
+{
+  "scenarios": {
+    "szenario_1": {
+      "description": "Document context retrieval over synthetic primary PDFs.",
+      "documents": [
+        {
+          "document_id": "technical_handbook",
+          "role": "technical_handbook",
+          "path": "data/source/scenario_1/technical_handbook/Quantum Weaver.pdf",
+          "page_count": 7
+        },
+        {
+          "document_id": "annual_report",
+          "role": "annual_report",
+          "path": "data/source/scenario_1/annual_report/AeroNova Logistics.pdf",
+          "page_count": 5
+        }
+      ],
+      "queries": [
+        {
+          "query_id": "s1_qws_spezifikation_prc_toleranz",
+          "scenario_id": "szenario_1",
+          "query_text": "Welche Synthese-Frequenz muss der QWS-3000 einhalten, welcher Toleranzbereich ist zulässig und an welcher Komponente wird dieser Wert gemessen?",
+          "query_modality": "text",
+          "target_modality": "table",
+          "expected_document_id": "technical_handbook",
+          "expected_pages": [
+            1
+          ],
+          "expected_answer_hint": "15.75 GHz, ± 0.05 GHz, Primär-Resonator (PRC)",
+          "expected_visual_evidence_count": 1,
+          "relevant_point_ids": [
+            "aa950a42-2ae4-5007-972a-df8e4be02006"
+          ]
+        },
+        {
+          "query_id": "s1_qws_architektur_komponenten_abfolge",
+          "scenario_id": "szenario_1",
+          "query_text": "Aus welchen fünf Hauptphasen besteht die modulare Architektur des QWS-3000 und welche Rolle übernehmen PRC, IQM, Kryo-Sensor und NES-VSR im System?",
+          "query_modality": "text",
+          "target_modality": "text",
+          "expected_document_id": "technical_handbook",
+          "expected_pages": [
+            2
+          ],
+          "expected_answer_hint": "PRC, Kryo-Sensor T-22, IQM und NES-VSR",
+          "expected_visual_evidence_count": 0,
+          "relevant_point_ids": [
+            "46c9cf8e-3146-5d1e-a9a8-7a3d3fbb3134"
+          ]
+        },
+        {
+          "query_id": "s1_qws_flowchart_vakuum_resonanz_entscheidung",
+          "scenario_id": "szenario_1",
+          "query_text": "Wie kalibriere ich den QWS laut Flowchart, wenn der VSR-Druck unter 10⁻⁹ mbar liegt, und welche Schritte folgen bis zur Prüfung der Resonanzspitze?",
+          "query_modality": "text",
+          "target_modality": "visual",
+          "expected_document_id": "technical_handbook",
+          "expected_pages": [
+            4
+          ],
+          "expected_answer_hint": "IQM Bias Spannung auf 5.0 kV setzen, Resonanz-Sweep ausführen, Resonanzspitze bei 15.75 GHz ± 0.01 GHz prüfen",
+          "expected_visual_evidence_count": 1,
+          "relevant_point_ids": [
+            "b01451ea-830e-5ba9-9065-e89efb71ea60"
+          ]
+        },
+        {
+          "query_id": "s1_qws_handgeschriebene_wartungstabelle_iqm_vsr",
+          "scenario_id": "szenario_1",
+          "query_text": "Was gilt es bei der Wartung des Haupttransformators HT-400 zu beachten und wer ist laut handgeschriebener Wartungstabelle dafür verantwortlich?",
+          "query_modality": "text",
+          "target_modality": "handwritten_table",
+          "expected_document_id": "technical_handbook",
+          "expected_pages": [
+            5
+          ],
+          "expected_answer_hint": "Jährliche HT-400-Wartung, Effizienz und Hitzeentwicklung, Elektrotechniker",
+          "expected_visual_evidence_count": 1,
+          "relevant_point_ids": [
+            "dffff53a-3f79-5872-b6fc-3acf6512ea82"
+          ]
+        },
+        {
+          "query_id": "s1_qws_fehler_e312_e404_vergleich",
+          "scenario_id": "szenario_1",
+          "query_text": "Welche Maßnahmen sind bei einem E-312 Vakuum-Integrität Alarm nötig und wie unterscheiden sie sich von der Vorgehensweise bei einer E-404 Material-Handling Blockade?",
+          "query_modality": "text",
+          "target_modality": "table",
+          "expected_document_id": "technical_handbook",
+          "expected_pages": [
+            6
+          ],
+          "expected_answer_hint": "Dichtungssätze prüfen, Lecksuche durchführen, MEU inspizieren",
+          "expected_visual_evidence_count": 1,
+          "relevant_point_ids": [
+            "ef0c687b-2e96-5473-baeb-8841489fe2dc"
+          ]
+        },
+        {
+          "query_id": "s1_qws_fehler_e803_e921_diagnose",
+          "scenario_id": "szenario_1",
+          "query_text": "Was muss ich prüfen, wenn der supraleitende Magnet Strom-Ripple meldet, und welche manuelle Prozedur ist bei verlorener QRC-Kopplung vorgesehen?",
+          "query_modality": "text",
+          "target_modality": "table",
+          "expected_document_id": "technical_handbook",
+          "expected_pages": [
+            7
+          ],
+          "expected_answer_hint": "E-803 S-Mag Strom-Ripple und E-921 QRC-Kopplung verloren",
+          "expected_visual_evidence_count": 1,
+          "relevant_point_ids": [
+            "52b10078-730d-5f8a-9973-05706e3ba9fc"
+          ]
+        },
+        {
+          "query_id": "s1_aeronova_strategische_vision_2026",
+          "scenario_id": "szenario_1",
+          "query_text": "Welche drei strategischen Schwerpunkte verfolgt AeroNova für die Last-Mile-Evolution im Jahr 2026?",
+          "query_modality": "text",
+          "target_modality": "text",
+          "expected_document_id": "annual_report",
+          "expected_pages": [
+            1
+          ],
+          "expected_answer_hint": "Hyper-Lokalisierung, KI-gestützte Prädiktion, Nachhaltigkeit 360",
+          "expected_visual_evidence_count": 0,
+          "relevant_point_ids": [
+            "cdbf50ef-d636-5cd0-a4a2-9aa8b176033e"
+          ]
+        },
+        {
+          "query_id": "s1_aeronova_finanzkennzahlen_q4_b2b_ebitda",
+          "scenario_id": "szenario_1",
+          "query_text": "Wie hoch waren der Gesamtumsatz und Aero-Freight-B2B-Umsatz in Q4 2025, und welche EBITDA-Marge wurde in Q3 2025 erreicht?",
+          "query_modality": "text",
+          "target_modality": "table",
+          "expected_document_id": "annual_report",
+          "expected_pages": [
+            2
+          ],
+          "expected_answer_hint": "731.0 Mio. USD, 145.9 Mio. USD, 29.3%",
+          "expected_visual_evidence_count": 1,
+          "relevant_point_ids": [
+            "a40b2321-b5b1-5152-bc9f-4553aa759603"
+          ]
+        },
+        {
+          "query_id": "s1_aeronova_marktanteile_2024_2025_vergleich",
+          "scenario_id": "szenario_1",
+          "query_text": "Welche Marktanteile hatten Nordamerika und Lateinamerika jeweils in 2024 und 2025, und wie haben sich diese beiden Regionen verändert?",
+          "query_modality": "text",
+          "target_modality": "visual",
+          "expected_document_id": "annual_report",
+          "expected_pages": [
+            3
+          ],
+          "expected_answer_hint": "Nordamerika 59% auf 35%, Lateinamerika 8% auf 10%",
+          "expected_visual_evidence_count": 2,
+          "relevant_point_ids": [
+            "a3395251-fc6f-5cc1-978d-8279e07d7b63"
+          ]
+        },
+        {
+          "query_id": "s1_aeronova_forschung_budget_balkendiagramm",
+          "scenario_id": "szenario_1",
+          "query_text": "In welche Branche beziehungsweise F&E-Säule ging bei AeroNova der größte Anteil des Forschungsbudgets, und wie groß war dieser Anteil?",
+          "query_modality": "text",
+          "target_modality": "visual",
+          "expected_document_id": "annual_report",
+          "expected_pages": [
+            4
+          ],
+          "expected_answer_hint": "Autonome Navigationssysteme (KI), 40%",
+          "expected_visual_evidence_count": 1,
+          "relevant_point_ids": [
+            "ddde9b8a-e8eb-50fb-814b-b35a955331f9"
+          ]
+        },
+        {
+          "query_id": "s1_aeronova_ion_drive_forschungskontext",
+          "scenario_id": "szenario_1",
+          "query_text": "Welche F&E-Säule führte zur Einführung des Ion-Drive-Akkus, welchen Reichweitengewinn brachte er, und wie hoch war der zugehörige Budgetanteil?",
+          "query_modality": "text",
+          "target_modality": "visual_text",
+          "expected_document_id": "annual_report",
+          "expected_pages": [
+            4
+          ],
+          "expected_answer_hint": "Batterie- und Antriebseffizienz, 20% mehr Reichweite, 30% Budgetanteil",
+          "expected_visual_evidence_count": 1,
+          "relevant_point_ids": [
+            "ddde9b8a-e8eb-50fb-814b-b35a955331f9"
+          ]
+        },
+        {
+          "query_id": "s1_aeronova_esg_tabelle_webinar",
+          "scenario_id": "szenario_1",
+          "query_text": "Wie haben sich erneuerbare Energie, Arbeitsunfälle, Diversität und Wasserverbrauch bei AeroNova entwickelt, und wann ist das ESG Strategy Update 2026 angesetzt?",
+          "query_modality": "text",
+          "target_modality": "table_text",
+          "expected_document_id": "annual_report",
+          "expected_pages": [
+            5
+          ],
+          "expected_answer_hint": "80% erneuerbare Energie, 0.5 Arbeitsunfälle, 33% Diversität, 95% Wasserverbrauch, 08.02.2026",
+          "expected_visual_evidence_count": 1,
+          "relevant_point_ids": [
+            "cbb783af-5f7e-57b6-83a9-46e9292fcbe6"
+          ]
+        }
+      ],
+      "troubleshooting_icon_benchmark": {
+        "scenario_id": "szenario_1_troubleshooting_icons",
+        "indexed_reference_screenshots": [
+          {
+            "point_id": "f23747f7-828d-52c9-8904-8cf7897567ac",
+            "path": "data/source/scenario_1/screenshots_manual/01_e101_resonance_frequency_drift.png",
+            "error_code": "e101",
+            "fault_label": "resonance_frequency_drift",
+            "expected_pdf_page_number": 5,
+            "expected_pdf_page_point_id": "fc240a98-6538-53d7-853b-fffce96bb809"
+          },
+          {
+            "point_id": "e7f4860d-23b9-51e9-810e-76906809e337",
+            "path": "data/source/scenario_1/screenshots_manual/02_e205_tca_overtemperature.png",
+            "error_code": "e205",
+            "fault_label": "tca_overtemperature",
+            "expected_pdf_page_number": 6,
+            "expected_pdf_page_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169"
+          },
+          {
+            "point_id": "35dc6d1b-2c38-5a07-b794-45afd4148fd5",
+            "path": "data/source/scenario_1/screenshots_manual/03_e312_vacuum_integrity_alarm.png",
+            "error_code": "e312",
+            "fault_label": "vacuum_integrity_alarm",
+            "expected_pdf_page_number": 6,
+            "expected_pdf_page_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169"
+          },
+          {
+            "point_id": "d04a9d77-7d9b-5c73-8ac1-3ca143c57711",
+            "path": "data/source/scenario_1/screenshots_manual/04_e404_material_handling_blockage.png",
+            "error_code": "e404",
+            "fault_label": "material_handling_blockage",
+            "expected_pdf_page_number": 6,
+            "expected_pdf_page_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169"
+          },
+          {
+            "point_id": "b87d3a9a-f742-5e01-ab08-aff5c0a0c6f0",
+            "path": "data/source/scenario_1/screenshots_manual/05_e500_system_initialization_error.png",
+            "error_code": "e500",
+            "fault_label": "system_initialization_error",
+            "expected_pdf_page_number": 6,
+            "expected_pdf_page_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169"
+          },
+          {
+            "point_id": "e943e693-495d-5c12-8989-88452eac972f",
+            "path": "data/source/scenario_1/screenshots_manual/06_e602_iqm_ion_flow_inconsistent.png",
+            "error_code": "e602",
+            "fault_label": "iqm_ion_flow_inconsistent",
+            "expected_pdf_page_number": 6,
+            "expected_pdf_page_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169"
+          },
+          {
+            "point_id": "7f0066c5-dcd3-5131-99c7-4bd3ea36fd74",
+            "path": "data/source/scenario_1/screenshots_manual/07_e710_tca_heating_matrix_defect.png",
+            "error_code": "e710",
+            "fault_label": "tca_heating_matrix_defect",
+            "expected_pdf_page_number": 6,
+            "expected_pdf_page_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169"
+          },
+          {
+            "point_id": "4dedd8b8-bccc-5198-9046-fd5203be2827",
+            "path": "data/source/scenario_1/screenshots_manual/08_e803_s_mag_current_ripple.png",
+            "error_code": "e803",
+            "fault_label": "s_mag_current_ripple",
+            "expected_pdf_page_number": 7,
+            "expected_pdf_page_point_id": "573a6901-b6f0-5af0-a85c-e48fb75d9155"
+          },
+          {
+            "point_id": "7d699202-36b0-5ba1-8205-4d06093ac7a9",
+            "path": "data/source/scenario_1/screenshots_manual/09_e921_qrc_coupling_lost.png",
+            "error_code": "e921",
+            "fault_label": "qrc_coupling_lost",
+            "expected_pdf_page_number": 7,
+            "expected_pdf_page_point_id": "573a6901-b6f0-5af0-a85c-e48fb75d9155"
+          },
+          {
+            "point_id": "6c634fcc-4491-590f-900d-8072ff77015c",
+            "path": "data/source/scenario_1/screenshots_manual/10_e999_critical_system_error.png",
+            "error_code": "e999",
+            "fault_label": "critical_system_error",
+            "expected_pdf_page_number": 7,
+            "expected_pdf_page_point_id": "573a6901-b6f0-5af0-a85c-e48fb75d9155"
+          }
+        ],
+        "indexed_reference_icon_crops": [
+          {
+            "point_id": "f23747f7-828d-52c9-8904-8cf7897567ac",
+            "path": "data/source/scenario_1/screenshots_manual_cutted/01_e101_resonance_frequency_drift.png",
+            "error_code": "e101",
+            "fault_label": "resonance_frequency_drift",
+            "expected_pdf_page_number": 5,
+            "expected_pdf_page_point_id": "fc240a98-6538-53d7-853b-fffce96bb809"
+          },
+          {
+            "point_id": "e7f4860d-23b9-51e9-810e-76906809e337",
+            "path": "data/source/scenario_1/screenshots_manual_cutted/02_e205_tca_overtemperature.png",
+            "error_code": "e205",
+            "fault_label": "tca_overtemperature",
+            "expected_pdf_page_number": 6,
+            "expected_pdf_page_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169"
+          },
+          {
+            "point_id": "35dc6d1b-2c38-5a07-b794-45afd4148fd5",
+            "path": "data/source/scenario_1/screenshots_manual_cutted/03_e312_vacuum_integrity_alarm.png",
+            "error_code": "e312",
+            "fault_label": "vacuum_integrity_alarm",
+            "expected_pdf_page_number": 6,
+            "expected_pdf_page_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169"
+          },
+          {
+            "point_id": "d04a9d77-7d9b-5c73-8ac1-3ca143c57711",
+            "path": "data/source/scenario_1/screenshots_manual_cutted/04_e404_material_handling_blockage.png",
+            "error_code": "e404",
+            "fault_label": "material_handling_blockage",
+            "expected_pdf_page_number": 6,
+            "expected_pdf_page_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169"
+          },
+          {
+            "point_id": "b87d3a9a-f742-5e01-ab08-aff5c0a0c6f0",
+            "path": "data/source/scenario_1/screenshots_manual_cutted/05_e500_system_initialization_error.png",
+            "error_code": "e500",
+            "fault_label": "system_initialization_error",
+            "expected_pdf_page_number": 6,
+            "expected_pdf_page_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169"
+          },
+          {
+            "point_id": "e943e693-495d-5c12-8989-88452eac972f",
+            "path": "data/source/scenario_1/screenshots_manual_cutted/06_e602_iqm_ion_flow_inconsistent.png",
+            "error_code": "e602",
+            "fault_label": "iqm_ion_flow_inconsistent",
+            "expected_pdf_page_number": 6,
+            "expected_pdf_page_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169"
+          },
+          {
+            "point_id": "7f0066c5-dcd3-5131-99c7-4bd3ea36fd74",
+            "path": "data/source/scenario_1/screenshots_manual_cutted/07_e710_tca_heating_matrix_defect.png",
+            "error_code": "e710",
+            "fault_label": "tca_heating_matrix_defect",
+            "expected_pdf_page_number": 6,
+            "expected_pdf_page_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169"
+          },
+          {
+            "point_id": "4dedd8b8-bccc-5198-9046-fd5203be2827",
+            "path": "data/source/scenario_1/screenshots_manual_cutted/08_e803_s_mag_current_ripple.png",
+            "error_code": "e803",
+            "fault_label": "s_mag_current_ripple",
+            "expected_pdf_page_number": 7,
+            "expected_pdf_page_point_id": "573a6901-b6f0-5af0-a85c-e48fb75d9155"
+          },
+          {
+            "point_id": "7d699202-36b0-5ba1-8205-4d06093ac7a9",
+            "path": "data/source/scenario_1/screenshots_manual_cutted/09_e921_qrc_coupling_lost.png",
+            "error_code": "e921",
+            "fault_label": "qrc_coupling_lost",
+            "expected_pdf_page_number": 7,
+            "expected_pdf_page_point_id": "573a6901-b6f0-5af0-a85c-e48fb75d9155"
+          },
+          {
+            "point_id": "6c634fcc-4491-590f-900d-8072ff77015c",
+            "path": "data/source/scenario_1/screenshots_manual_cutted/10_e999_critical_system_error.png",
+            "error_code": "e999",
+            "fault_label": "critical_system_error",
+            "expected_pdf_page_number": 7,
+            "expected_pdf_page_point_id": "573a6901-b6f0-5af0-a85c-e48fb75d9155"
+          }
+        ],
+        "queries": [
+          {
+            "query_id": "troubleshooting_01_e101",
+            "path": "data/source/scenario_1/screenshots_manual_queries/query_01_e101_resonance_frequency_drift.png",
+            "query_modality": "image",
+            "target_modalities": [
+              "image",
+              "pdf_page_image"
+            ],
+            "error_code": "e101",
+            "fault_label": "resonance_frequency_drift",
+            "expected_reference_point_id": "f23747f7-828d-52c9-8904-8cf7897567ac",
+            "expected_pdf_page_number": 5,
+            "expected_pdf_page_point_id": "fc240a98-6538-53d7-853b-fffce96bb809",
+            "rank_sensitive_expectation": {
+              "rank_1_point_id": "f23747f7-828d-52c9-8904-8cf7897567ac",
+              "rank_2_point_id": "fc240a98-6538-53d7-853b-fffce96bb809"
+            },
+            "relevant_point_ids": [
+              "f23747f7-828d-52c9-8904-8cf7897567ac",
+              "fc240a98-6538-53d7-853b-fffce96bb809"
+            ]
+          },
+          {
+            "query_id": "troubleshooting_02_e205",
+            "path": "data/source/scenario_1/screenshots_manual_queries/query_02_e205_tca_overtemperature.png",
+            "query_modality": "image",
+            "target_modalities": [
+              "image",
+              "pdf_page_image"
+            ],
+            "error_code": "e205",
+            "fault_label": "tca_overtemperature",
+            "expected_reference_point_id": "e7f4860d-23b9-51e9-810e-76906809e337",
+            "expected_pdf_page_number": 6,
+            "expected_pdf_page_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169",
+            "rank_sensitive_expectation": {
+              "rank_1_point_id": "e7f4860d-23b9-51e9-810e-76906809e337",
+              "rank_2_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169"
+            },
+            "relevant_point_ids": [
+              "e7f4860d-23b9-51e9-810e-76906809e337",
+              "5c60ee85-1096-51de-ac82-08244bf3d169"
+            ]
+          },
+          {
+            "query_id": "troubleshooting_03_e312",
+            "path": "data/source/scenario_1/screenshots_manual_queries/query_03_e312_vacuum_integrity_alarm.png",
+            "query_modality": "image",
+            "target_modalities": [
+              "image",
+              "pdf_page_image"
+            ],
+            "error_code": "e312",
+            "fault_label": "vacuum_integrity_alarm",
+            "expected_reference_point_id": "35dc6d1b-2c38-5a07-b794-45afd4148fd5",
+            "expected_pdf_page_number": 6,
+            "expected_pdf_page_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169",
+            "rank_sensitive_expectation": {
+              "rank_1_point_id": "35dc6d1b-2c38-5a07-b794-45afd4148fd5",
+              "rank_2_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169"
+            },
+            "relevant_point_ids": [
+              "35dc6d1b-2c38-5a07-b794-45afd4148fd5",
+              "5c60ee85-1096-51de-ac82-08244bf3d169"
+            ]
+          },
+          {
+            "query_id": "troubleshooting_04_e404",
+            "path": "data/source/scenario_1/screenshots_manual_queries/query_04_e404_material_handling_blockage.png",
+            "query_modality": "image",
+            "target_modalities": [
+              "image",
+              "pdf_page_image"
+            ],
+            "error_code": "e404",
+            "fault_label": "material_handling_blockage",
+            "expected_reference_point_id": "d04a9d77-7d9b-5c73-8ac1-3ca143c57711",
+            "expected_pdf_page_number": 6,
+            "expected_pdf_page_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169",
+            "rank_sensitive_expectation": {
+              "rank_1_point_id": "d04a9d77-7d9b-5c73-8ac1-3ca143c57711",
+              "rank_2_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169"
+            },
+            "relevant_point_ids": [
+              "d04a9d77-7d9b-5c73-8ac1-3ca143c57711",
+              "5c60ee85-1096-51de-ac82-08244bf3d169"
+            ]
+          },
+          {
+            "query_id": "troubleshooting_05_e500",
+            "path": "data/source/scenario_1/screenshots_manual_queries/query_05_e500_system_initialization_error.png",
+            "query_modality": "image",
+            "target_modalities": [
+              "image",
+              "pdf_page_image"
+            ],
+            "error_code": "e500",
+            "fault_label": "system_initialization_error",
+            "expected_reference_point_id": "b87d3a9a-f742-5e01-ab08-aff5c0a0c6f0",
+            "expected_pdf_page_number": 6,
+            "expected_pdf_page_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169",
+            "rank_sensitive_expectation": {
+              "rank_1_point_id": "b87d3a9a-f742-5e01-ab08-aff5c0a0c6f0",
+              "rank_2_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169"
+            },
+            "relevant_point_ids": [
+              "b87d3a9a-f742-5e01-ab08-aff5c0a0c6f0",
+              "5c60ee85-1096-51de-ac82-08244bf3d169"
+            ]
+          },
+          {
+            "query_id": "troubleshooting_06_e602",
+            "path": "data/source/scenario_1/screenshots_manual_queries/query_06_e602_iqm_ion_flow_inconsistent.png",
+            "query_modality": "image",
+            "target_modalities": [
+              "image",
+              "pdf_page_image"
+            ],
+            "error_code": "e602",
+            "fault_label": "iqm_ion_flow_inconsistent",
+            "expected_reference_point_id": "e943e693-495d-5c12-8989-88452eac972f",
+            "expected_pdf_page_number": 6,
+            "expected_pdf_page_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169",
+            "rank_sensitive_expectation": {
+              "rank_1_point_id": "e943e693-495d-5c12-8989-88452eac972f",
+              "rank_2_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169"
+            },
+            "relevant_point_ids": [
+              "e943e693-495d-5c12-8989-88452eac972f",
+              "5c60ee85-1096-51de-ac82-08244bf3d169"
+            ]
+          },
+          {
+            "query_id": "troubleshooting_07_e710",
+            "path": "data/source/scenario_1/screenshots_manual_queries/query_07_e710_tca_heating_matrix_defect.png",
+            "query_modality": "image",
+            "target_modalities": [
+              "image",
+              "pdf_page_image"
+            ],
+            "error_code": "e710",
+            "fault_label": "tca_heating_matrix_defect",
+            "expected_reference_point_id": "7f0066c5-dcd3-5131-99c7-4bd3ea36fd74",
+            "expected_pdf_page_number": 6,
+            "expected_pdf_page_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169",
+            "rank_sensitive_expectation": {
+              "rank_1_point_id": "7f0066c5-dcd3-5131-99c7-4bd3ea36fd74",
+              "rank_2_point_id": "5c60ee85-1096-51de-ac82-08244bf3d169"
+            },
+            "relevant_point_ids": [
+              "7f0066c5-dcd3-5131-99c7-4bd3ea36fd74",
+              "5c60ee85-1096-51de-ac82-08244bf3d169"
+            ]
+          },
+          {
+            "query_id": "troubleshooting_08_e803",
+            "path": "data/source/scenario_1/screenshots_manual_queries/query_08_e803_s_mag_current_ripple.png",
+            "query_modality": "image",
+            "target_modalities": [
+              "image",
+              "pdf_page_image"
+            ],
+            "error_code": "e803",
+            "fault_label": "s_mag_current_ripple",
+            "expected_reference_point_id": "4dedd8b8-bccc-5198-9046-fd5203be2827",
+            "expected_pdf_page_number": 7,
+            "expected_pdf_page_point_id": "573a6901-b6f0-5af0-a85c-e48fb75d9155",
+            "rank_sensitive_expectation": {
+              "rank_1_point_id": "4dedd8b8-bccc-5198-9046-fd5203be2827",
+              "rank_2_point_id": "573a6901-b6f0-5af0-a85c-e48fb75d9155"
+            },
+            "relevant_point_ids": [
+              "4dedd8b8-bccc-5198-9046-fd5203be2827",
+              "573a6901-b6f0-5af0-a85c-e48fb75d9155"
+            ]
+          },
+          {
+            "query_id": "troubleshooting_09_e921",
+            "path": "data/source/scenario_1/screenshots_manual_queries/query_09_e921_qrc_coupling_lost.png",
+            "query_modality": "image",
+            "target_modalities": [
+              "image",
+              "pdf_page_image"
+            ],
+            "error_code": "e921",
+            "fault_label": "qrc_coupling_lost",
+            "expected_reference_point_id": "7d699202-36b0-5ba1-8205-4d06093ac7a9",
+            "expected_pdf_page_number": 7,
+            "expected_pdf_page_point_id": "573a6901-b6f0-5af0-a85c-e48fb75d9155",
+            "rank_sensitive_expectation": {
+              "rank_1_point_id": "7d699202-36b0-5ba1-8205-4d06093ac7a9",
+              "rank_2_point_id": "573a6901-b6f0-5af0-a85c-e48fb75d9155"
+            },
+            "relevant_point_ids": [
+              "7d699202-36b0-5ba1-8205-4d06093ac7a9",
+              "573a6901-b6f0-5af0-a85c-e48fb75d9155"
+            ]
+          },
+          {
+            "query_id": "troubleshooting_10_e999",
+            "path": "data/source/scenario_1/screenshots_manual_queries/query_10_e999_critical_system_error.png",
+            "query_modality": "image",
+            "target_modalities": [
+              "image",
+              "pdf_page_image"
+            ],
+            "error_code": "e999",
+            "fault_label": "critical_system_error",
+            "expected_reference_point_id": "6c634fcc-4491-590f-900d-8072ff77015c",
+            "expected_pdf_page_number": 7,
+            "expected_pdf_page_point_id": "573a6901-b6f0-5af0-a85c-e48fb75d9155",
+            "rank_sensitive_expectation": {
+              "rank_1_point_id": "6c634fcc-4491-590f-900d-8072ff77015c",
+              "rank_2_point_id": "573a6901-b6f0-5af0-a85c-e48fb75d9155"
+            },
+            "relevant_point_ids": [
+              "6c634fcc-4491-590f-900d-8072ff77015c",
+              "573a6901-b6f0-5af0-a85c-e48fb75d9155"
+            ]
+          }
+        ],
+        "ground_truth_rank_policy": {
+          "rank_1": "matching_manual_reference_screenshot",
+          "rank_2": "pdf_page_containing_matching_troubleshooting_row",
+          "metadata_usage": "evaluation_only_after_vector_search"
+        }
+      }
+    },
+    "szenario_2": {
+      "description": "Noise robustness with Scenario 1 PDFs plus one irrelevant PDF.",
+      "documents": [
+        {
+          "document_id": "technical_handbook",
+          "role": "primary_document",
+          "path": "data/source/scenario_1/technical_handbook/Quantum Weaver.pdf",
+          "page_count": 7
+        },
+        {
+          "document_id": "annual_report",
+          "role": "primary_document",
+          "path": "data/source/scenario_1/annual_report/AeroNova Logistics.pdf",
+          "page_count": 5
+        },
+        {
+          "document_id": "noise_pdf",
+          "role": "noise_document",
+          "path": "data/source/scenario_2/noise_pdf/short_geschaeftsbericht-2025-volkswagen-group.pdf",
+          "page_count": 51
+        }
+      ],
+      "queries": [
+        {
+          "query_id": "s2_qws_spezifikation_prc_toleranz",
+          "scenario_id": "szenario_2",
+          "query_text": "Welche Synthese-Frequenz muss der QWS-3000 einhalten, welcher Toleranzbereich ist zulässig und an welcher Komponente wird dieser Wert gemessen?",
+          "query_modality": "text",
+          "target_modality": "table",
+          "expected_document_id": "technical_handbook",
+          "expected_pages": [
+            1
+          ],
+          "expected_answer_hint": "15.75 GHz, ± 0.05 GHz, Primär-Resonator (PRC)",
+          "expected_visual_evidence_count": 1,
+          "relevant_point_ids": [
+            "beced732-810e-565c-b80a-e073ca2a5a59"
+          ]
+        },
+        {
+          "query_id": "s2_qws_architektur_komponenten_abfolge",
+          "scenario_id": "szenario_2",
+          "query_text": "Aus welchen fünf Hauptphasen besteht die modulare Architektur des QWS-3000 und welche Rolle übernehmen PRC, IQM, Kryo-Sensor und NES-VSR im System?",
+          "query_modality": "text",
+          "target_modality": "text",
+          "expected_document_id": "technical_handbook",
+          "expected_pages": [
+            2
+          ],
+          "expected_answer_hint": "PRC, Kryo-Sensor T-22, IQM und NES-VSR",
+          "expected_visual_evidence_count": 0,
+          "relevant_point_ids": [
+            "45b9b110-6707-56e7-b4ce-e7879d7516f8"
+          ]
+        },
+        {
+          "query_id": "s2_qws_flowchart_vakuum_resonanz_entscheidung",
+          "scenario_id": "szenario_2",
+          "query_text": "Wie kalibriere ich den QWS laut Flowchart, wenn der VSR-Druck unter 10⁻⁹ mbar liegt, und welche Schritte folgen bis zur Prüfung der Resonanzspitze?",
+          "query_modality": "text",
+          "target_modality": "visual",
+          "expected_document_id": "technical_handbook",
+          "expected_pages": [
+            4
+          ],
+          "expected_answer_hint": "IQM Bias Spannung auf 5.0 kV setzen, Resonanz-Sweep ausführen, Resonanzspitze bei 15.75 GHz ± 0.01 GHz prüfen",
+          "expected_visual_evidence_count": 1,
+          "relevant_point_ids": [
+            "dc32e2c1-60bb-5071-9660-fba026832a69"
+          ]
+        },
+        {
+          "query_id": "s2_qws_handgeschriebene_wartungstabelle_iqm_vsr",
+          "scenario_id": "szenario_2",
+          "query_text": "Was gilt es bei der Wartung des Haupttransformators HT-400 zu beachten und wer ist laut handgeschriebener Wartungstabelle dafür verantwortlich?",
+          "query_modality": "text",
+          "target_modality": "handwritten_table",
+          "expected_document_id": "technical_handbook",
+          "expected_pages": [
+            5
+          ],
+          "expected_answer_hint": "Jährliche HT-400-Wartung, Effizienz und Hitzeentwicklung, Elektrotechniker",
+          "expected_visual_evidence_count": 1,
+          "relevant_point_ids": [
+            "8fd15ca2-b134-511f-b977-f4d7ffaea916"
+          ]
+        },
+        {
+          "query_id": "s2_qws_fehler_e312_e404_vergleich",
+          "scenario_id": "szenario_2",
+          "query_text": "Welche Maßnahmen sind bei einem E-312 Vakuum-Integrität Alarm nötig und wie unterscheiden sie sich von der Vorgehensweise bei einer E-404 Material-Handling Blockade?",
+          "query_modality": "text",
+          "target_modality": "table",
+          "expected_document_id": "technical_handbook",
+          "expected_pages": [
+            6
+          ],
+          "expected_answer_hint": "Dichtungssätze prüfen, Lecksuche durchführen, MEU inspizieren",
+          "expected_visual_evidence_count": 1,
+          "relevant_point_ids": [
+            "5d21d4a2-d003-5ed7-b80b-fbac94a41d54"
+          ]
+        },
+        {
+          "query_id": "s2_qws_fehler_e803_e921_diagnose",
+          "scenario_id": "szenario_2",
+          "query_text": "Was muss ich prüfen, wenn der supraleitende Magnet Strom-Ripple meldet, und welche manuelle Prozedur ist bei verlorener QRC-Kopplung vorgesehen?",
+          "query_modality": "text",
+          "target_modality": "table",
+          "expected_document_id": "technical_handbook",
+          "expected_pages": [
+            7
+          ],
+          "expected_answer_hint": "E-803 S-Mag Strom-Ripple und E-921 QRC-Kopplung verloren",
+          "expected_visual_evidence_count": 1,
+          "relevant_point_ids": [
+            "00bd32f2-032a-5ce3-a9bd-7339ea2b8923"
+          ]
+        },
+        {
+          "query_id": "s2_aeronova_strategische_vision_2026",
+          "scenario_id": "szenario_2",
+          "query_text": "Welche drei strategischen Schwerpunkte verfolgt AeroNova für die Last-Mile-Evolution im Jahr 2026?",
+          "query_modality": "text",
+          "target_modality": "text",
+          "expected_document_id": "annual_report",
+          "expected_pages": [
+            1
+          ],
+          "expected_answer_hint": "Hyper-Lokalisierung, KI-gestützte Prädiktion, Nachhaltigkeit 360",
+          "expected_visual_evidence_count": 0,
+          "relevant_point_ids": [
+            "957a003b-0998-5245-baf3-5d2a00506bd6"
+          ]
+        },
+        {
+          "query_id": "s2_aeronova_finanzkennzahlen_q4_b2b_ebitda",
+          "scenario_id": "szenario_2",
+          "query_text": "Wie hoch waren der Gesamtumsatz und Aero-Freight-B2B-Umsatz in Q4 2025, und welche EBITDA-Marge wurde in Q3 2025 erreicht?",
+          "query_modality": "text",
+          "target_modality": "table",
+          "expected_document_id": "annual_report",
+          "expected_pages": [
+            2
+          ],
+          "expected_answer_hint": "731.0 Mio. USD, 145.9 Mio. USD, 29.3%",
+          "expected_visual_evidence_count": 1,
+          "relevant_point_ids": [
+            "738341b2-013e-5799-994a-23e5d262e0f6"
+          ]
+        },
+        {
+          "query_id": "s2_aeronova_marktanteile_2024_2025_vergleich",
+          "scenario_id": "szenario_2",
+          "query_text": "Welche Marktanteile hatten Nordamerika und Lateinamerika jeweils in 2024 und 2025, und wie haben sich diese beiden Regionen verändert?",
+          "query_modality": "text",
+          "target_modality": "visual",
+          "expected_document_id": "annual_report",
+          "expected_pages": [
+            3
+          ],
+          "expected_answer_hint": "Nordamerika 59% auf 35%, Lateinamerika 8% auf 10%",
+          "expected_visual_evidence_count": 2,
+          "relevant_point_ids": [
+            "e1e748f4-ac23-5a57-ba3a-f05fcde8ddd6"
+          ]
+        },
+        {
+          "query_id": "s2_aeronova_forschung_budget_balkendiagramm",
+          "scenario_id": "szenario_2",
+          "query_text": "In welche Branche beziehungsweise F&E-Säule ging bei AeroNova der größte Anteil des Forschungsbudgets, und wie groß war dieser Anteil?",
+          "query_modality": "text",
+          "target_modality": "visual",
+          "expected_document_id": "annual_report",
+          "expected_pages": [
+            4
+          ],
+          "expected_answer_hint": "Autonome Navigationssysteme (KI), 40%",
+          "expected_visual_evidence_count": 1,
+          "relevant_point_ids": [
+            "6dfd709b-13c8-521a-be1c-df61953fc88f"
+          ]
+        },
+        {
+          "query_id": "s2_aeronova_ion_drive_forschungskontext",
+          "scenario_id": "szenario_2",
+          "query_text": "Welche F&E-Säule führte zur Einführung des Ion-Drive-Akkus, welchen Reichweitengewinn brachte er, und wie hoch war der zugehörige Budgetanteil?",
+          "query_modality": "text",
+          "target_modality": "visual_text",
+          "expected_document_id": "annual_report",
+          "expected_pages": [
+            4
+          ],
+          "expected_answer_hint": "Batterie- und Antriebseffizienz, 20% mehr Reichweite, 30% Budgetanteil",
+          "expected_visual_evidence_count": 1,
+          "relevant_point_ids": [
+            "6dfd709b-13c8-521a-be1c-df61953fc88f"
+          ]
+        },
+        {
+          "query_id": "s2_aeronova_esg_tabelle_webinar",
+          "scenario_id": "szenario_2",
+          "query_text": "Wie haben sich erneuerbare Energie, Arbeitsunfälle, Diversität und Wasserverbrauch bei AeroNova entwickelt, und wann ist das ESG Strategy Update 2026 angesetzt?",
+          "query_modality": "text",
+          "target_modality": "table_text",
+          "expected_document_id": "annual_report",
+          "expected_pages": [
+            5
+          ],
+          "expected_answer_hint": "80% erneuerbare Energie, 0.5 Arbeitsunfälle, 33% Diversität, 95% Wasserverbrauch, 08.02.2026",
+          "expected_visual_evidence_count": 1,
+          "relevant_point_ids": [
+            "a890940f-ddf7-5c12-8928-1002a9ec6c1f"
+          ]
+        }
+      ]
+    },
+    "szenario_3": {
+      "description": "Visual breed retrieval stress test with dog targets and cat noise.",
+      "random_seed": 42,
+      "indexed_assets": [
+        {
+          "point_id": "f7be6a68-f84d-5135-b03d-458a5fbff1c9",
+          "path": "data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_01_n02099601_118.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02099601-golden_retriever/n02099601_118.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02099601",
+          "breed_name": "golden retriever",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "9a05a3bb-2d34-5b2a-818a-bdc8112bb402",
+          "path": "data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_02_n02099601_2408.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02099601-golden_retriever/n02099601_2408.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02099601",
+          "breed_name": "golden retriever",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "9fa9bf5b-af43-5c3d-b801-d8ab84888470",
+          "path": "data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_03_n02099601_3738.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02099601-golden_retriever/n02099601_3738.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02099601",
+          "breed_name": "golden retriever",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "bf8641e0-61f1-5785-9137-6bd51581c629",
+          "path": "data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_04_n02099601_4651.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02099601-golden_retriever/n02099601_4651.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02099601",
+          "breed_name": "golden retriever",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "a23f5cb3-ebd8-5a82-bd6d-75267be0e7d0",
+          "path": "data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_01_n02106662_14842.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106662-German_shepherd/n02106662_14842.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106662",
+          "breed_name": "German shepherd",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "48f10883-5436-58d7-8227-594e37268c85",
+          "path": "data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_02_n02106662_16014.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106662-German_shepherd/n02106662_16014.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106662",
+          "breed_name": "German shepherd",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "3d837ccc-b51a-56dd-9538-0041ed3c6aee",
+          "path": "data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_03_n02106662_19801.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106662-German_shepherd/n02106662_19801.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106662",
+          "breed_name": "German shepherd",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "b6924955-3dcb-5ac6-910f-49d328e050c8",
+          "path": "data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_04_n02106662_8002.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106662-German_shepherd/n02106662_8002.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106662",
+          "breed_name": "German shepherd",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "58cdd5cd-b854-5236-92a8-4c4405fdd5b2",
+          "path": "data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_01_n02110185_10844.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110185-Siberian_husky/n02110185_10844.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110185",
+          "breed_name": "Siberian husky",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "1a72b5cd-9bc4-5c3a-9f9b-949222564989",
+          "path": "data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_02_n02110185_11445.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110185-Siberian_husky/n02110185_11445.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110185",
+          "breed_name": "Siberian husky",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "d632b8ba-6706-55fa-93b1-034a36482466",
+          "path": "data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_03_n02110185_4133.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110185-Siberian_husky/n02110185_4133.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110185",
+          "breed_name": "Siberian husky",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "f864a263-600e-5da8-8ffc-5aef34adc789",
+          "path": "data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_04_n02110185_725.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110185-Siberian_husky/n02110185_725.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110185",
+          "breed_name": "Siberian husky",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "101fd26e-51d9-54fb-81c7-f5c031071b3f",
+          "path": "data/source/scenario_3/dogs_indexed/n02110958-pug/index_01_n02110958_11194.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110958-pug/n02110958_11194.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110958",
+          "breed_name": "pug",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "0e455184-cb0e-5ea9-97cb-b2f4c5ff54f9",
+          "path": "data/source/scenario_3/dogs_indexed/n02110958-pug/index_02_n02110958_11977.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110958-pug/n02110958_11977.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110958",
+          "breed_name": "pug",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "e2421b62-0a8e-5b94-b345-9f0978a9ff78",
+          "path": "data/source/scenario_3/dogs_indexed/n02110958-pug/index_03_n02110958_13340.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110958-pug/n02110958_13340.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110958",
+          "breed_name": "pug",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "f85f4cc5-1684-5f3c-ae3c-b8cf039d1edb",
+          "path": "data/source/scenario_3/dogs_indexed/n02110958-pug/index_04_n02110958_13439.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110958-pug/n02110958_13439.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110958",
+          "breed_name": "pug",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "94b6fb17-c8f3-57dc-a428-c75ccf78da52",
+          "path": "data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_01_n02108915_11220.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02108915-French_bulldog/n02108915_11220.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02108915",
+          "breed_name": "French bulldog",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "d79f1364-fb86-506f-a3c0-ac6c79981bc2",
+          "path": "data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_02_n02108915_644.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02108915-French_bulldog/n02108915_644.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02108915",
+          "breed_name": "French bulldog",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "4ae1cea4-8236-5531-b9eb-6661d870ecdc",
+          "path": "data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_03_n02108915_8258.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02108915-French_bulldog/n02108915_8258.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02108915",
+          "breed_name": "French bulldog",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "e4edb628-3f98-5093-bd12-a9871868289f",
+          "path": "data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_04_n02108915_9666.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02108915-French_bulldog/n02108915_9666.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02108915",
+          "breed_name": "French bulldog",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "dd2a934f-94a6-5fd1-8342-bb20c61d54a3",
+          "path": "data/source/scenario_3/dogs_indexed/n02088364-beagle/index_01_n02088364_13236.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02088364-beagle/n02088364_13236.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02088364",
+          "breed_name": "beagle",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "be46fbf4-9a5a-54ff-859a-8f6b1376c642",
+          "path": "data/source/scenario_3/dogs_indexed/n02088364-beagle/index_02_n02088364_6109.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02088364-beagle/n02088364_6109.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02088364",
+          "breed_name": "beagle",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "b649c6cc-9479-5485-addd-8dfd3348c4a5",
+          "path": "data/source/scenario_3/dogs_indexed/n02088364-beagle/index_03_n02088364_8477.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02088364-beagle/n02088364_8477.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02088364",
+          "breed_name": "beagle",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "6d660002-1afc-5367-9f8a-3fb9aa51cf53",
+          "path": "data/source/scenario_3/dogs_indexed/n02088364-beagle/index_04_n02088364_8713.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02088364-beagle/n02088364_8713.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02088364",
+          "breed_name": "beagle",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "a66315f5-af8b-5ee0-8c19-2a12013dabf9",
+          "path": "data/source/scenario_3/dogs_indexed/n02108089-boxer/index_01_n02108089_1775.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02108089-boxer/n02108089_1775.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02108089",
+          "breed_name": "boxer",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "bf3ecb46-10de-5ba1-a68f-2ee85ee6e6f0",
+          "path": "data/source/scenario_3/dogs_indexed/n02108089-boxer/index_02_n02108089_4730.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02108089-boxer/n02108089_4730.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02108089",
+          "breed_name": "boxer",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "540ba252-72ab-53be-86ed-684410b69bdc",
+          "path": "data/source/scenario_3/dogs_indexed/n02108089-boxer/index_03_n02108089_530.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02108089-boxer/n02108089_530.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02108089",
+          "breed_name": "boxer",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "e917c9a5-ebce-5e77-b014-a4ffc24c6d3c",
+          "path": "data/source/scenario_3/dogs_indexed/n02108089-boxer/index_04_n02108089_849.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02108089-boxer/n02108089_849.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02108089",
+          "breed_name": "boxer",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "c663f98f-5c46-590b-8a23-03a3823fc107",
+          "path": "data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_01_n02112018_10158.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02112018-Pomeranian/n02112018_10158.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02112018",
+          "breed_name": "Pomeranian",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "4bf87af2-1b97-5890-9343-66e1fa9ac84f",
+          "path": "data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_02_n02112018_2614.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02112018-Pomeranian/n02112018_2614.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02112018",
+          "breed_name": "Pomeranian",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "8453fa7b-e059-57b6-b6ac-b137c3e0b877",
+          "path": "data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_03_n02112018_5560.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02112018-Pomeranian/n02112018_5560.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02112018",
+          "breed_name": "Pomeranian",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "efe61acc-2894-5c44-a27b-f9fc8b777692",
+          "path": "data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_04_n02112018_883.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02112018-Pomeranian/n02112018_883.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02112018",
+          "breed_name": "Pomeranian",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "94fc25b0-d7ac-5752-be44-be6a372d2f22",
+          "path": "data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_01_n02106166_1975.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106166-Border_collie/n02106166_1975.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106166",
+          "breed_name": "Border collie",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "88ce4aaa-c85d-5558-9635-0e473db97b27",
+          "path": "data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_02_n02106166_3395.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106166-Border_collie/n02106166_3395.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106166",
+          "breed_name": "Border collie",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "9e8dff10-aa05-5b6f-95ee-0e7892e37917",
+          "path": "data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_03_n02106166_402.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106166-Border_collie/n02106166_402.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106166",
+          "breed_name": "Border collie",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "6aafaba5-0dd8-5394-9f8c-c7c02f838b0b",
+          "path": "data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_04_n02106166_5869.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106166-Border_collie/n02106166_5869.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106166",
+          "breed_name": "Border collie",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "c7585a68-82e5-58d1-82d5-ddc0cef9524c",
+          "path": "data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_01_n02085620_14252.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02085620-Chihuahua/n02085620_14252.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02085620",
+          "breed_name": "Chihuahua",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "fdef16fa-6795-57b8-891f-5d06591a8298",
+          "path": "data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_02_n02085620_1916.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02085620-Chihuahua/n02085620_1916.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02085620",
+          "breed_name": "Chihuahua",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "9219b6fa-cff8-5c5f-b22e-575738110467",
+          "path": "data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_03_n02085620_2793.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02085620-Chihuahua/n02085620_2793.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02085620",
+          "breed_name": "Chihuahua",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "c9ffe1d4-9e80-55a2-91c6-3a62083d172d",
+          "path": "data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_04_n02085620_3875.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02085620-Chihuahua/n02085620_3875.jpg",
+          "split": "index",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02085620",
+          "breed_name": "Chihuahua",
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "e4c63eed-94d4-5d71-8470-437e696fb435",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_01_00000075_002.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_00/00000075_002.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "1ed22c13-edd7-510a-9bd4-89d8d17354e7",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_02_00000311_014.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_00/00000311_014.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "037f9f45-9ecc-5b04-a772-726905f09b7c",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_03_00000337_009.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_00/00000337_009.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "da3c2dc0-9717-5545-99b4-d15b4c3c3014",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_04_00000361_021.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_00/00000361_021.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "19f5accd-833b-500c-b5fa-f977744024f6",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_05_00000369_004.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_00/00000369_004.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "f4eac959-b76f-5573-b263-195288951ee6",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_06_00000374_003.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_00/00000374_003.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "1717ceb1-0a95-53ea-94bf-e0f1f9e06d2d",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_07_00000394_003.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_00/00000394_003.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "b52e4917-e548-52f4-8e35-486bd5d7450a",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_08_00000449_009.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_00/00000449_009.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "dd4e0d56-ca23-505e-89c6-6aa166d410b7",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_09_00000214_023.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_01/00000214_023.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "00250ce7-5877-5024-a676-3a664c0351df",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_10_00000215_018.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_01/00000215_018.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "f66bc206-9488-5a07-a450-5964d9f131de",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_11_00000232_006.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_01/00000232_006.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "012eb8f3-3bdf-50f3-baf8-279f83dc2554",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_12_00000275_014.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_01/00000275_014.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "e5abbdce-f02e-5f1f-ae17-da5756eb43e0",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_13_00000508_027.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_02/00000508_027.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "9f3c3f4a-2247-50db-9aa1-3609eafd6b01",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_14_00000511_011.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_02/00000511_011.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "2f399d16-971d-5cbc-9f1b-aa6909206fc3",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_15_00000526_005.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_02/00000526_005.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "45f461bb-f1bb-5c9c-bf2e-2d0c8d0b5d66",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_16_00000541_005.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_02/00000541_005.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "3d267c11-99be-5584-a8fa-402ffe4f4f78",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_17_00000543_010.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_02/00000543_010.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "9a433f7e-42be-5b1f-b32a-e417dee348b7",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_18_00000550_024.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_02/00000550_024.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "10dc31ef-e348-5b8c-aed3-a037398adcce",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_19_00000574_006.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_02/00000574_006.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "e7cd8841-2820-5c07-80ab-592702dd21f9",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_20_00000617_022.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_02/00000617_022.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "0cfca03f-fe0c-537f-8e16-b26a2932d0eb",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_21_00000619_001.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_02/00000619_001.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "86ef3119-54af-51b6-b4e1-f52cf41a75eb",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_22_00000623_011.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_02/00000623_011.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "aeac3ef5-684f-5876-9f17-258ea9e0f3cd",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_23_00000638_017.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_02/00000638_017.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "0f7852c3-2a13-5820-b648-ed1ee42961f0",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_24_00000658_003.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_02/00000658_003.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "9a94b8df-a120-5109-a0f4-958c07858b4a",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_25_00000810_005.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_03/00000810_005.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "57aa7391-a1f0-58b7-9e0a-c2c5af949009",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_26_00000828_001.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_03/00000828_001.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "73c46bcd-1b9f-547d-a980-f6132baffd7e",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_27_00000889_022.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_03/00000889_022.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "5d57f976-cf0e-5c53-9c58-d5c100a66985",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_28_00000904_023.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_04/00000904_023.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "b7c36576-82f5-5e32-b7e6-43593230f949",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_29_00000911_009.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_04/00000911_009.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "4639297f-85f5-5532-bb40-4ca537505e07",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_30_00000926_013.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_04/00000926_013.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "12d3ed77-3aa8-56d4-8d9f-ded08146dd97",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_31_00000947_010.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_04/00000947_010.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "d68a3ec5-b0dd-557e-9e31-16510500df32",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_32_00000948_017.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_04/00000948_017.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "59b3668b-84c6-571d-9ed6-c9dc82feb29e",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_33_00001000_027.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_04/00001000_027.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "d708c59c-c9b2-5c9f-b9be-703337152aab",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_34_00001120_011.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_05/00001120_011.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "b3949178-6f8b-5329-960b-8241d977bb29",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_35_00001142_023.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_05/00001142_023.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "4add9c46-0634-5195-8614-f81e50324ef9",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_36_00001316_004.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_06/00001316_004.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "6488e435-3e29-5e36-85b3-5827ac19f88d",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_37_00001378_017.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_06/00001378_017.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "0f2f86cd-8a33-5c34-83ee-44d7608054c7",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_38_00001403_001.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_06/00001403_001.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "ffb776e9-b11a-5259-99f8-c3c0ad9c3eb4",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_39_00001424_023.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_06/00001424_023.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "aa39b1b8-c299-5148-bb94-0a4df837af60",
+          "path": "data/source/scenario_3/cats_noise/cat_noise_40_00001498_000.jpg",
+          "source_path": "artifacts/kaggle_downloads_cat/cats/CAT_06/00001498_000.jpg",
+          "split": "index",
+          "source_dataset": "cat_dataset_kaggle",
+          "asset_type": "cat_noise",
+          "breed_id": null,
+          "breed_name": null,
+          "query_type": null,
+          "expected_relation": null,
+          "relevant_point_ids": []
+        }
+      ],
+      "queries": [
+        {
+          "point_id": "f7be6a68-f84d-5135-b03d-458a5fbff1c9",
+          "path": "data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_01_n02099601_118.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02099601-golden_retriever/n02099601_118.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02099601",
+          "breed_name": "golden retriever",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "f7be6a68-f84d-5135-b03d-458a5fbff1c9"
+          ]
+        },
+        {
+          "point_id": "9a05a3bb-2d34-5b2a-818a-bdc8112bb402",
+          "path": "data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_02_n02099601_2408.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02099601-golden_retriever/n02099601_2408.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02099601",
+          "breed_name": "golden retriever",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "9a05a3bb-2d34-5b2a-818a-bdc8112bb402"
+          ]
+        },
+        {
+          "point_id": "9fa9bf5b-af43-5c3d-b801-d8ab84888470",
+          "path": "data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_03_n02099601_3738.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02099601-golden_retriever/n02099601_3738.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02099601",
+          "breed_name": "golden retriever",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "9fa9bf5b-af43-5c3d-b801-d8ab84888470"
+          ]
+        },
+        {
+          "point_id": "bf8641e0-61f1-5785-9137-6bd51581c629",
+          "path": "data/source/scenario_3/dogs_indexed/n02099601-golden_retriever/index_04_n02099601_4651.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02099601-golden_retriever/n02099601_4651.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02099601",
+          "breed_name": "golden retriever",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "bf8641e0-61f1-5785-9137-6bd51581c629"
+          ]
+        },
+        {
+          "point_id": "a23f5cb3-ebd8-5a82-bd6d-75267be0e7d0",
+          "path": "data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_01_n02106662_14842.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106662-German_shepherd/n02106662_14842.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106662",
+          "breed_name": "German shepherd",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "a23f5cb3-ebd8-5a82-bd6d-75267be0e7d0"
+          ]
+        },
+        {
+          "point_id": "48f10883-5436-58d7-8227-594e37268c85",
+          "path": "data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_02_n02106662_16014.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106662-German_shepherd/n02106662_16014.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106662",
+          "breed_name": "German shepherd",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "48f10883-5436-58d7-8227-594e37268c85"
+          ]
+        },
+        {
+          "point_id": "3d837ccc-b51a-56dd-9538-0041ed3c6aee",
+          "path": "data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_03_n02106662_19801.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106662-German_shepherd/n02106662_19801.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106662",
+          "breed_name": "German shepherd",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "3d837ccc-b51a-56dd-9538-0041ed3c6aee"
+          ]
+        },
+        {
+          "point_id": "b6924955-3dcb-5ac6-910f-49d328e050c8",
+          "path": "data/source/scenario_3/dogs_indexed/n02106662-German_shepherd/index_04_n02106662_8002.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106662-German_shepherd/n02106662_8002.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106662",
+          "breed_name": "German shepherd",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "b6924955-3dcb-5ac6-910f-49d328e050c8"
+          ]
+        },
+        {
+          "point_id": "58cdd5cd-b854-5236-92a8-4c4405fdd5b2",
+          "path": "data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_01_n02110185_10844.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110185-Siberian_husky/n02110185_10844.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110185",
+          "breed_name": "Siberian husky",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "58cdd5cd-b854-5236-92a8-4c4405fdd5b2"
+          ]
+        },
+        {
+          "point_id": "1a72b5cd-9bc4-5c3a-9f9b-949222564989",
+          "path": "data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_02_n02110185_11445.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110185-Siberian_husky/n02110185_11445.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110185",
+          "breed_name": "Siberian husky",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "1a72b5cd-9bc4-5c3a-9f9b-949222564989"
+          ]
+        },
+        {
+          "point_id": "d632b8ba-6706-55fa-93b1-034a36482466",
+          "path": "data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_03_n02110185_4133.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110185-Siberian_husky/n02110185_4133.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110185",
+          "breed_name": "Siberian husky",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "d632b8ba-6706-55fa-93b1-034a36482466"
+          ]
+        },
+        {
+          "point_id": "f864a263-600e-5da8-8ffc-5aef34adc789",
+          "path": "data/source/scenario_3/dogs_indexed/n02110185-Siberian_husky/index_04_n02110185_725.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110185-Siberian_husky/n02110185_725.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110185",
+          "breed_name": "Siberian husky",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "f864a263-600e-5da8-8ffc-5aef34adc789"
+          ]
+        },
+        {
+          "point_id": "101fd26e-51d9-54fb-81c7-f5c031071b3f",
+          "path": "data/source/scenario_3/dogs_indexed/n02110958-pug/index_01_n02110958_11194.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110958-pug/n02110958_11194.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110958",
+          "breed_name": "pug",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "101fd26e-51d9-54fb-81c7-f5c031071b3f"
+          ]
+        },
+        {
+          "point_id": "0e455184-cb0e-5ea9-97cb-b2f4c5ff54f9",
+          "path": "data/source/scenario_3/dogs_indexed/n02110958-pug/index_02_n02110958_11977.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110958-pug/n02110958_11977.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110958",
+          "breed_name": "pug",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "0e455184-cb0e-5ea9-97cb-b2f4c5ff54f9"
+          ]
+        },
+        {
+          "point_id": "e2421b62-0a8e-5b94-b345-9f0978a9ff78",
+          "path": "data/source/scenario_3/dogs_indexed/n02110958-pug/index_03_n02110958_13340.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110958-pug/n02110958_13340.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110958",
+          "breed_name": "pug",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "e2421b62-0a8e-5b94-b345-9f0978a9ff78"
+          ]
+        },
+        {
+          "point_id": "f85f4cc5-1684-5f3c-ae3c-b8cf039d1edb",
+          "path": "data/source/scenario_3/dogs_indexed/n02110958-pug/index_04_n02110958_13439.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110958-pug/n02110958_13439.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110958",
+          "breed_name": "pug",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "f85f4cc5-1684-5f3c-ae3c-b8cf039d1edb"
+          ]
+        },
+        {
+          "point_id": "94b6fb17-c8f3-57dc-a428-c75ccf78da52",
+          "path": "data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_01_n02108915_11220.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02108915-French_bulldog/n02108915_11220.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02108915",
+          "breed_name": "French bulldog",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "94b6fb17-c8f3-57dc-a428-c75ccf78da52"
+          ]
+        },
+        {
+          "point_id": "d79f1364-fb86-506f-a3c0-ac6c79981bc2",
+          "path": "data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_02_n02108915_644.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02108915-French_bulldog/n02108915_644.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02108915",
+          "breed_name": "French bulldog",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "d79f1364-fb86-506f-a3c0-ac6c79981bc2"
+          ]
+        },
+        {
+          "point_id": "4ae1cea4-8236-5531-b9eb-6661d870ecdc",
+          "path": "data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_03_n02108915_8258.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02108915-French_bulldog/n02108915_8258.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02108915",
+          "breed_name": "French bulldog",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "4ae1cea4-8236-5531-b9eb-6661d870ecdc"
+          ]
+        },
+        {
+          "point_id": "e4edb628-3f98-5093-bd12-a9871868289f",
+          "path": "data/source/scenario_3/dogs_indexed/n02108915-French_bulldog/index_04_n02108915_9666.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02108915-French_bulldog/n02108915_9666.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02108915",
+          "breed_name": "French bulldog",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "e4edb628-3f98-5093-bd12-a9871868289f"
+          ]
+        },
+        {
+          "point_id": "dd2a934f-94a6-5fd1-8342-bb20c61d54a3",
+          "path": "data/source/scenario_3/dogs_indexed/n02088364-beagle/index_01_n02088364_13236.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02088364-beagle/n02088364_13236.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02088364",
+          "breed_name": "beagle",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "dd2a934f-94a6-5fd1-8342-bb20c61d54a3"
+          ]
+        },
+        {
+          "point_id": "be46fbf4-9a5a-54ff-859a-8f6b1376c642",
+          "path": "data/source/scenario_3/dogs_indexed/n02088364-beagle/index_02_n02088364_6109.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02088364-beagle/n02088364_6109.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02088364",
+          "breed_name": "beagle",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "be46fbf4-9a5a-54ff-859a-8f6b1376c642"
+          ]
+        },
+        {
+          "point_id": "b649c6cc-9479-5485-addd-8dfd3348c4a5",
+          "path": "data/source/scenario_3/dogs_indexed/n02088364-beagle/index_03_n02088364_8477.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02088364-beagle/n02088364_8477.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02088364",
+          "breed_name": "beagle",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "b649c6cc-9479-5485-addd-8dfd3348c4a5"
+          ]
+        },
+        {
+          "point_id": "6d660002-1afc-5367-9f8a-3fb9aa51cf53",
+          "path": "data/source/scenario_3/dogs_indexed/n02088364-beagle/index_04_n02088364_8713.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02088364-beagle/n02088364_8713.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02088364",
+          "breed_name": "beagle",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "6d660002-1afc-5367-9f8a-3fb9aa51cf53"
+          ]
+        },
+        {
+          "point_id": "a66315f5-af8b-5ee0-8c19-2a12013dabf9",
+          "path": "data/source/scenario_3/dogs_indexed/n02108089-boxer/index_01_n02108089_1775.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02108089-boxer/n02108089_1775.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02108089",
+          "breed_name": "boxer",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "a66315f5-af8b-5ee0-8c19-2a12013dabf9"
+          ]
+        },
+        {
+          "point_id": "bf3ecb46-10de-5ba1-a68f-2ee85ee6e6f0",
+          "path": "data/source/scenario_3/dogs_indexed/n02108089-boxer/index_02_n02108089_4730.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02108089-boxer/n02108089_4730.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02108089",
+          "breed_name": "boxer",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "bf3ecb46-10de-5ba1-a68f-2ee85ee6e6f0"
+          ]
+        },
+        {
+          "point_id": "540ba252-72ab-53be-86ed-684410b69bdc",
+          "path": "data/source/scenario_3/dogs_indexed/n02108089-boxer/index_03_n02108089_530.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02108089-boxer/n02108089_530.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02108089",
+          "breed_name": "boxer",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "540ba252-72ab-53be-86ed-684410b69bdc"
+          ]
+        },
+        {
+          "point_id": "e917c9a5-ebce-5e77-b014-a4ffc24c6d3c",
+          "path": "data/source/scenario_3/dogs_indexed/n02108089-boxer/index_04_n02108089_849.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02108089-boxer/n02108089_849.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02108089",
+          "breed_name": "boxer",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "e917c9a5-ebce-5e77-b014-a4ffc24c6d3c"
+          ]
+        },
+        {
+          "point_id": "c663f98f-5c46-590b-8a23-03a3823fc107",
+          "path": "data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_01_n02112018_10158.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02112018-Pomeranian/n02112018_10158.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02112018",
+          "breed_name": "Pomeranian",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "c663f98f-5c46-590b-8a23-03a3823fc107"
+          ]
+        },
+        {
+          "point_id": "4bf87af2-1b97-5890-9343-66e1fa9ac84f",
+          "path": "data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_02_n02112018_2614.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02112018-Pomeranian/n02112018_2614.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02112018",
+          "breed_name": "Pomeranian",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "4bf87af2-1b97-5890-9343-66e1fa9ac84f"
+          ]
+        },
+        {
+          "point_id": "8453fa7b-e059-57b6-b6ac-b137c3e0b877",
+          "path": "data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_03_n02112018_5560.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02112018-Pomeranian/n02112018_5560.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02112018",
+          "breed_name": "Pomeranian",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "8453fa7b-e059-57b6-b6ac-b137c3e0b877"
+          ]
+        },
+        {
+          "point_id": "efe61acc-2894-5c44-a27b-f9fc8b777692",
+          "path": "data/source/scenario_3/dogs_indexed/n02112018-Pomeranian/index_04_n02112018_883.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02112018-Pomeranian/n02112018_883.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02112018",
+          "breed_name": "Pomeranian",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "efe61acc-2894-5c44-a27b-f9fc8b777692"
+          ]
+        },
+        {
+          "point_id": "94fc25b0-d7ac-5752-be44-be6a372d2f22",
+          "path": "data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_01_n02106166_1975.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106166-Border_collie/n02106166_1975.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106166",
+          "breed_name": "Border collie",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "94fc25b0-d7ac-5752-be44-be6a372d2f22"
+          ]
+        },
+        {
+          "point_id": "88ce4aaa-c85d-5558-9635-0e473db97b27",
+          "path": "data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_02_n02106166_3395.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106166-Border_collie/n02106166_3395.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106166",
+          "breed_name": "Border collie",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "88ce4aaa-c85d-5558-9635-0e473db97b27"
+          ]
+        },
+        {
+          "point_id": "9e8dff10-aa05-5b6f-95ee-0e7892e37917",
+          "path": "data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_03_n02106166_402.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106166-Border_collie/n02106166_402.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106166",
+          "breed_name": "Border collie",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "9e8dff10-aa05-5b6f-95ee-0e7892e37917"
+          ]
+        },
+        {
+          "point_id": "6aafaba5-0dd8-5394-9f8c-c7c02f838b0b",
+          "path": "data/source/scenario_3/dogs_indexed/n02106166-Border_collie/index_04_n02106166_5869.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106166-Border_collie/n02106166_5869.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106166",
+          "breed_name": "Border collie",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "6aafaba5-0dd8-5394-9f8c-c7c02f838b0b"
+          ]
+        },
+        {
+          "point_id": "c7585a68-82e5-58d1-82d5-ddc0cef9524c",
+          "path": "data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_01_n02085620_14252.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02085620-Chihuahua/n02085620_14252.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02085620",
+          "breed_name": "Chihuahua",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "c7585a68-82e5-58d1-82d5-ddc0cef9524c"
+          ]
+        },
+        {
+          "point_id": "fdef16fa-6795-57b8-891f-5d06591a8298",
+          "path": "data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_02_n02085620_1916.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02085620-Chihuahua/n02085620_1916.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02085620",
+          "breed_name": "Chihuahua",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "fdef16fa-6795-57b8-891f-5d06591a8298"
+          ]
+        },
+        {
+          "point_id": "9219b6fa-cff8-5c5f-b22e-575738110467",
+          "path": "data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_03_n02085620_2793.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02085620-Chihuahua/n02085620_2793.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02085620",
+          "breed_name": "Chihuahua",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "9219b6fa-cff8-5c5f-b22e-575738110467"
+          ]
+        },
+        {
+          "point_id": "c9ffe1d4-9e80-55a2-91c6-3a62083d172d",
+          "path": "data/source/scenario_3/dogs_indexed/n02085620-Chihuahua/index_04_n02085620_3875.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02085620-Chihuahua/n02085620_3875.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02085620",
+          "breed_name": "Chihuahua",
+          "query_type": "identity",
+          "expected_relation": "exact_indexed_image",
+          "relevant_point_ids": [
+            "c9ffe1d4-9e80-55a2-91c6-3a62083d172d"
+          ]
+        },
+        {
+          "point_id": "8fb9546e-3681-5192-8bcb-593fce71dade",
+          "path": "data/source/scenario_3/dogs_queries/n02099601-golden_retriever/query_01_n02099601_user_20260427_200848.jpg",
+          "source_path": "data/source/scenario_3/user_queries/n02099601-golden_retriever/whatsapp_20260427_200848.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02099601",
+          "breed_name": "golden retriever",
+          "query_type": "semantic",
+          "expected_relation": "same_breed_present_in_index",
+          "relevant_point_ids": [
+            "f7be6a68-f84d-5135-b03d-458a5fbff1c9",
+            "9a05a3bb-2d34-5b2a-818a-bdc8112bb402",
+            "9fa9bf5b-af43-5c3d-b801-d8ab84888470",
+            "bf8641e0-61f1-5785-9137-6bd51581c629"
+          ]
+        },
+        {
+          "point_id": "10980d0a-9cf0-5f68-b3c2-7a727cfb620f",
+          "path": "data/source/scenario_3/dogs_queries/n02099601-golden_retriever/query_02_n02099601_2295.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02099601-golden_retriever/n02099601_2295.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02099601",
+          "breed_name": "golden retriever",
+          "query_type": "semantic",
+          "expected_relation": "same_breed_present_in_index",
+          "relevant_point_ids": [
+            "f7be6a68-f84d-5135-b03d-458a5fbff1c9",
+            "9a05a3bb-2d34-5b2a-818a-bdc8112bb402",
+            "9fa9bf5b-af43-5c3d-b801-d8ab84888470",
+            "bf8641e0-61f1-5785-9137-6bd51581c629"
+          ]
+        },
+        {
+          "point_id": "72e4b784-583f-5410-866f-7c572c41e477",
+          "path": "data/source/scenario_3/dogs_queries/n02099601-golden_retriever/query_03_n02099601_2358.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02099601-golden_retriever/n02099601_2358.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02099601",
+          "breed_name": "golden retriever",
+          "query_type": "semantic",
+          "expected_relation": "same_breed_present_in_index",
+          "relevant_point_ids": [
+            "f7be6a68-f84d-5135-b03d-458a5fbff1c9",
+            "9a05a3bb-2d34-5b2a-818a-bdc8112bb402",
+            "9fa9bf5b-af43-5c3d-b801-d8ab84888470",
+            "bf8641e0-61f1-5785-9137-6bd51581c629"
+          ]
+        },
+        {
+          "point_id": "a0c6c308-63e8-5aa9-bd12-ea0ade5b3501",
+          "path": "data/source/scenario_3/dogs_queries/n02099601-golden_retriever/query_04_n02099601_5893.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02099601-golden_retriever/n02099601_5893.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02099601",
+          "breed_name": "golden retriever",
+          "query_type": "semantic",
+          "expected_relation": "same_breed_present_in_index",
+          "relevant_point_ids": [
+            "f7be6a68-f84d-5135-b03d-458a5fbff1c9",
+            "9a05a3bb-2d34-5b2a-818a-bdc8112bb402",
+            "9fa9bf5b-af43-5c3d-b801-d8ab84888470",
+            "bf8641e0-61f1-5785-9137-6bd51581c629"
+          ]
+        },
+        {
+          "point_id": "9810de5a-d477-5c4a-8ebc-073da71bef72",
+          "path": "data/source/scenario_3/dogs_queries/n02099601-golden_retriever/query_05_n02099601_6318.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02099601-golden_retriever/n02099601_6318.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02099601",
+          "breed_name": "golden retriever",
+          "query_type": "semantic",
+          "expected_relation": "same_breed_present_in_index",
+          "relevant_point_ids": [
+            "f7be6a68-f84d-5135-b03d-458a5fbff1c9",
+            "9a05a3bb-2d34-5b2a-818a-bdc8112bb402",
+            "9fa9bf5b-af43-5c3d-b801-d8ab84888470",
+            "bf8641e0-61f1-5785-9137-6bd51581c629"
+          ]
+        },
+        {
+          "point_id": "96f374fe-8b11-5616-9c29-482f8bd44e00",
+          "path": "data/source/scenario_3/dogs_queries/n02106662-German_shepherd/query_01_n02106662_12028.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106662-German_shepherd/n02106662_12028.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106662",
+          "breed_name": "German shepherd",
+          "query_type": "semantic",
+          "expected_relation": "same_breed_present_in_index",
+          "relevant_point_ids": [
+            "a23f5cb3-ebd8-5a82-bd6d-75267be0e7d0",
+            "48f10883-5436-58d7-8227-594e37268c85",
+            "3d837ccc-b51a-56dd-9538-0041ed3c6aee",
+            "b6924955-3dcb-5ac6-910f-49d328e050c8"
+          ]
+        },
+        {
+          "point_id": "beaa08fd-b819-5134-ad3a-421b392eb2d0",
+          "path": "data/source/scenario_3/dogs_queries/n02106662-German_shepherd/query_02_n02106662_22730.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106662-German_shepherd/n02106662_22730.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106662",
+          "breed_name": "German shepherd",
+          "query_type": "semantic",
+          "expected_relation": "same_breed_present_in_index",
+          "relevant_point_ids": [
+            "a23f5cb3-ebd8-5a82-bd6d-75267be0e7d0",
+            "48f10883-5436-58d7-8227-594e37268c85",
+            "3d837ccc-b51a-56dd-9538-0041ed3c6aee",
+            "b6924955-3dcb-5ac6-910f-49d328e050c8"
+          ]
+        },
+        {
+          "point_id": "f7aaca84-a7cd-570a-9a90-fb76056957a2",
+          "path": "data/source/scenario_3/dogs_queries/n02106662-German_shepherd/query_03_n02106662_26549.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106662-German_shepherd/n02106662_26549.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106662",
+          "breed_name": "German shepherd",
+          "query_type": "semantic",
+          "expected_relation": "same_breed_present_in_index",
+          "relevant_point_ids": [
+            "a23f5cb3-ebd8-5a82-bd6d-75267be0e7d0",
+            "48f10883-5436-58d7-8227-594e37268c85",
+            "3d837ccc-b51a-56dd-9538-0041ed3c6aee",
+            "b6924955-3dcb-5ac6-910f-49d328e050c8"
+          ]
+        },
+        {
+          "point_id": "bf1c911b-48c7-5608-b32c-0b6c3b623391",
+          "path": "data/source/scenario_3/dogs_queries/n02106662-German_shepherd/query_04_n02106662_597.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02106662-German_shepherd/n02106662_597.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02106662",
+          "breed_name": "German shepherd",
+          "query_type": "semantic",
+          "expected_relation": "same_breed_present_in_index",
+          "relevant_point_ids": [
+            "a23f5cb3-ebd8-5a82-bd6d-75267be0e7d0",
+            "48f10883-5436-58d7-8227-594e37268c85",
+            "3d837ccc-b51a-56dd-9538-0041ed3c6aee",
+            "b6924955-3dcb-5ac6-910f-49d328e050c8"
+          ]
+        },
+        {
+          "point_id": "92b8909f-2f9a-5b82-8994-beec15aa7c92",
+          "path": "data/source/scenario_3/dogs_queries/n02110185-Siberian_husky/query_01_n02110185_11409.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110185-Siberian_husky/n02110185_11409.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110185",
+          "breed_name": "Siberian husky",
+          "query_type": "semantic",
+          "expected_relation": "same_breed_present_in_index",
+          "relevant_point_ids": [
+            "58cdd5cd-b854-5236-92a8-4c4405fdd5b2",
+            "1a72b5cd-9bc4-5c3a-9f9b-949222564989",
+            "d632b8ba-6706-55fa-93b1-034a36482466",
+            "f864a263-600e-5da8-8ffc-5aef34adc789"
+          ]
+        },
+        {
+          "point_id": "9c219826-c48d-530d-bcd4-fba6e0806e76",
+          "path": "data/source/scenario_3/dogs_queries/n02110185-Siberian_husky/query_02_n02110185_12120.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110185-Siberian_husky/n02110185_12120.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110185",
+          "breed_name": "Siberian husky",
+          "query_type": "semantic",
+          "expected_relation": "same_breed_present_in_index",
+          "relevant_point_ids": [
+            "58cdd5cd-b854-5236-92a8-4c4405fdd5b2",
+            "1a72b5cd-9bc4-5c3a-9f9b-949222564989",
+            "d632b8ba-6706-55fa-93b1-034a36482466",
+            "f864a263-600e-5da8-8ffc-5aef34adc789"
+          ]
+        },
+        {
+          "point_id": "a899c373-c41a-5d45-8e08-b69e425aa0b3",
+          "path": "data/source/scenario_3/dogs_queries/n02110185-Siberian_husky/query_03_n02110185_3406.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110185-Siberian_husky/n02110185_3406.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110185",
+          "breed_name": "Siberian husky",
+          "query_type": "semantic",
+          "expected_relation": "same_breed_present_in_index",
+          "relevant_point_ids": [
+            "58cdd5cd-b854-5236-92a8-4c4405fdd5b2",
+            "1a72b5cd-9bc4-5c3a-9f9b-949222564989",
+            "d632b8ba-6706-55fa-93b1-034a36482466",
+            "f864a263-600e-5da8-8ffc-5aef34adc789"
+          ]
+        },
+        {
+          "point_id": "a022bc0b-bd13-5f02-95c5-f512d96a06f7",
+          "path": "data/source/scenario_3/dogs_queries/n02110185-Siberian_husky/query_04_n02110185_6746.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02110185-Siberian_husky/n02110185_6746.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02110185",
+          "breed_name": "Siberian husky",
+          "query_type": "semantic",
+          "expected_relation": "same_breed_present_in_index",
+          "relevant_point_ids": [
+            "58cdd5cd-b854-5236-92a8-4c4405fdd5b2",
+            "1a72b5cd-9bc4-5c3a-9f9b-949222564989",
+            "d632b8ba-6706-55fa-93b1-034a36482466",
+            "f864a263-600e-5da8-8ffc-5aef34adc789"
+          ]
+        },
+        {
+          "point_id": "4497c88f-4cdd-54b1-abdd-ec026022babd",
+          "path": "data/source/scenario_3/dogs_queries/n02099712-Labrador_retriever/query_01_n02099712_4508.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02099712-Labrador_retriever/n02099712_4508.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02099712",
+          "breed_name": "Labrador retriever",
+          "query_type": "semantic",
+          "expected_relation": "breed_not_present_in_index",
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "a755f792-c188-5a95-9557-7b2f63826b5d",
+          "path": "data/source/scenario_3/dogs_queries/n02099712-Labrador_retriever/query_02_n02099712_719.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02099712-Labrador_retriever/n02099712_719.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02099712",
+          "breed_name": "Labrador retriever",
+          "query_type": "semantic",
+          "expected_relation": "breed_not_present_in_index",
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "63f32132-27e1-5177-bac4-202668693358",
+          "path": "data/source/scenario_3/dogs_queries/n02099712-Labrador_retriever/query_03_n02099712_7866.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02099712-Labrador_retriever/n02099712_7866.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02099712",
+          "breed_name": "Labrador retriever",
+          "query_type": "semantic",
+          "expected_relation": "breed_not_present_in_index",
+          "relevant_point_ids": []
+        },
+        {
+          "point_id": "f8294baf-0005-55ec-a0a8-aa645c28cd15",
+          "path": "data/source/scenario_3/dogs_queries/n02099712-Labrador_retriever/query_04_n02099712_7937.jpg",
+          "source_path": "artifacts/kaggle_downloads/images/Images/n02099712-Labrador_retriever/n02099712_7937.jpg",
+          "split": "query",
+          "source_dataset": "stanford_dogs_kaggle",
+          "asset_type": "dog",
+          "breed_id": "n02099712",
+          "breed_name": "Labrador retriever",
+          "query_type": "semantic",
+          "expected_relation": "breed_not_present_in_index",
+          "relevant_point_ids": []
+        }
+      ],
+      "aggregate_rules": {
+        "exclude_queries_without_relevant_indexed_targets": true,
+        "metadata_usage": "evaluation_only_after_vector_search"
+      }
+    }
+  }
+}
