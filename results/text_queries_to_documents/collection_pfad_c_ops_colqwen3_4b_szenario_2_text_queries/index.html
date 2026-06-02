@@ -1,0 +1,1617 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PDF Page Retrieval Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f6f2;
+      --panel: #ffffff;
+      --ink: #202124;
+      --muted: #62666d;
+      --line: #dad7ce;
+      --accent: #2f6f73;
+      --good: #1f7a4f;
+      --bad: #a33b30;
+      --neutral: #78621f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 14px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main {
+      width: min(1220px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+    header {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 20px;
+    }
+    h1 { margin: 0; font-size: clamp(24px, 3vw, 36px); line-height: 1.1; }
+    h2 { margin: 0; font-size: 17px; }
+    .meta, .small { color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+    .summary, .query-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+    }
+    .metric, .query-metric {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .metric strong, .query-metric strong { display: block; margin-top: 3px; font-size: 18px; }
+    .query-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin: 18px 0;
+      padding: 16px;
+      break-inside: avoid;
+    }
+    .query-layout {
+      display: grid;
+      grid-template-columns: minmax(250px, 340px) 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    .query-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfaf7;
+      padding: 14px;
+    }
+    .query-text {
+      font-size: 16px;
+      line-height: 1.4;
+      margin: 8px 0 12px;
+    }
+    figure { margin: 0; }
+    img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: contain;
+      background: #edeae2;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    figcaption { margin-top: 7px; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+    .query-head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+    .chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 3px 8px;
+      color: var(--muted);
+      background: #fbfaf7;
+      font-size: 12px;
+    }
+    .status {
+      border-radius: 999px;
+      color: white;
+      font-weight: 700;
+      padding: 4px 9px;
+      font-size: 12px;
+    }
+    .status.good { background: var(--good); }
+    .status.bad { background: var(--bad); }
+    .results, .missing-results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .section-title { margin: 14px 0 6px; font-size: 13px; font-weight: 700; }
+    .result {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 9px;
+      background: #fbfaf7;
+    }
+    .result.good { border-color: color-mix(in srgb, var(--good) 55%, var(--line)); }
+    .result.bad { border-color: color-mix(in srgb, var(--bad) 45%, var(--line)); }
+    .result.missing { border-color: color-mix(in srgb, var(--neutral) 50%, var(--line)); }
+    .rank {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 7px;
+      font-weight: 700;
+    }
+    .score { color: var(--muted); font-weight: 500; font-size: 12px; }
+    .fairness {
+      border-left: 4px solid var(--accent);
+      background: #edf5f4;
+      padding: 10px 12px;
+      border-radius: 6px;
+      color: #214548;
+    }
+    @media (max-width: 820px) {
+      main { width: min(100vw - 20px, 1220px); padding-top: 20px; }
+      .query-layout { grid-template-columns: 1fr; }
+    }
+    @media print {
+      body { background: white; }
+      main { width: 100%; padding: 0; }
+      .query-card { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <h1>PDF Page Retrieval Report</h1>
+      <div class="meta">Run: collection_pfad_c_ops_colqwen3_4b_szenario_2_text_queries · Collection: collection_pfad_c_ops_colqwen3_4b_szenario_2</div>
+      <div class="meta">CSV: outputs/pdf_pages_colqwen2/collection_pfad_c_ops_colqwen3_4b_szenario_2_text_queries.csv</div>
+    </div>
+    <div class="fairness">
+      Payload metadata is displayed only after vector retrieval has already produced the ranked
+      IDs. The report does not filter, rerank, boost, embed, or construct queries from metadata.
+    </div>
+    <section class="summary"><div class="metric">
+  <span class="small">Displayed Queries</span>
+  <strong>12</strong>
+</div><div class="metric">
+  <span class="small">Queries With Hit</span>
+  <strong>12</strong>
+</div><div class="metric">
+  <span class="small">hit_rate_at_5</span>
+  <strong>1</strong>
+</div><div class="metric">
+  <span class="small">mrr</span>
+  <strong>1</strong>
+</div><div class="metric">
+  <span class="small">ndcg_at_5</span>
+  <strong>1</strong>
+</div></section>
+  </header>
+  <section class="query-card" id="query-s2_qws_spezifikation_prc_toleranz">
+  <div class="query-layout">
+    <aside class="query-panel">
+      <div class="small">Query ID: s2_qws_spezifikation_prc_toleranz</div>
+      <div class="query-text">Welche Synthese-Frequenz muss der QWS-3000 einhalten, welcher Toleranzbereich ist zulässig und an welcher Komponente wird dieser Wert gemessen?</div>
+      <div class="chips">
+        <span class="chip">scenario: szenario_2</span>
+        <span class="chip">target: table</span>
+        <span class="chip">document: technical_handbook</span>
+        <span class="chip">page: 1</span>
+      </div>
+      <div class="small">Expected hint: 15.75 GHz, ± 0.05 GHz, Primär-Resonator (PRC)</div>
+    </aside>
+    <div>
+      <div class="query-head">
+        <h2>s2_qws_spezifikation_prc_toleranz</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">latency: 0.0468s</span>
+        <span class="chip">relevant pages: 1</span>
+      </div>
+      <div class="query-metrics"><div class="query-metric">
+  <span class="small">hit_rate_at_5</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">mrr</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">ndcg_at_5</span>
+  <strong>1</strong>
+</div></div>
+      <div class="section-title">Retrieved top-k pages</div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score 43.7417</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-beced732-810e-565c-b80a-e073ca2a5a59.jpg" alt="Retrieved PDF page rank 1">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0001.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">expected page</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 1</span>
+  </div>
+  <div class="small">ID: beced732-810e-565c-b80a-e073ca2a5a59</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score 39.3062</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-45b9b110-6707-56e7-b4ce-e7879d7516f8.jpg" alt="Retrieved PDF page rank 2">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0002.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 2</span>
+  </div>
+  <div class="small">ID: 45b9b110-6707-56e7-b4ce-e7879d7516f8</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score 35.559</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-ebef1fd7-4326-536b-aa7b-d4e01bc2707d.jpg" alt="Retrieved PDF page rank 3">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0003.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 3</span>
+  </div>
+  <div class="small">ID: ebef1fd7-4326-536b-aa7b-d4e01bc2707d</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score 35.1971</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-8fd15ca2-b134-511f-b977-f4d7ffaea916.jpg" alt="Retrieved PDF page rank 4">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0005.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 5</span>
+  </div>
+  <div class="small">ID: 8fd15ca2-b134-511f-b977-f4d7ffaea916</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score 34.657</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-dc32e2c1-60bb-5071-9660-fba026832a69.jpg" alt="Retrieved PDF page rank 5">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0004.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 4</span>
+  </div>
+  <div class="small">ID: dc32e2c1-60bb-5071-9660-fba026832a69</div>
+</article>
+      </div>
+      <div class="section-title">Missing expected pages</div><div class="small">All expected pages were returned in top-k.</div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-s2_qws_architektur_komponenten_abfolge">
+  <div class="query-layout">
+    <aside class="query-panel">
+      <div class="small">Query ID: s2_qws_architektur_komponenten_abfolge</div>
+      <div class="query-text">Aus welchen fünf Hauptphasen besteht die modulare Architektur des QWS-3000 und welche Rolle übernehmen PRC, IQM, Kryo-Sensor und NES-VSR im System?</div>
+      <div class="chips">
+        <span class="chip">scenario: szenario_2</span>
+        <span class="chip">target: text</span>
+        <span class="chip">document: technical_handbook</span>
+        <span class="chip">page: 2</span>
+      </div>
+      <div class="small">Expected hint: PRC, Kryo-Sensor T-22, IQM und NES-VSR</div>
+    </aside>
+    <div>
+      <div class="query-head">
+        <h2>s2_qws_architektur_komponenten_abfolge</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">latency: 0.0372s</span>
+        <span class="chip">relevant pages: 1</span>
+      </div>
+      <div class="query-metrics"><div class="query-metric">
+  <span class="small">hit_rate_at_5</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">mrr</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">ndcg_at_5</span>
+  <strong>1</strong>
+</div></div>
+      <div class="section-title">Retrieved top-k pages</div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score 41.0832</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-45b9b110-6707-56e7-b4ce-e7879d7516f8.jpg" alt="Retrieved PDF page rank 1">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0002.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">expected page</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 2</span>
+  </div>
+  <div class="small">ID: 45b9b110-6707-56e7-b4ce-e7879d7516f8</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score 39.794</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-ebef1fd7-4326-536b-aa7b-d4e01bc2707d.jpg" alt="Retrieved PDF page rank 2">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0003.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 3</span>
+  </div>
+  <div class="small">ID: ebef1fd7-4326-536b-aa7b-d4e01bc2707d</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score 33.4789</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-8fd15ca2-b134-511f-b977-f4d7ffaea916.jpg" alt="Retrieved PDF page rank 3">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0005.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 5</span>
+  </div>
+  <div class="small">ID: 8fd15ca2-b134-511f-b977-f4d7ffaea916</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score 32.7087</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-beced732-810e-565c-b80a-e073ca2a5a59.jpg" alt="Retrieved PDF page rank 4">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0001.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 1</span>
+  </div>
+  <div class="small">ID: beced732-810e-565c-b80a-e073ca2a5a59</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score 30.471</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-dc32e2c1-60bb-5071-9660-fba026832a69.jpg" alt="Retrieved PDF page rank 5">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0004.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 4</span>
+  </div>
+  <div class="small">ID: dc32e2c1-60bb-5071-9660-fba026832a69</div>
+</article>
+      </div>
+      <div class="section-title">Missing expected pages</div><div class="small">All expected pages were returned in top-k.</div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-s2_qws_flowchart_vakuum_resonanz_entscheidung">
+  <div class="query-layout">
+    <aside class="query-panel">
+      <div class="small">Query ID: s2_qws_flowchart_vakuum_resonanz_entscheidung</div>
+      <div class="query-text">Wie kalibriere ich den QWS laut Flowchart, wenn der VSR-Druck unter 10⁻⁹ mbar liegt, und welche Schritte folgen bis zur Prüfung der Resonanzspitze?</div>
+      <div class="chips">
+        <span class="chip">scenario: szenario_2</span>
+        <span class="chip">target: visual</span>
+        <span class="chip">document: technical_handbook</span>
+        <span class="chip">page: 4</span>
+      </div>
+      <div class="small">Expected hint: IQM Bias Spannung auf 5.0 kV setzen, Resonanz-Sweep ausführen, Resonanzspitze bei 15.75 GHz ± 0.01 GHz prüfen</div>
+    </aside>
+    <div>
+      <div class="query-head">
+        <h2>s2_qws_flowchart_vakuum_resonanz_entscheidung</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">latency: 0.0577s</span>
+        <span class="chip">relevant pages: 1</span>
+      </div>
+      <div class="query-metrics"><div class="query-metric">
+  <span class="small">hit_rate_at_5</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">mrr</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">ndcg_at_5</span>
+  <strong>1</strong>
+</div></div>
+      <div class="section-title">Retrieved top-k pages</div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score 44.3938</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-dc32e2c1-60bb-5071-9660-fba026832a69.jpg" alt="Retrieved PDF page rank 1">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0004.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">expected page</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 4</span>
+  </div>
+  <div class="small">ID: dc32e2c1-60bb-5071-9660-fba026832a69</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score 36.7877</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-ebef1fd7-4326-536b-aa7b-d4e01bc2707d.jpg" alt="Retrieved PDF page rank 2">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0003.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 3</span>
+  </div>
+  <div class="small">ID: ebef1fd7-4326-536b-aa7b-d4e01bc2707d</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score 33.4285</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-45b9b110-6707-56e7-b4ce-e7879d7516f8.jpg" alt="Retrieved PDF page rank 3">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0002.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 2</span>
+  </div>
+  <div class="small">ID: 45b9b110-6707-56e7-b4ce-e7879d7516f8</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score 32.6673</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-beced732-810e-565c-b80a-e073ca2a5a59.jpg" alt="Retrieved PDF page rank 4">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0001.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 1</span>
+  </div>
+  <div class="small">ID: beced732-810e-565c-b80a-e073ca2a5a59</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score 32.0044</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-8fd15ca2-b134-511f-b977-f4d7ffaea916.jpg" alt="Retrieved PDF page rank 5">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0005.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 5</span>
+  </div>
+  <div class="small">ID: 8fd15ca2-b134-511f-b977-f4d7ffaea916</div>
+</article>
+      </div>
+      <div class="section-title">Missing expected pages</div><div class="small">All expected pages were returned in top-k.</div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-s2_qws_handgeschriebene_wartungstabelle_iqm_vsr">
+  <div class="query-layout">
+    <aside class="query-panel">
+      <div class="small">Query ID: s2_qws_handgeschriebene_wartungstabelle_iqm_vsr</div>
+      <div class="query-text">Was gilt es bei der Wartung des Haupttransformators HT-400 zu beachten und wer ist laut handgeschriebener Wartungstabelle dafür verantwortlich?</div>
+      <div class="chips">
+        <span class="chip">scenario: szenario_2</span>
+        <span class="chip">target: handwritten_table</span>
+        <span class="chip">document: technical_handbook</span>
+        <span class="chip">page: 5</span>
+      </div>
+      <div class="small">Expected hint: Jährliche HT-400-Wartung, Effizienz und Hitzeentwicklung, Elektrotechniker</div>
+    </aside>
+    <div>
+      <div class="query-head">
+        <h2>s2_qws_handgeschriebene_wartungstabelle_iqm_vsr</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">latency: 0.0309s</span>
+        <span class="chip">relevant pages: 1</span>
+      </div>
+      <div class="query-metrics"><div class="query-metric">
+  <span class="small">hit_rate_at_5</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">mrr</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">ndcg_at_5</span>
+  <strong>1</strong>
+</div></div>
+      <div class="section-title">Retrieved top-k pages</div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score 30.5638</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-8fd15ca2-b134-511f-b977-f4d7ffaea916.jpg" alt="Retrieved PDF page rank 1">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0005.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">expected page</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 5</span>
+  </div>
+  <div class="small">ID: 8fd15ca2-b134-511f-b977-f4d7ffaea916</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score 27.7284</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-00bd32f2-032a-5ce3-a9bd-7339ea2b8923.jpg" alt="Retrieved PDF page rank 2">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0007.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 7</span>
+  </div>
+  <div class="small">ID: 00bd32f2-032a-5ce3-a9bd-7339ea2b8923</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score 26.117</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-dc32e2c1-60bb-5071-9660-fba026832a69.jpg" alt="Retrieved PDF page rank 3">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0004.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 4</span>
+  </div>
+  <div class="small">ID: dc32e2c1-60bb-5071-9660-fba026832a69</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score 23.981</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-beced732-810e-565c-b80a-e073ca2a5a59.jpg" alt="Retrieved PDF page rank 4">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0001.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 1</span>
+  </div>
+  <div class="small">ID: beced732-810e-565c-b80a-e073ca2a5a59</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score 22.6615</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-5d21d4a2-d003-5ed7-b80b-fbac94a41d54.jpg" alt="Retrieved PDF page rank 5">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0006.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 6</span>
+  </div>
+  <div class="small">ID: 5d21d4a2-d003-5ed7-b80b-fbac94a41d54</div>
+</article>
+      </div>
+      <div class="section-title">Missing expected pages</div><div class="small">All expected pages were returned in top-k.</div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-s2_qws_fehler_e312_e404_vergleich">
+  <div class="query-layout">
+    <aside class="query-panel">
+      <div class="small">Query ID: s2_qws_fehler_e312_e404_vergleich</div>
+      <div class="query-text">Welche Maßnahmen sind bei einem E-312 Vakuum-Integrität Alarm nötig und wie unterscheiden sie sich von der Vorgehensweise bei einer E-404 Material-Handling Blockade?</div>
+      <div class="chips">
+        <span class="chip">scenario: szenario_2</span>
+        <span class="chip">target: table</span>
+        <span class="chip">document: technical_handbook</span>
+        <span class="chip">page: 6</span>
+      </div>
+      <div class="small">Expected hint: Dichtungssätze prüfen, Lecksuche durchführen, MEU inspizieren</div>
+    </aside>
+    <div>
+      <div class="query-head">
+        <h2>s2_qws_fehler_e312_e404_vergleich</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">latency: 0.0400s</span>
+        <span class="chip">relevant pages: 1</span>
+      </div>
+      <div class="query-metrics"><div class="query-metric">
+  <span class="small">hit_rate_at_5</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">mrr</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">ndcg_at_5</span>
+  <strong>1</strong>
+</div></div>
+      <div class="section-title">Retrieved top-k pages</div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score 44.0292</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-5d21d4a2-d003-5ed7-b80b-fbac94a41d54.jpg" alt="Retrieved PDF page rank 1">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0006.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">expected page</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 6</span>
+  </div>
+  <div class="small">ID: 5d21d4a2-d003-5ed7-b80b-fbac94a41d54</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score 33.8063</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-00bd32f2-032a-5ce3-a9bd-7339ea2b8923.jpg" alt="Retrieved PDF page rank 2">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0007.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 7</span>
+  </div>
+  <div class="small">ID: 00bd32f2-032a-5ce3-a9bd-7339ea2b8923</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score 32.8561</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-8fd15ca2-b134-511f-b977-f4d7ffaea916.jpg" alt="Retrieved PDF page rank 3">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0005.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 5</span>
+  </div>
+  <div class="small">ID: 8fd15ca2-b134-511f-b977-f4d7ffaea916</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score 28.2517</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-beced732-810e-565c-b80a-e073ca2a5a59.jpg" alt="Retrieved PDF page rank 4">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0001.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 1</span>
+  </div>
+  <div class="small">ID: beced732-810e-565c-b80a-e073ca2a5a59</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score 26.9944</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-dc32e2c1-60bb-5071-9660-fba026832a69.jpg" alt="Retrieved PDF page rank 5">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0004.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 4</span>
+  </div>
+  <div class="small">ID: dc32e2c1-60bb-5071-9660-fba026832a69</div>
+</article>
+      </div>
+      <div class="section-title">Missing expected pages</div><div class="small">All expected pages were returned in top-k.</div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-s2_qws_fehler_e803_e921_diagnose">
+  <div class="query-layout">
+    <aside class="query-panel">
+      <div class="small">Query ID: s2_qws_fehler_e803_e921_diagnose</div>
+      <div class="query-text">Was muss ich prüfen, wenn der supraleitende Magnet Strom-Ripple meldet, und welche manuelle Prozedur ist bei verlorener QRC-Kopplung vorgesehen?</div>
+      <div class="chips">
+        <span class="chip">scenario: szenario_2</span>
+        <span class="chip">target: table</span>
+        <span class="chip">document: technical_handbook</span>
+        <span class="chip">page: 7</span>
+      </div>
+      <div class="small">Expected hint: E-803 S-Mag Strom-Ripple und E-921 QRC-Kopplung verloren</div>
+    </aside>
+    <div>
+      <div class="query-head">
+        <h2>s2_qws_fehler_e803_e921_diagnose</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">latency: 0.0318s</span>
+        <span class="chip">relevant pages: 1</span>
+      </div>
+      <div class="query-metrics"><div class="query-metric">
+  <span class="small">hit_rate_at_5</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">mrr</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">ndcg_at_5</span>
+  <strong>1</strong>
+</div></div>
+      <div class="section-title">Retrieved top-k pages</div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score 38.9544</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-00bd32f2-032a-5ce3-a9bd-7339ea2b8923.jpg" alt="Retrieved PDF page rank 1">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0007.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">expected page</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 7</span>
+  </div>
+  <div class="small">ID: 00bd32f2-032a-5ce3-a9bd-7339ea2b8923</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score 27.1681</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-8fd15ca2-b134-511f-b977-f4d7ffaea916.jpg" alt="Retrieved PDF page rank 2">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0005.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 5</span>
+  </div>
+  <div class="small">ID: 8fd15ca2-b134-511f-b977-f4d7ffaea916</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score 26.9718</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-5d21d4a2-d003-5ed7-b80b-fbac94a41d54.jpg" alt="Retrieved PDF page rank 3">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0006.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 6</span>
+  </div>
+  <div class="small">ID: 5d21d4a2-d003-5ed7-b80b-fbac94a41d54</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score 25.8265</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-ebef1fd7-4326-536b-aa7b-d4e01bc2707d.jpg" alt="Retrieved PDF page rank 4">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0003.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 3</span>
+  </div>
+  <div class="small">ID: ebef1fd7-4326-536b-aa7b-d4e01bc2707d</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score 24.9154</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-dc32e2c1-60bb-5071-9660-fba026832a69.jpg" alt="Retrieved PDF page rank 5">
+  <figcaption>artifacts/rasterized_pages/szenario_2/technical_handbook/Quantum_Weaver_page_0004.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">technical_handbook</span>
+    <span class="chip">page 4</span>
+  </div>
+  <div class="small">ID: dc32e2c1-60bb-5071-9660-fba026832a69</div>
+</article>
+      </div>
+      <div class="section-title">Missing expected pages</div><div class="small">All expected pages were returned in top-k.</div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-s2_aeronova_strategische_vision_2026">
+  <div class="query-layout">
+    <aside class="query-panel">
+      <div class="small">Query ID: s2_aeronova_strategische_vision_2026</div>
+      <div class="query-text">Welche drei strategischen Schwerpunkte verfolgt AeroNova für die Last-Mile-Evolution im Jahr 2026?</div>
+      <div class="chips">
+        <span class="chip">scenario: szenario_2</span>
+        <span class="chip">target: text</span>
+        <span class="chip">document: annual_report</span>
+        <span class="chip">page: 1</span>
+      </div>
+      <div class="small">Expected hint: Hyper-Lokalisierung, KI-gestützte Prädiktion, Nachhaltigkeit 360</div>
+    </aside>
+    <div>
+      <div class="query-head">
+        <h2>s2_aeronova_strategische_vision_2026</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">latency: 0.0274s</span>
+        <span class="chip">relevant pages: 1</span>
+      </div>
+      <div class="query-metrics"><div class="query-metric">
+  <span class="small">hit_rate_at_5</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">mrr</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">ndcg_at_5</span>
+  <strong>1</strong>
+</div></div>
+      <div class="section-title">Retrieved top-k pages</div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score 30.9469</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-957a003b-0998-5245-baf3-5d2a00506bd6.jpg" alt="Retrieved PDF page rank 1">
+  <figcaption>artifacts/rasterized_pages/szenario_2/annual_report/AeroNova_Logistics_page_0001.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">expected page</span>
+    <span class="chip">annual_report</span>
+    <span class="chip">page 1</span>
+  </div>
+  <div class="small">ID: 957a003b-0998-5245-baf3-5d2a00506bd6</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score 25.3218</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-6dfd709b-13c8-521a-be1c-df61953fc88f.jpg" alt="Retrieved PDF page rank 2">
+  <figcaption>artifacts/rasterized_pages/szenario_2/annual_report/AeroNova_Logistics_page_0004.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">annual_report</span>
+    <span class="chip">page 4</span>
+  </div>
+  <div class="small">ID: 6dfd709b-13c8-521a-be1c-df61953fc88f</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score 22.1718</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-e1e748f4-ac23-5a57-ba3a-f05fcde8ddd6.jpg" alt="Retrieved PDF page rank 3">
+  <figcaption>artifacts/rasterized_pages/szenario_2/annual_report/AeroNova_Logistics_page_0003.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">annual_report</span>
+    <span class="chip">page 3</span>
+  </div>
+  <div class="small">ID: e1e748f4-ac23-5a57-ba3a-f05fcde8ddd6</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score 21.1694</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-fcfb4a01-7ad1-593c-9f95-9aec91e42e0d.jpg" alt="Retrieved PDF page rank 4">
+  <figcaption>artifacts/rasterized_pages/szenario_2/noise_pdf/short_geschaeftsbericht-2025-volkswagen-group_page_0029.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">noise_pdf</span>
+    <span class="chip">page 29</span>
+  </div>
+  <div class="small">ID: fcfb4a01-7ad1-593c-9f95-9aec91e42e0d</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score 20.8688</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-94633b38-47a7-50c1-9289-c2c81bcc0c74.jpg" alt="Retrieved PDF page rank 5">
+  <figcaption>artifacts/rasterized_pages/szenario_2/noise_pdf/short_geschaeftsbericht-2025-volkswagen-group_page_0026.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">noise_pdf</span>
+    <span class="chip">page 26</span>
+  </div>
+  <div class="small">ID: 94633b38-47a7-50c1-9289-c2c81bcc0c74</div>
+</article>
+      </div>
+      <div class="section-title">Missing expected pages</div><div class="small">All expected pages were returned in top-k.</div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-s2_aeronova_finanzkennzahlen_q4_b2b_ebitda">
+  <div class="query-layout">
+    <aside class="query-panel">
+      <div class="small">Query ID: s2_aeronova_finanzkennzahlen_q4_b2b_ebitda</div>
+      <div class="query-text">Wie hoch waren der Gesamtumsatz und Aero-Freight-B2B-Umsatz in Q4 2025, und welche EBITDA-Marge wurde in Q3 2025 erreicht?</div>
+      <div class="chips">
+        <span class="chip">scenario: szenario_2</span>
+        <span class="chip">target: table</span>
+        <span class="chip">document: annual_report</span>
+        <span class="chip">page: 2</span>
+      </div>
+      <div class="small">Expected hint: 731.0 Mio. USD, 145.9 Mio. USD, 29.3%</div>
+    </aside>
+    <div>
+      <div class="query-head">
+        <h2>s2_aeronova_finanzkennzahlen_q4_b2b_ebitda</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">latency: 0.0365s</span>
+        <span class="chip">relevant pages: 1</span>
+      </div>
+      <div class="query-metrics"><div class="query-metric">
+  <span class="small">hit_rate_at_5</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">mrr</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">ndcg_at_5</span>
+  <strong>1</strong>
+</div></div>
+      <div class="section-title">Retrieved top-k pages</div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score 46.5013</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-738341b2-013e-5799-994a-23e5d262e0f6.jpg" alt="Retrieved PDF page rank 1">
+  <figcaption>artifacts/rasterized_pages/szenario_2/annual_report/AeroNova_Logistics_page_0002.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">expected page</span>
+    <span class="chip">annual_report</span>
+    <span class="chip">page 2</span>
+  </div>
+  <div class="small">ID: 738341b2-013e-5799-994a-23e5d262e0f6</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score 32.7835</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-e1e748f4-ac23-5a57-ba3a-f05fcde8ddd6.jpg" alt="Retrieved PDF page rank 2">
+  <figcaption>artifacts/rasterized_pages/szenario_2/annual_report/AeroNova_Logistics_page_0003.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">annual_report</span>
+    <span class="chip">page 3</span>
+  </div>
+  <div class="small">ID: e1e748f4-ac23-5a57-ba3a-f05fcde8ddd6</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score 30.2414</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-144ad0c4-197b-5e4c-8e46-57632fe3ac62.jpg" alt="Retrieved PDF page rank 3">
+  <figcaption>artifacts/rasterized_pages/szenario_2/noise_pdf/short_geschaeftsbericht-2025-volkswagen-group_page_0035.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">noise_pdf</span>
+    <span class="chip">page 35</span>
+  </div>
+  <div class="small">ID: 144ad0c4-197b-5e4c-8e46-57632fe3ac62</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score 30.0153</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-6dfd709b-13c8-521a-be1c-df61953fc88f.jpg" alt="Retrieved PDF page rank 4">
+  <figcaption>artifacts/rasterized_pages/szenario_2/annual_report/AeroNova_Logistics_page_0004.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">annual_report</span>
+    <span class="chip">page 4</span>
+  </div>
+  <div class="small">ID: 6dfd709b-13c8-521a-be1c-df61953fc88f</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score 29.5561</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-ca453fbd-ec96-5eb2-bc6f-9c5351af5ac2.jpg" alt="Retrieved PDF page rank 5">
+  <figcaption>artifacts/rasterized_pages/szenario_2/noise_pdf/short_geschaeftsbericht-2025-volkswagen-group_page_0051.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">noise_pdf</span>
+    <span class="chip">page 51</span>
+  </div>
+  <div class="small">ID: ca453fbd-ec96-5eb2-bc6f-9c5351af5ac2</div>
+</article>
+      </div>
+      <div class="section-title">Missing expected pages</div><div class="small">All expected pages were returned in top-k.</div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-s2_aeronova_marktanteile_2024_2025_vergleich">
+  <div class="query-layout">
+    <aside class="query-panel">
+      <div class="small">Query ID: s2_aeronova_marktanteile_2024_2025_vergleich</div>
+      <div class="query-text">Welche Marktanteile hatten Nordamerika und Lateinamerika jeweils in 2024 und 2025, und wie haben sich diese beiden Regionen verändert?</div>
+      <div class="chips">
+        <span class="chip">scenario: szenario_2</span>
+        <span class="chip">target: visual</span>
+        <span class="chip">document: annual_report</span>
+        <span class="chip">page: 3</span>
+      </div>
+      <div class="small">Expected hint: Nordamerika 59% auf 35%, Lateinamerika 8% auf 10%</div>
+    </aside>
+    <div>
+      <div class="query-head">
+        <h2>s2_aeronova_marktanteile_2024_2025_vergleich</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">latency: 0.0321s</span>
+        <span class="chip">relevant pages: 1</span>
+      </div>
+      <div class="query-metrics"><div class="query-metric">
+  <span class="small">hit_rate_at_5</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">mrr</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">ndcg_at_5</span>
+  <strong>1</strong>
+</div></div>
+      <div class="section-title">Retrieved top-k pages</div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score 43.4315</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-e1e748f4-ac23-5a57-ba3a-f05fcde8ddd6.jpg" alt="Retrieved PDF page rank 1">
+  <figcaption>artifacts/rasterized_pages/szenario_2/annual_report/AeroNova_Logistics_page_0003.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">expected page</span>
+    <span class="chip">annual_report</span>
+    <span class="chip">page 3</span>
+  </div>
+  <div class="small">ID: e1e748f4-ac23-5a57-ba3a-f05fcde8ddd6</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score 37.0677</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-ca453fbd-ec96-5eb2-bc6f-9c5351af5ac2.jpg" alt="Retrieved PDF page rank 2">
+  <figcaption>artifacts/rasterized_pages/szenario_2/noise_pdf/short_geschaeftsbericht-2025-volkswagen-group_page_0051.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">noise_pdf</span>
+    <span class="chip">page 51</span>
+  </div>
+  <div class="small">ID: ca453fbd-ec96-5eb2-bc6f-9c5351af5ac2</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score 36.7455</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-868d204a-1093-5958-8e02-aaed35bbc1eb.jpg" alt="Retrieved PDF page rank 3">
+  <figcaption>artifacts/rasterized_pages/szenario_2/noise_pdf/short_geschaeftsbericht-2025-volkswagen-group_page_0047.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">noise_pdf</span>
+    <span class="chip">page 47</span>
+  </div>
+  <div class="small">ID: 868d204a-1093-5958-8e02-aaed35bbc1eb</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score 35.0118</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-2b1a6043-8ad4-5e0b-a0ee-afc49cd46134.jpg" alt="Retrieved PDF page rank 4">
+  <figcaption>artifacts/rasterized_pages/szenario_2/noise_pdf/short_geschaeftsbericht-2025-volkswagen-group_page_0044.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">noise_pdf</span>
+    <span class="chip">page 44</span>
+  </div>
+  <div class="small">ID: 2b1a6043-8ad4-5e0b-a0ee-afc49cd46134</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score 34.931</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-2d1f73ef-1fe7-592b-b511-076fd87d1487.jpg" alt="Retrieved PDF page rank 5">
+  <figcaption>artifacts/rasterized_pages/szenario_2/noise_pdf/short_geschaeftsbericht-2025-volkswagen-group_page_0046.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">noise_pdf</span>
+    <span class="chip">page 46</span>
+  </div>
+  <div class="small">ID: 2d1f73ef-1fe7-592b-b511-076fd87d1487</div>
+</article>
+      </div>
+      <div class="section-title">Missing expected pages</div><div class="small">All expected pages were returned in top-k.</div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-s2_aeronova_forschung_budget_balkendiagramm">
+  <div class="query-layout">
+    <aside class="query-panel">
+      <div class="small">Query ID: s2_aeronova_forschung_budget_balkendiagramm</div>
+      <div class="query-text">In welche Branche beziehungsweise F&amp;E-Säule ging bei AeroNova der größte Anteil des Forschungsbudgets, und wie groß war dieser Anteil?</div>
+      <div class="chips">
+        <span class="chip">scenario: szenario_2</span>
+        <span class="chip">target: visual</span>
+        <span class="chip">document: annual_report</span>
+        <span class="chip">page: 4</span>
+      </div>
+      <div class="small">Expected hint: Autonome Navigationssysteme (KI), 40%</div>
+    </aside>
+    <div>
+      <div class="query-head">
+        <h2>s2_aeronova_forschung_budget_balkendiagramm</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">latency: 0.0314s</span>
+        <span class="chip">relevant pages: 1</span>
+      </div>
+      <div class="query-metrics"><div class="query-metric">
+  <span class="small">hit_rate_at_5</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">mrr</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">ndcg_at_5</span>
+  <strong>1</strong>
+</div></div>
+      <div class="section-title">Retrieved top-k pages</div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score 37.2054</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-6dfd709b-13c8-521a-be1c-df61953fc88f.jpg" alt="Retrieved PDF page rank 1">
+  <figcaption>artifacts/rasterized_pages/szenario_2/annual_report/AeroNova_Logistics_page_0004.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">expected page</span>
+    <span class="chip">annual_report</span>
+    <span class="chip">page 4</span>
+  </div>
+  <div class="small">ID: 6dfd709b-13c8-521a-be1c-df61953fc88f</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score 25.5552</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-e1e748f4-ac23-5a57-ba3a-f05fcde8ddd6.jpg" alt="Retrieved PDF page rank 2">
+  <figcaption>artifacts/rasterized_pages/szenario_2/annual_report/AeroNova_Logistics_page_0003.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">annual_report</span>
+    <span class="chip">page 3</span>
+  </div>
+  <div class="small">ID: e1e748f4-ac23-5a57-ba3a-f05fcde8ddd6</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score 25.1072</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-c30d7f13-20ec-5792-a67c-33da8c8f0c93.jpg" alt="Retrieved PDF page rank 3">
+  <figcaption>artifacts/rasterized_pages/szenario_2/noise_pdf/short_geschaeftsbericht-2025-volkswagen-group_page_0034.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">noise_pdf</span>
+    <span class="chip">page 34</span>
+  </div>
+  <div class="small">ID: c30d7f13-20ec-5792-a67c-33da8c8f0c93</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score 25.0944</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-738341b2-013e-5799-994a-23e5d262e0f6.jpg" alt="Retrieved PDF page rank 4">
+  <figcaption>artifacts/rasterized_pages/szenario_2/annual_report/AeroNova_Logistics_page_0002.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">annual_report</span>
+    <span class="chip">page 2</span>
+  </div>
+  <div class="small">ID: 738341b2-013e-5799-994a-23e5d262e0f6</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score 24.4753</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-957a003b-0998-5245-baf3-5d2a00506bd6.jpg" alt="Retrieved PDF page rank 5">
+  <figcaption>artifacts/rasterized_pages/szenario_2/annual_report/AeroNova_Logistics_page_0001.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">annual_report</span>
+    <span class="chip">page 1</span>
+  </div>
+  <div class="small">ID: 957a003b-0998-5245-baf3-5d2a00506bd6</div>
+</article>
+      </div>
+      <div class="section-title">Missing expected pages</div><div class="small">All expected pages were returned in top-k.</div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-s2_aeronova_ion_drive_forschungskontext">
+  <div class="query-layout">
+    <aside class="query-panel">
+      <div class="small">Query ID: s2_aeronova_ion_drive_forschungskontext</div>
+      <div class="query-text">Welche F&amp;E-Säule führte zur Einführung des Ion-Drive-Akkus, welchen Reichweitengewinn brachte er, und wie hoch war der zugehörige Budgetanteil?</div>
+      <div class="chips">
+        <span class="chip">scenario: szenario_2</span>
+        <span class="chip">target: visual_text</span>
+        <span class="chip">document: annual_report</span>
+        <span class="chip">page: 4</span>
+      </div>
+      <div class="small">Expected hint: Batterie- und Antriebseffizienz, 20% mehr Reichweite, 30% Budgetanteil</div>
+    </aside>
+    <div>
+      <div class="query-head">
+        <h2>s2_aeronova_ion_drive_forschungskontext</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">latency: 0.0462s</span>
+        <span class="chip">relevant pages: 1</span>
+      </div>
+      <div class="query-metrics"><div class="query-metric">
+  <span class="small">hit_rate_at_5</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">mrr</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">ndcg_at_5</span>
+  <strong>1</strong>
+</div></div>
+      <div class="section-title">Retrieved top-k pages</div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score 42.206</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-6dfd709b-13c8-521a-be1c-df61953fc88f.jpg" alt="Retrieved PDF page rank 1">
+  <figcaption>artifacts/rasterized_pages/szenario_2/annual_report/AeroNova_Logistics_page_0004.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">expected page</span>
+    <span class="chip">annual_report</span>
+    <span class="chip">page 4</span>
+  </div>
+  <div class="small">ID: 6dfd709b-13c8-521a-be1c-df61953fc88f</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score 26.7631</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-fcfb4a01-7ad1-593c-9f95-9aec91e42e0d.jpg" alt="Retrieved PDF page rank 2">
+  <figcaption>artifacts/rasterized_pages/szenario_2/noise_pdf/short_geschaeftsbericht-2025-volkswagen-group_page_0029.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">noise_pdf</span>
+    <span class="chip">page 29</span>
+  </div>
+  <div class="small">ID: fcfb4a01-7ad1-593c-9f95-9aec91e42e0d</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score 26.1801</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-086a1da2-4fcc-5226-a4ac-26ec39b37692.jpg" alt="Retrieved PDF page rank 3">
+  <figcaption>artifacts/rasterized_pages/szenario_2/noise_pdf/short_geschaeftsbericht-2025-volkswagen-group_page_0027.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">noise_pdf</span>
+    <span class="chip">page 27</span>
+  </div>
+  <div class="small">ID: 086a1da2-4fcc-5226-a4ac-26ec39b37692</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score 26.0504</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-c30d7f13-20ec-5792-a67c-33da8c8f0c93.jpg" alt="Retrieved PDF page rank 4">
+  <figcaption>artifacts/rasterized_pages/szenario_2/noise_pdf/short_geschaeftsbericht-2025-volkswagen-group_page_0034.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">noise_pdf</span>
+    <span class="chip">page 34</span>
+  </div>
+  <div class="small">ID: c30d7f13-20ec-5792-a67c-33da8c8f0c93</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score 25.4479</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-129f7ccd-f952-5588-b2d8-bbcab0c6e82b.jpg" alt="Retrieved PDF page rank 5">
+  <figcaption>artifacts/rasterized_pages/szenario_2/noise_pdf/short_geschaeftsbericht-2025-volkswagen-group_page_0050.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">noise_pdf</span>
+    <span class="chip">page 50</span>
+  </div>
+  <div class="small">ID: 129f7ccd-f952-5588-b2d8-bbcab0c6e82b</div>
+</article>
+      </div>
+      <div class="section-title">Missing expected pages</div><div class="small">All expected pages were returned in top-k.</div>
+    </div>
+  </div>
+</section>
+<section class="query-card" id="query-s2_aeronova_esg_tabelle_webinar">
+  <div class="query-layout">
+    <aside class="query-panel">
+      <div class="small">Query ID: s2_aeronova_esg_tabelle_webinar</div>
+      <div class="query-text">Wie haben sich erneuerbare Energie, Arbeitsunfälle, Diversität und Wasserverbrauch bei AeroNova entwickelt, und wann ist das ESG Strategy Update 2026 angesetzt?</div>
+      <div class="chips">
+        <span class="chip">scenario: szenario_2</span>
+        <span class="chip">target: table_text</span>
+        <span class="chip">document: annual_report</span>
+        <span class="chip">page: 5</span>
+      </div>
+      <div class="small">Expected hint: 80% erneuerbare Energie, 0.5 Arbeitsunfälle, 33% Diversität, 95% Wasserverbrauch, 08.02.2026</div>
+    </aside>
+    <div>
+      <div class="query-head">
+        <h2>s2_aeronova_esg_tabelle_webinar</h2>
+        <span class="status good">hit</span>
+      </div>
+      <div class="chips">
+        <span class="chip">latency: 0.0534s</span>
+        <span class="chip">relevant pages: 1</span>
+      </div>
+      <div class="query-metrics"><div class="query-metric">
+  <span class="small">hit_rate_at_5</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">mrr</span>
+  <strong>1</strong>
+</div><div class="query-metric">
+  <span class="small">ndcg_at_5</span>
+  <strong>1</strong>
+</div></div>
+      <div class="section-title">Retrieved top-k pages</div>
+      <div class="results">
+        <article class="result good">
+  <div class="rank">
+    <span>Rank 1</span>
+    <span class="score">score 37.1639</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-a890940f-ddf7-5c12-8928-1002a9ec6c1f.jpg" alt="Retrieved PDF page rank 1">
+  <figcaption>artifacts/rasterized_pages/szenario_2/annual_report/AeroNova_Logistics_page_0005.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">expected page</span>
+    <span class="chip">annual_report</span>
+    <span class="chip">page 5</span>
+  </div>
+  <div class="small">ID: a890940f-ddf7-5c12-8928-1002a9ec6c1f</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 2</span>
+    <span class="score">score 31.7805</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-957a003b-0998-5245-baf3-5d2a00506bd6.jpg" alt="Retrieved PDF page rank 2">
+  <figcaption>artifacts/rasterized_pages/szenario_2/annual_report/AeroNova_Logistics_page_0001.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">annual_report</span>
+    <span class="chip">page 1</span>
+  </div>
+  <div class="small">ID: 957a003b-0998-5245-baf3-5d2a00506bd6</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 3</span>
+    <span class="score">score 31.1994</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-6dfd709b-13c8-521a-be1c-df61953fc88f.jpg" alt="Retrieved PDF page rank 3">
+  <figcaption>artifacts/rasterized_pages/szenario_2/annual_report/AeroNova_Logistics_page_0004.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">annual_report</span>
+    <span class="chip">page 4</span>
+  </div>
+  <div class="small">ID: 6dfd709b-13c8-521a-be1c-df61953fc88f</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 4</span>
+    <span class="score">score 27.7308</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-e1e748f4-ac23-5a57-ba3a-f05fcde8ddd6.jpg" alt="Retrieved PDF page rank 4">
+  <figcaption>artifacts/rasterized_pages/szenario_2/annual_report/AeroNova_Logistics_page_0003.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">annual_report</span>
+    <span class="chip">page 3</span>
+  </div>
+  <div class="small">ID: e1e748f4-ac23-5a57-ba3a-f05fcde8ddd6</div>
+</article>
+<article class="result bad">
+  <div class="rank">
+    <span>Rank 5</span>
+    <span class="score">score 25.5951</span>
+  </div>
+  <figure>
+  <img src="assets/images/pdf-page-result-738341b2-013e-5799-994a-23e5d262e0f6.jpg" alt="Retrieved PDF page rank 5">
+  <figcaption>artifacts/rasterized_pages/szenario_2/annual_report/AeroNova_Logistics_page_0002.png</figcaption>
+</figure>
+  <div class="chips">
+    <span class="chip">not expected</span>
+    <span class="chip">annual_report</span>
+    <span class="chip">page 2</span>
+  </div>
+  <div class="small">ID: 738341b2-013e-5799-994a-23e5d262e0f6</div>
+</article>
+      </div>
+      <div class="section-title">Missing expected pages</div><div class="small">All expected pages were returned in top-k.</div>
+    </div>
+  </div>
+</section>
+</main>
+</body>
+</html>

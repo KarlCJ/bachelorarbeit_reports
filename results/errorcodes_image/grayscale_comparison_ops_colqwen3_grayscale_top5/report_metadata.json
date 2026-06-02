@@ -1,0 +1,10 @@
+{
+  "generated_at": "2026-06-02T12:40:41.027343+00:00",
+  "run_id": "grayscale_comparison_ops_colqwen3_grayscale_top5",
+  "collection": "collection_pfad_c_ops_colqwen3_4b_szenario_1_troubleshooting_icons",
+  "csv_path": "outputs/troubleshooting_colqwen2/grayscale_comparison_ops_colqwen3_grayscale_top5.csv",
+  "query_count": 10,
+  "image_count": 23,
+  "report_type": "troubleshooting_retrieval",
+  "fairness_note": "Payload metadata is displayed after retrieval only. It is not used for embedding, filtering, reranking, score boosting, or query construction."
+}

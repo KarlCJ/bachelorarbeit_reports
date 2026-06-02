@@ -1,0 +1,10 @@
+{
+  "generated_at": "2026-06-02T12:38:29.371564+00:00",
+  "run_id": "collection_pfad_c_ops_colqwen3_4b_szenario_1_troubleshooting_icons_image",
+  "collection": "collection_pfad_c_ops_colqwen3_4b_szenario_1_troubleshooting_icons",
+  "csv_path": "outputs/troubleshooting_colqwen2/collection_pfad_c_ops_colqwen3_4b_szenario_1_troubleshooting_icons_image.csv",
+  "query_count": 10,
+  "image_count": 23,
+  "report_type": "troubleshooting_retrieval",
+  "fairness_note": "Payload metadata is displayed after retrieval only. It is not used for embedding, filtering, reranking, score boosting, or query construction."
+}
